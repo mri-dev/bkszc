@@ -1,0 +1,69 @@
+[30-Jul-2019 11:44:07 Europe/Berlin] PHP Warning:  require(autoload.php): failed to open stream: No such file or directory in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:44:07 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'autoload.php' (include_path='.:/opt/alt/php70/usr/share/pear') in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:50:11 Europe/Berlin] PHP Warning:  require(autoload.php): failed to open stream: No such file or directory in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:50:11 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'autoload.php' (include_path='.:/opt/alt/php70/usr/share/pear') in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:50:25 Europe/Berlin] PHP Warning:  require(autoload.php): failed to open stream: No such file or directory in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:50:25 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'autoload.php' (include_path='.:/opt/alt/php70/usr/share/pear') in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:50:45 Europe/Berlin] PHP Warning:  require(autoload.php): failed to open stream: No such file or directory in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:50:45 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'autoload.php' (include_path='.:/opt/alt/php70/usr/share/pear') in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:51:43 Europe/Berlin] PHP Warning:  require(autoload.php): failed to open stream: No such file or directory in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:51:43 Europe/Berlin] PHP Fatal error:  require(): Failed opening required 'autoload.php' (include_path='.:/opt/alt/php70/usr/share/pear') in /home/webprohu/bkszc.web-pro.hu/admin/index.php on line 15
+[30-Jul-2019 11:53:00 Europe/Berlin] SELECT SQL_CALC_FOUND_ROWS 
+			s.*,
+			t.nev,
+			t.meret,
+			t.szin,
+			t.cikkszam,
+			getTermekUrl(t.ID,'https://cp.bkszc.web-pro.hu/') as url,
+			sum(me) as me
+		FROM `stat_nezettseg_termek` as s
+		LEFT OUTER JOIN shop_termekek as t ON t.ID = s.termekID
+		WHERE t.nev IS NOT NULL and s.datum LIKE '2019-07%'
+		GROUP BY s.termekID
+		ORDER BY sum(me) DESC, t.nev ASC
+		LIMIT 0, 5
+[30-Jul-2019 11:53:00 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function rowCount() on boolean in /home/webprohu/bkszc.web-pro.hu/admin/application/libs/DatabaseManager/Database.php:262
+Stack trace:
+#0 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/PortalManager/AdminUser.php(2678): DatabaseManager\Database->q('SELECT SQL_CALC...', Array)
+#1 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/PortalManager/AdminUser.php(232): PortalManager\AdminUser->getTermekMostViewStat()
+#2 /home/webprohu/bkszc.web-pro.hu/admin/application/controllers/home.php(33): PortalManager\AdminUser->getStats(false)
+#3 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/Start.php(25): home->__construct()
+#4 /home/webprohu/bkszc.web-pro.hu/admin/index.php(17): Start->__construct()
+#5 {main}
+  thrown in /home/webprohu/bkszc.web-pro.hu/admin/application/libs/DatabaseManager/Database.php on line 262
+[30-Jul-2019 11:56:03 Europe/Berlin] SELECT SQL_CALC_FOUND_ROWS 
+			s.*,
+			t.nev,
+			t.meret,
+			t.szin,
+			t.cikkszam,
+			getTermekUrl(t.ID,'https://cp.bkszc.web-pro.hu/') as url,
+			sum(me) as me
+		FROM `stat_nezettseg_termek` as s
+		LEFT OUTER JOIN shop_termekek as t ON t.ID = s.termekID
+		WHERE t.nev IS NOT NULL and s.datum LIKE '2019-07%'
+		GROUP BY s.termekID
+		ORDER BY sum(me) DESC, t.nev ASC
+		LIMIT 0, 5
+[30-Jul-2019 11:56:03 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function rowCount() on boolean in /home/webprohu/bkszc.web-pro.hu/admin/application/libs/DatabaseManager/Database.php:262
+Stack trace:
+#0 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/PortalManager/AdminUser.php(2678): DatabaseManager\Database->q('SELECT SQL_CALC...', Array)
+#1 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/PortalManager/AdminUser.php(232): PortalManager\AdminUser->getTermekMostViewStat()
+#2 /home/webprohu/bkszc.web-pro.hu/admin/application/controllers/home.php(33): PortalManager\AdminUser->getStats(false)
+#3 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/Start.php(25): home->__construct()
+#4 /home/webprohu/bkszc.web-pro.hu/admin/index.php(17): Start->__construct()
+#5 {main}
+  thrown in /home/webprohu/bkszc.web-pro.hu/admin/application/libs/DatabaseManager/Database.php on line 262
+[30-Jul-2019 11:57:17 Europe/Berlin] SELECT SQL_CALC_FOUND_ROWS  			f.*,
+						(SELECT sum(me*egysegAr+o.szallitasi_koltseg-o.kedvezmeny) FROM `order_termekek`as t LEFT OUTER JOIN orders as o ON o.ID = t.orderKey WHERE o.allapot = 4 and t.userID = f.ID) as totalOrderPrices,
+						(SELECT sum(me*egysegAr+o.szallitasi_koltseg-o.kedvezmeny) FROM `order_termekek`as t LEFT OUTER JOIN orders as o ON o.ID = t.orderKey WHERE o.allapot = 4 and o.referer_code = refererID(f.ID)  and o.idopont >= '2019-06-30' ) as totalReferredOrderPrices,
+						(SELECT count(o.ID) FROM orders as o WHERE o.allapot = 4 and o.referer_code = refererID(f.ID)  and o.idopont >= '2019-06-30' ) as totalRefererOrderNum
+		FROM 			felhasznalok as f WHERE 1=1  and user_group IN ('sales','reseller')  HAVING totalReferredOrderPrices > 0  ORDER BY totalReferredOrderPrices DESC LIMIT 0, 10;
+[30-Jul-2019 11:57:17 Europe/Berlin] PHP Fatal error:  Uncaught Error: Call to a member function rowCount() on boolean in /home/webprohu/bkszc.web-pro.hu/admin/application/libs/DatabaseManager/Database.php:262
+Stack trace:
+#0 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/PortalManager/Users.php(1483): DatabaseManager\Database->q('SELECT SQL_CALC...', Array)
+#1 /home/webprohu/bkszc.web-pro.hu/admin/application/controllers/home.php(51): PortalManager\Users->getUserList(Array)
+#2 /home/webprohu/bkszc.web-pro.hu/admin/application/libs/Start.php(25): home->__construct()
+#3 /home/webprohu/bkszc.web-pro.hu/admin/index.php(17): Start->__construct()
+#4 {main}
+  thrown in /home/webprohu/bkszc.web-pro.hu/admin/application/libs/DatabaseManager/Database.php on line 262

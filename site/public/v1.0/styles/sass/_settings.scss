@@ -1,0 +1,50 @@
+/* VÁLTOZÓK */
+$page-width: 1200px;
+$size-sidebar: 280px;
+$imgroot: "//www.cp.vemend.web-pro.hu/src/images/";
+
+/* COLORS */
+
+$color-red: #e31e24;
+$color-orange: #ef7f1a;
+$color-yellow: #ffcc00;
+$color-grey: #d9dada;
+$color-grey-dark: #5b5b5b;
+$color-green: #97ac23;
+$color-blue: #0072c5;
+$color-blue-light: #01a3de;
+$color-blue-dark: #3d4ca7;
+$color-pr: $color-grey;
+$color-sec: $color-grey-dark;
+
+/* FONTS */
+$font-cond: 'Roboto', sans-serif;
+$font-sans-narrow: 'Roboto', sans-serif;
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700&subset=latin-ext');
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin border-radius-top($radius) {
+  -webkit-border-radius: $radius $radius 0 0;
+     -moz-border-radius: $radius $radius 0 0;
+      -ms-border-radius: $radius $radius 0 0;
+          border-radius: $radius $radius 0 0;
+}
+@mixin border-radius-left($radius) {
+  -webkit-border-radius: $radius 0 0 $radius;
+     -moz-border-radius: $radius 0 0 $radius;
+      -ms-border-radius: $radius 0 0 $radius;
+          border-radius: $radius 0 0 $radius;
+}
+@mixin border-radius-right($radius) {
+  -webkit-border-radius: 0 $radius $radius 0;
+     -moz-border-radius: 0 $radius $radius 0;
+      -ms-border-radius: 0 $radius $radius 0;
+          border-radius: 0 $radius $radius 0;
+}
