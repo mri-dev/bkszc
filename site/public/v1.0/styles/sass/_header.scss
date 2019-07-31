@@ -89,10 +89,48 @@ header {
 	.top {
 		background: $color-grey-dark;
 		color: white;
-		padding: 0;
+		padding: 10px 0;
+
+		.block-holder{
+			position: relative;
+			font-size: 0.7rem;
+
+			.data{
+				padding-left: 40px;
+				.h{
+					font-weight: bold;
+				}
+
+				.v{
+					padding-top: 4px;
+					a{
+						color: white;
+						text-decoration: none;
+					}
+				}
+			}
+
+			i{
+				position: absolute;
+				left: 12px;
+				top: 50%;
+				font-size: 24px;
+				-webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+			}
+		}
 
 		& > .pw > .flex {
-			justify-content: flex-end;
+			justify-content: space-between;
+			.contact{
+				flex-basis: 50%;
+			}
+			.contact > .flex{
+				justify-content: space-between;
+				& > div {
+					flex-basis: calc(100% / 3);
+				}
+			}
 		}
 
 		.flex {

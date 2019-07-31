@@ -37,7 +37,35 @@
     <div class="pw">
       <div class="flex">
         <div class="contact">
-
+          <div class="flex">
+            <div class="phone">
+              <div class="block-holder">
+                <i class="fa fa-phone"></i>
+                <div class="data">
+                  <div class="h">Központi telefon:</div>
+                  <div class="v"><a href="tel:<?=$this->settings['page_author_phone']?>"><?=$this->settings['page_author_phone']?></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="email">
+              <div class="block-holder">
+                <i class="fa fa-envelope-o"></i>
+                <div class="data">
+                  <div class="h">E-mail:</div>
+                  <div class="v"><a href="mailto:<?=$this->settings['primary_email']?>"><?=$this->settings['primary_email']?></a></div>
+                </div>
+              </div>
+            </div>
+            <div class="address">
+              <div class="block-holder">
+                <i class="fa fa-map-marker"></i>
+                <div class="data">
+                  <div class="h">Cím:</div>
+                  <div class="v"><?=$this->settings['page_author_address']?></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="ugyintezes">
           <div class="block-holder">
