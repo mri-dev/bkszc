@@ -1,11 +1,6 @@
-
-	<?php if ( !$this->homepage ): ?>
-		</div> <!-- .inside-content -->
-		<div class="clr"></div>
-		</div><!-- #main -->
-		<div class="clr"></div>
-	</div><!-- website -->
-	<?php endif; ?>
+		<? $this->render('templates/sidebar'); ?>
+		</div> <!-- .pw -->
+	</div> <!-- .content-wrapper -->
 
 	<footer>
 		<div class="info">
@@ -49,7 +44,7 @@
 						</div>
 					</div>
 				</div>
-			</div>			
+			</div>
 			<div class="bottom">
 				<div class="pw">
 					Minden jog fenntartva &nbsp; 2016 &copy; <span class="author"><?=$this->settings['page_author']?></span> &mdash; <?=$this->settings['page_description']?> | Fejlesztette: <a href="https://www.web-pro.hu" target="_blank">www.web-pro.hu</a>

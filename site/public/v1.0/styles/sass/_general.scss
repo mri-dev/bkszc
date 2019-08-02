@@ -26,8 +26,9 @@ footer, header, hgroup, menu, nav, section {
 	}
 body {
 	line-height: 1;
+	font-size: 1.4rem;
 	color: #333333;
-	background: #efefef;
+	background: #fbfbfb;
 }
 ol, ul {
 	list-style: none;
@@ -168,7 +169,7 @@ hr {
 body, html {
 	font-family: $font-sans-narrow;
 	font-weight: 400;
-	font-size: 0.9em;
+	font-size: 0.9rem;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0);
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;

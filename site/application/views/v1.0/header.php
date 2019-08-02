@@ -167,12 +167,5 @@
   </div>
   <?php endif; ?>
 </header>
-<?php if ( !$this->homepage ): ?>
-<!-- Content View -->
-<div class="website">
-		<?=$this->gmsg?>
-		<div class="general-sidebar"></div>
-		<div class="site-container <?=($this->gets[0]=='termek' )?'productview':''?>">
-			<div class="clr"></div>
-			<div class="inside-content">
-<?php endif; ?>
+<div class="page-wrapper">
+  <div class="pw">
