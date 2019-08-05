@@ -47,7 +47,7 @@
 			</div>
 			<div class="bottom">
 				<div class="pw">
-					Minden jog fenntartva &nbsp; 2016 &copy; <span class="author"><?=$this->settings['page_author']?></span> &mdash; <?=$this->settings['page_description']?> | Fejlesztette: <a href="https://www.web-pro.hu" target="_blank">www.web-pro.hu</a>
+					Minden jog fenntartva &nbsp; 2016 &copy; <span class="author"><?=$this->settings['page_author']?></span> &mdash; <?=$this->settings['page_description']?>
 				</div>
 			</div>
 		</div>
