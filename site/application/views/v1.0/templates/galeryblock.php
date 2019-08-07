@@ -15,7 +15,7 @@
     </div>
     <div class="image autocorrett-height-by-width" data-image-ratio="1:1">
       <div class="wrapper">
-        <a href="#"><img src="http://cp.bkszc.web-pro.hu//src/uploads/boritokepek/home-borito.jpg" alt=""></a>
+        <a href="#"><img src="http://cp.bkszc.ideasandbox.eu//src/uploads/boritokepek/home-borito.jpg" alt=""></a>
       </div>
     </div>
   </div>

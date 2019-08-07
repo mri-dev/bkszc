@@ -17,10 +17,11 @@ class Menus
 	// Elérhető menü típusok
 	private $allowed_menu_type = array(
 		'url' 							=> 'URL',
-		'kategoria_link' 				=> 'Kategória link',
-		'kategoria_alkategoria_lista' 	=> 'Kategória alkategória lista',
-		'oldal_link' 					=> 'Oldal link',
-		'template' 						=> 'Előformázott tartalom'
+		//'kategoria_link' => 'Kategória link',
+		//'kategoria_alkategoria_lista' 	=> 'Kategória alkategória lista',
+		'cikk_kategoria_link' => 'Cikk kategória link',
+		'oldal_link' => 'Oldal link',
+		'template' => 'Előformázott tartalom'
 	);
 	public $tree = false;
 	private $current_item = false;
@@ -91,6 +92,12 @@ class Menus
 				}
 				$elem_id = $data['page_elem_id'];
 				break;
+			case 'cikk_kategoria_link':
+				if(	!$data['cikkcat_elem_id'] ) {
+					throw new \Exception("Kérjük, hogy válassza ki a <strong>kapcsolódó cikk kategóriát</strong> a listából!");
+				}
+				$elem_id = $data['cikkcat_elem_id'];
+				break;
 			case 'template':
 				if(	!$data['data_value'] ) {
 					throw new \Exception("Kérjük, hogy adja meg a <strong>a template azonosító kulcsát</strong>!");
@@ -160,6 +167,12 @@ class Menus
 					throw new \Exception("Kérjük, hogy válassza ki a <strong>kapcsolódó oldalt</strong> a listából!");
 				}
 				$elem_id = $data['page_elem_id'];
+				break;
+			case 'cikk_kategoria_link':
+				if(	!$data['cikkcat_elem_id'] ) {
+					throw new \Exception("Kérjük, hogy válassza ki a <strong>kapcsolódó cikk kategóriát</strong> a listából!");
+				}
+				$elem_id = $data['cikkcat_elem_id'];
 				break;
 			case 'template':
 				if(	!$data['data_value'] ) {
@@ -383,6 +396,23 @@ class Menus
 					$link = DOMAIN.'termekek/'.\PortalManager\Formater::makeSafeUrl($kat['neve'],'_-'.$item['elem_id']);
 
 					$item['link'] 	= $link;;
+				} else {
+					$item['nev'] = ($item['nev'] ?: ($kat['szulo_neve'] ? $kat['szulo_neve'] .' / ' : '').$kat['neve']).' <span class="menu-type-prefix">(Kiválasztott kategória: <a title="kategória szerkesztése" href=\'/kategoriak/szerkeszt/'.$item['elem_id'].'\'>'.($kat['szulo_neve'] ? $kat['szulo_neve'].' / ' : '').$kat['neve'].'</a>)</span>';
+				}
+
+				break;
+			case 'cikk_kategoria_link':
+				$kat = $this->db->query(sprintf("
+					SELECT
+						k.neve,
+						k.slug as cat_slug
+					FROM cikk_kategoriak as k
+					WHERE	k.ID = %d", $item['elem_id']))->fetch(\PDO::FETCH_ASSOC);
+
+				if( $this->final ) {
+					$item['nev'] = ($item['nev'] ?: $kat['neve']);
+					$link = DOMAIN.'cikkek/kategoriak/'.$kat['cat_slug'];
+					$item['link'] 	= $link;
 				} else {
 					$item['nev'] = ($item['nev'] ?: ($kat['szulo_neve'] ? $kat['szulo_neve'] .' / ' : '').$kat['neve']).' <span class="menu-type-prefix">(Kiválasztott kategória: <a title="kategória szerkesztése" href=\'/kategoriak/szerkeszt/'.$item['elem_id'].'\'>'.($kat['szulo_neve'] ? $kat['szulo_neve'].' / ' : '').$kat['neve'].'</a>)</span>';
 				}

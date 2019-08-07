@@ -1,4 +1,8 @@
-		<? $this->render('templates/sidebar'); ?>
+		<?php if ($this->gets[0] == 'cikkek'): ?>
+			<? $this->render('templates/sidebar_cikkek'); ?>
+		<?php else: ?>
+			<? $this->render('templates/sidebar'); ?>
+		<?php endif; ?>
 		</div> <!-- .pw -->
 	</div> <!-- .content-wrapper -->
 

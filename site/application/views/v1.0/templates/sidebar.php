@@ -9,7 +9,7 @@
         <?php for ($i=0; $i < 4 ; $i++) { ?>
         <div class="logo">
           <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
-            <a href="#"><img src="http://cp.bkszc.web-pro.hu//src/uploads/boritokepek/home-borito.jpg" alt=""></a>
+            <a href="#"><img src="http://cp.bkszc.ideasandbox.eu//src/uploads/boritokepek/home-borito.jpg" alt=""></a>
           </div>
         </div>
         <?php } ?>

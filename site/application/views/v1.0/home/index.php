@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="image">
-            <img src="http://cp.bkszc.web-pro.hu//src/uploads/boritokepek/home-borito.jpg" alt="">
+            <img src="http://cp.bkszc.ideasandbox.eu//src/uploads/boritokepek/home-borito.jpg" alt="">
           </div>
         </div>
       </article>
