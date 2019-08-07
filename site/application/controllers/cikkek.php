@@ -15,18 +15,12 @@ class cikkek extends Controller{
 		$title = 'Bejegyzéseink';
 		$description = $this->view->settings['page_title'].' friss bejegyzései. Kövesd oldalunkat és tájékozódj az újdonságokról!';
 		$cikkroot = '/cikkek/';
-		$is_archiv = (isset($_GET['archiv'])) ? true : false;
-		if ($is_archiv) {
-			$cikkroot = '/archivum/';
-		}
+		$is_archiv = false;
 
 		$news = new News( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
 		$catarg = array();
-		if ($is_archiv) {
-			$catarg['archiv'] = true;
-		}
 		if (isset($_GET['src']) && !empty($_GET['src'])) {
 			$catarg['search'] = trim($_GET['src']);
 		}
@@ -66,12 +60,9 @@ class cikkek extends Controller{
 		} else {
 			$cat_slug =  trim($_GET['cat']);
 
-			if ($is_archiv || true)
-			{
-				// Archív dátumok betöltése
-				$archive_dates = $news->getArchiveDates();
-				$this->out('archive_dates', $archive_dates);
-			}
+			// archív dátumok
+			$archive_dates = $news->getArchiveDates();
+			$this->out('archive_dates', $archive_dates);
 
 			// Kategória adatok
 			$catdata = $this->db->squery("SELECT ID, neve FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
@@ -97,12 +88,8 @@ class cikkek extends Controller{
 				'in_cat' => $cat_id,
 				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
 			);
-			if ($is_archiv) {
-				$arg['only_archiv'] = true;
-			} else {
-				$arg['hide_archiv'] = true;
-			}
-			if ($is_archiv && isset($_GET['date'])) {
+
+			if (isset($_GET['date'])) {
 				$arg['on_date'] = $_GET['date'];
 			}
 			if (isset($_GET['src']) && !empty($_GET['src'])) {
