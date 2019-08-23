@@ -1675,23 +1675,197 @@ header .header-img.has-text.noimage .htitle {
 }
 
 /* line 1110, sass/_base.scss */
+.programnaptar-holder .sbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+/* line 1117, sass/_base.scss */
+.programnaptar-holder .sbar > div {
+  flex-basis: calc(100% / 2);
+  background: #e6e6e6;
+  padding: 10px;
+  color: #4e4e4e;
+  font-size: 0.7rem;
+  text-align: center;
+  border: 0.5px solid #d9d9d9;
+  transition: all .7s;
+}
+/* line 1127, sass/_base.scss */
+.programnaptar-holder .sbar > div:hover, .programnaptar-holder .sbar > div.wbg {
+  background: #167ba0;
+  color: white;
+  cursor: pointer;
+}
+/* line 1134, sass/_base.scss */
+.programnaptar-holder .sbar > .unique-date {
+  order: 10;
+  flex-basis: 100%;
+}
+/* line 1137, sass/_base.scss */
+.programnaptar-holder .sbar > .unique-date.wbg {
+  position: relative;
+}
+/* line 1139, sass/_base.scss */
+.programnaptar-holder .sbar > .unique-date.wbg:after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  border-width: 10px;
+  border-style: solid;
+  border-color: #167ba0 transparent transparent transparent;
+  background: transparent;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+/* line 1154, sass/_base.scss */
+.programnaptar-holder .sel-dates {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  padding: 5px;
+  background: #01a3de;
+}
+/* line 1163, sass/_base.scss */
+.programnaptar-holder .sel-dates > .div {
+  flex-basis: 40px;
+  text-align: center;
+  color: white;
+}
+/* line 1170, sass/_base.scss */
+.programnaptar-holder .sel-dates > .start, .programnaptar-holder .sel-dates > .end {
+  flex-basis: calc((100% - 40px) / 2 );
+}
+/* line 1173, sass/_base.scss */
+.programnaptar-holder .sel-dates > .start input[type=date], .programnaptar-holder .sel-dates > .end input[type=date] {
+  font-weight: bold;
+  text-align: center;
+  color: black;
+  padding: 0 !important;
+  border: none;
+  border-radius: 10px;
+}
+/* line 1181, sass/_base.scss */
+.programnaptar-holder .sel-dates > .start input[type=date]:focus, .programnaptar-holder .sel-dates > .start input[type=date]:active, .programnaptar-holder .sel-dates > .end input[type=date]:focus, .programnaptar-holder .sel-dates > .end input[type=date]:active {
+  outline: none;
+}
+/* line 1185, sass/_base.scss */
+.programnaptar-holder .sel-dates > .start input[type=date]:disabled, .programnaptar-holder .sel-dates > .end input[type=date]:disabled {
+  color: #dbdbdb;
+  background: none;
+}
+/* line 1194, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar > span {
+  border: 0.5px solid #ededed;
+  border-radius: 0;
+}
+/* line 1199, sass/_base.scss */
+.programnaptar-holder .md-whiteframe-1dp, .programnaptar-holder .md-whiteframe-z1 {
+  box-shadow: none !important;
+}
+/* line 1202, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__month-year {
+  background: none;
+}
+/* line 1206, sass/_base.scss */
+.programnaptar-holder .layout-margin,
+.programnaptar-holder .layout-margin > * {
+  margin: 0 !important;
+}
+/* line 1209, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar-wrapper {
+  width: 100%;
+  max-width: 100%;
+  background: #f5f5f5;
+}
+/* line 1215, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar,
+.programnaptar-holder .md-date-range-picker__week {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+/* line 1222, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar > span.md-date-range-picker__calendar__grid,
+.programnaptar-holder .md-date-range-picker__week > span.md-date-range-picker__calendar__grid {
+  flex-basis: calc(100% / 7);
+}
+/* line 1227, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__week {
+  background: none;
+}
+/* line 1230, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__week .md-date-range-picker__calendar__grid {
+  font-weight: 300;
+  color: #ffffff !important;
+}
+/* line 1235, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__week > span {
+  background: #01a3de;
+  border-radius: 4px 4px 0 0;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+  line-height: 1;
+  padding: 8px 0;
+  height: auto;
+}
+/* line 1244, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__week > span:nth-child(even) {
+  background: #0072c5;
+}
+/* line 1247, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__week > span:nth-child(6) {
+  background: #97ac23;
+}
+/* line 1250, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__week > span:nth-child(7) {
+  background: #e31e24;
+}
+/* line 1254, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar__grid {
+  background: white;
+}
+/* line 1257, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar__selected {
+  background: #0072c5;
+  border: 0.5px solid #005492 !important;
+}
+/* line 1261, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar__grid.md-date-range-picker__calendar__today {
+  background: #2fb571 !important;
+  color: white;
+}
+/* line 1265, sass/_base.scss */
+.programnaptar-holder .md-date-range-picker__calendar .md-date-range-picker__calendar__grid:hover:not(.md-date-range-picker__calendar__selected):not(.md-date-range-picker__calendar__disabled) {
+  background: #01aae8;
+  color: white;
+}
+
+/* line 1272, sass/_base.scss */
 footer .info {
   background: #f5f5f5;
 }
-/* line 1113, sass/_base.scss */
+/* line 1275, sass/_base.scss */
 footer .info .top {
   padding: 15px 0;
 }
-/* line 1116, sass/_base.scss */
+/* line 1278, sass/_base.scss */
 footer .info .top > .pw > .flex {
   justify-content: space-between;
   align-items: center;
 }
-/* line 1121, sass/_base.scss */
+/* line 1283, sass/_base.scss */
 footer .info .top .links {
   font-size: 1rem;
 }
-/* line 1123, sass/_base.scss */
+/* line 1285, sass/_base.scss */
 footer .info .top .links ul {
   margin: 0 -15px 20px -15px;
   display: -webkit-box;
@@ -1701,7 +1875,7 @@ footer .info .top .links ul {
   justify-content: center;
   align-items: center;
 }
-/* line 1132, sass/_base.scss */
+/* line 1294, sass/_base.scss */
 footer .info .top .links ul li a {
   padding: 5px 15px;
   font-size: 1.2rem;
@@ -1709,11 +1883,11 @@ footer .info .top .links ul li a {
   color: black;
   text-decoration: none;
 }
-/* line 1139, sass/_base.scss */
+/* line 1301, sass/_base.scss */
 footer .info .top .links ul li a:hover {
   color: #01a3de;
 }
-/* line 1148, sass/_base.scss */
+/* line 1310, sass/_base.scss */
 footer .info .bottom {
   background: #3d4ca7;
   color: white;
@@ -1721,11 +1895,11 @@ footer .info .bottom {
   padding: 15px;
   font-size: 0.75rem;
 }
-/* line 1155, sass/_base.scss */
+/* line 1317, sass/_base.scss */
 footer .info .bottom a:link, footer .info .bottom a:visited {
   color: white;
 }
-/* line 1158, sass/_base.scss */
+/* line 1320, sass/_base.scss */
 footer .info .bottom a:hover {
   color: #01a3de;
 }

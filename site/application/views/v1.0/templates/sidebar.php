@@ -1,6 +1,6 @@
 <div class="sidebar-holder">
   <div class="sidebar-block naptar-block">
-    Naptár
+    <?php $this->render('templates/programnaptar') ?>
   </div>
   <div class="sidebar-block partner-list">
     <h3>Támogatóink - Partnereink</h3>
