@@ -782,6 +782,7 @@ header {
 }
 .sidebar-holder{
   flex-basis: $size-sidebar;
+	margin-top: -74px;
   .sidebar-block + .sidebar-block {
     margin: 15px 0 0 0;
   }
@@ -1113,6 +1114,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+		margin: 0 0 10px 0;
 
 		& > div {
 			flex-basis: calc(100% / 2);
@@ -1125,7 +1127,7 @@ header {
 			transition: all .7s;
 
 			&:hover, &.wbg{
-				background: #167ba0;
+				background: #33c7eb;
 				color: white;
 				cursor: pointer;
 			}
@@ -1142,7 +1144,7 @@ header {
 					bottom: -20px;
 					border-width: 10px;
 					border-style: solid;
-					border-color: #167ba0 transparent transparent transparent;
+					border-color: #33c7eb transparent transparent transparent;
 					background: transparent;
 					left: 50%;
 					-webkit-transform: translateX(-50%);
@@ -1157,8 +1159,12 @@ header {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    padding: 5px;
-		background: $color-blue-light;
+    padding: 40px 5px 5px 5px;
+		background-color: #33c7eb;
+		background-image: url('#{$imgroot}calendar-top-design.svg');
+		background-repeat: repeat-x;
+		background-position: top center;
+		background-size: 45.6px;
 
     & > .div{
       flex-basis: 40px;
@@ -1254,18 +1260,152 @@ header {
 	.md-date-range-picker__calendar__grid{
 		background: white;
 	}
+	.md-date-range-picker__calendar__grid.have-item-on-this-date{
+		background: #f59c00;
+		color: white;
+		border-radius: 50px;
+	}
   .md-date-range-picker__calendar__selected{
     background: $color-blue;
 		border: 0.5px solid darken($color-blue,10%) !important;
+		border-radius: 0 !important;
   }
 	.md-date-range-picker__calendar__grid.md-date-range-picker__calendar__today{
 		background: #2fb571 !important;
 		color: white;
 	}
+	.md-date-range-picker__calendar__selected.have-item-on-this-date{
+		background: #f56b00 !important;
+	}
   .md-date-range-picker__calendar .md-date-range-picker__calendar__grid:hover:not(.md-date-range-picker__calendar__selected):not(.md-date-range-picker__calendar__disabled){
     background: lighten($color-blue-light, 2%);
 		color: white;
   }
+
+	.programs-list{
+		background: #f1f1f1;
+		.loading{
+			background: $color-green;
+			color: white;
+			padding: 10px;
+			text-align: center;
+		}
+		& > .wrapper{
+			padding: 0;
+
+			.events{
+				.event{
+					& > .wrapper{
+						.eventdata{
+							.dateplace{
+								background: #606060;
+						    color: white;
+						    padding: 10px;
+							}
+							.title{
+								padding: 10px;
+
+								h4{
+									font-weight: bold;
+									margin: 0 0 4px 0;
+								}
+
+								.desc{
+									font-weight: 300;
+								}
+							}
+						}
+					}
+
+				}
+				.event + .event {
+					margin: 10px 0 0 0;
+				}
+			}
+		}
+	}
+}
+
+.naptar-slide-block{
+	display: table;
+  table-layout: fixed;
+  width: 100%;
+	.slick-prev, .slick-next{
+		background: #e2e0e0;
+    height: 74px;
+		z-index: 100;
+
+		&:hover{
+			background: $color-blue-light;
+		}
+		&:hover:before{
+			color: white;
+		}
+	}
+	.slick-prev:before, .slick-next:before{
+		color: black;
+		font-size: 2rem;
+		font-family: 'FontAwesome';
+	}
+	.slick-prev{
+		left: 0;
+	}
+	.slick-prev:before{
+		content:"\f104";
+	}
+	.slick-next{
+		right: 0;
+	}
+	.slick-next:before{
+		content:"\f105";
+	}
+	& > .wrapper{
+		margin: 0 !important;
+		background: #f1f1f1;
+		.event{
+			padding: 0 20px;
+			max-height: 74px;
+			& > .wrapper{
+				background: #f1f1f1;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				flex-wrap: nowrap;
+				align-items: center;
+
+				& > .date{
+					flex-basis: 30%;
+					background: $color-blue-dark;
+					color: white;
+					text-align: center;
+					padding: 10px;
+			    font-weight: 300;
+					line-height: 1.2;
+			    font-size: 1.2rem;
+
+					.month{
+						font-weight: bold;
+						font-size: 0.82rem;
+					}
+				}
+				& > .evdata{
+					flex: 1;
+					max-height: 74px;
+					overflow: hidden;
+					.title{
+						font-weight: bold;
+						color: black;
+						text-transform: uppercase;
+						padding: 5px 10px;
+						a{
+							color: black;
+							text-decoration: none;
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 footer{

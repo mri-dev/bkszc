@@ -139,27 +139,6 @@ app.controller('Programs', ['$scope', '$http', '$mdToast', '$mdDialog', '$httpPa
 
   $scope.init = function(){
     $scope.syncCalendarItems();
-    $scope.pickAItem();
-  }
-
-  $scope.pickAItem = function() {
-    var dstart = new Date();
-    var dstartformat = dstart.getFullYear()+'-'+ ('0' + (dstart.getMonth()+1)).slice(-2) +'-'+ ('0' + dstart.getDate()).slice(-2);
-
-    $http({
-      method: 'POST',
-      url: '/ajax/post',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      data: $httpParamSerializerJQLike({
-        type: 'Calendar',
-        mode: 'pickItem',
-        datestart: dstartformat,
-        kiemelt: 1,
-        limit: 1
-      })
-    }).success(function(r){
-      $scope.kiemelt_program = r.data[0];
-    });
   }
 
   $scope.syncCalendarItems = function() {

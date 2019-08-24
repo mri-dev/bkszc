@@ -12,6 +12,7 @@
 <?=$this->addStyle('media', 'media="all"', false)?>
 <link rel="stylesheet" type="text/css" href="<?=JS?>fancybox/jquery.fancybox.css?v=2.1.4" media="all" />
 <link rel="stylesheet" type="text/css" href="<?=JS?>fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" />
+<link rel="stylesheet" type="text/css" href="<?=JS?>slick/slick-theme.css"/>
 <link rel="stylesheet" type="text/css" href="<?=JS?>slick/slick.css"/>
 <link rel="stylesheet" type="text/css" href="<?=JS?>md-date-range-picker/md-date-range-picker.min.css"/>
 <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.css" />
@@ -46,7 +47,7 @@
 
 <script type="text/javascript" src="/src/vendors/autocomplete/scripts/jquery.mockjax.js"></script>
 <script type="text/javascript" src="/src/vendors/autocomplete/dist/jquery.autocomplete.min.js"></script>
-<script type="text/javascript" src="<?=JS?>md-date-range-picker/md-date-range-picker.min.js"></script>
+<script type="text/javascript" src="/src/vendors/md-date-range-picker/md-date-range-picker.js"></script>
 <script type="text/javascript" src="/src/vendors/angular-timer/dist/assets/js/angular-timer-all.min.js"></script>
 
 <script type="text/javascript" src="<?=JS?>slick/slick.min.js"></script>

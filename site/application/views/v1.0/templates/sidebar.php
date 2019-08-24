@@ -1,4 +1,7 @@
 <div class="sidebar-holder">
+  <div class="sidebar-block naptar-slide-block">
+    <?php $this->render('templates/programnaptarslide') ?>
+  </div>
   <div class="sidebar-block naptar-block">
     <?php $this->render('templates/programnaptar') ?>
   </div>

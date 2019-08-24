@@ -37,6 +37,7 @@ class Controller {
         Helper::setMashineID();
         $this->gets = Helper::GET();
         setlocale(LC_ALL, "hu_HU");
+        setlocale(LC_TIME, 'hu_HU');
         //$this->memory_usage();
 
         // CORE

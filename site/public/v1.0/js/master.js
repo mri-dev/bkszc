@@ -657,10 +657,10 @@ function searchFilters(){
 		} );
 	});
 
-	getCartInfo(function(e){
+	/*getCartInfo(function(e){
 		refreshCart(e);
 		buildCartItems(e);
-	});
+	});*/
 }
 function buildCartItems(c){
 	var i = c.items;

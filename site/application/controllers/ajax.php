@@ -1,12 +1,5 @@
 <?
-use ShopManager\Cart;
-use Applications\Cetelem;
-use PortalManager\CasadaShop;
-use PopupManager\Creative;
-use PopupManager\CreativeScreens;
-use ProductManager\Products;
-use PortalManager\Vehicles;
-use SzallasManager\SzallasList;
+use PortalManager\Programs;
 
 class ajax extends Controller{
 		function __construct()
@@ -24,7 +17,21 @@ class ajax extends Controller{
 			switch($type)
 			{
 				case 'Calendar':
-					
+					$calendar = new Programs(false, array('db' => $this->db));
+					$ret['pass'] = $_POST;
+
+					switch($mode){
+						case 'syncCalndarItems':
+							$arg = array();
+							$arg['datestart'] = $_POST['datestart'];
+							$arg['dateend'] = $_POST['dateend'];
+							$data = $calendar->getCalanderItems( $arg );
+							//$ret['data'] = $data;
+							$ret['data'] = $data['data'];
+							$ret['dates'] = $data['dates'];
+						break;
+					}
+
 				break;
 				case 'log':
 					switch($mode){
