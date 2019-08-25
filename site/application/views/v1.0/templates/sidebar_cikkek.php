@@ -2,6 +2,7 @@
   <div class="sidebar-block">
     <h3>Legutóbbi bejegyzések</h3>
   </div>
+  <div class="divider"></div>
   <div class="sidebar-block">
     <h3>Kategóriák</h3>
     <div class="list">
@@ -10,18 +11,19 @@
       </div>
       <?php foreach ( (array)$this->newscats as $nc ): if($this->is_archiv && in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs)) continue; ?>
       <div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-        <a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
+        <a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?>kategoriak/<?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"> > <?=$nc['neve']?> <span class="cnt">(<?=$nc['postc']?>)</span></a>
       </div>
       <?php if (!empty($nc['children'])): ?>
         <?php foreach ($nc['children'] as $nc): ?>
         <div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-          <a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
+          <a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?>kategoriak/<?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>">> <?=$nc['neve']?> <span class="cnt">(<?=$nc['postc']?>)</span></a>
         </div>
         <?php endforeach; ?>
       <?php endif; ?>
       <?php endforeach; ?>
     </div>
   </div>
+  <div class="divider"></div>
   <div class="sidebar-block">
     <h3>Archívum</h3>
     <?php if (true): ?>

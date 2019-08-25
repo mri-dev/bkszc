@@ -1,3 +1,6 @@
+<div class="articles-header">
+	<h1><?=$this->head_img_title?></h1>
+</div>
 <div class="news-page<?=($this->is_archiv)?' archive-list':''?>">
 		<? if( $this->news ):
 			$arg = $this->news->getFullData();
@@ -9,82 +12,43 @@
 		<? echo $this->template->get( 'hir-olvas',  $arg ); ?>
 		<? else: ?>
 		<div class="news-list">
-			<div class="pw">
-				<div class="categories sidebar">
-					<?php if ($this->is_archiv): ?>
-					<div class="backurl">
-						<a href="/cikkek/">vissza az aktív bejegyzésekhez</a>
-					</div>
-					<div class="clr"></div>
-					<br>
-					<?php endif; ?>
-					<h2>Kategóriák</h2>
-					<div class="list">
-						<div class="cat <?=($_GET['cat'] == '')?'active':''?>">
-							<a href="<?=$this->cikkroot?>"><span class="dot" style="color:black;"></span> Összes bejegyzés</a>
-						</div>
-						<?php foreach ( (array)$this->newscats as $nc ): if($this->is_archiv && in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs)) continue; ?>
-						<div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-							<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
-						</div>
-						<?php if (!empty($nc['children'])): ?>
-							<?php foreach ($nc['children'] as $nc): ?>
-							<div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-								<a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?><?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"><span class="dot" style="color:<?=$nc['bgcolor']?>;"></span> <?=$nc['neve']?> <span class="badge"><?=$nc['postc']?></span></a>
-							</div>
-							<?php endforeach; ?>
-						<?php endif; ?>
-						<?php endforeach; ?>
-					</div>
-
-					<?php if ($this->is_archiv && !empty($this->archive_dates)): ?>
-					<h2>Archívum</h2>
-					<div class="list">
-						<div class="cat <?=($_GET['date'] == '')?'active':''?>">
-							<a href="<?=$this->cikkroot?>">Összes</a>
-						</div>
-						<?php foreach ((array)$this->archive_dates as $nc): ?>
-						<div class="cat <?=($_GET['date'] == ($nc['date']))?'active':''?>">
-							<a href="<?=$this->cikkroot.'date/'.$nc['date'].'/1'?>"><?=$nc['datef']?> <span class="badge"><?=$nc['posts']?></span></a>
-						</div>
-						<?php endforeach; ?>
-					</div>
-					<?php endif; ?>
+			<?php if (isset($_GET['src']) && !empty($_GET['src'])): ?>
+				<div class="search-for">
+				 <i class="fa fa-search"></i> Keresés, mint: <?php foreach (explode(" ", $_GET['src']) as $src): ?><span><?=$src?></span><?php endforeach; ?>
 				</div>
-				<div class="art-list">
-					<?php if (isset($_GET['src']) && !empty($_GET['src'])): ?>
-            <div class="search-for">
-             <i class="fa fa-search"></i> Keresés, mint: <?php foreach (explode(" ", $_GET['src']) as $src): ?><span><?=$src?></span><?php endforeach; ?>
-            </div>
-          <?php endif; ?>
-					<div class="articles">
-						<?
-						$step = 0;
-						if ($this->list->tree_items > 0)
-						{
-							while ( $this->list->walk() ) {
-								$step++;
-								$arg = $this->list->the_news();
-								$arg['categories'] = $this->list->getCategories();
-								$arg['date_format'] = $this->settings['date_format'];
-								$arg['newscats'] = $this->newscats;
-					      $read_prefix = (isset($_GET['cat']) && $_GET['cat'] != '') ? $_GET['cat'] : 'olvas';
-								$arg['url'] = $this->list->getUrl($read_prefix, true);
+			<?php endif; ?>
 
+			<div class="news-block">
+				<div class="holder">
+					<?php if ( $this->list->tree_items > 0 ): ?>
+						<div class="news-group articles<?=($this->current_page <= 1)?' pageone':''?>">
+						<?php
+						$step = 0;
+						while ( $this->list->walk() ) {
+							$step++;
+							$arg = $this->list->the_news();
+							$arg['categories'] = $this->list->getCategories();
+							$arg['date_format'] = $this->settings['date_format'];
+							$arg['newscats'] = $this->newscats;
+				      $read_prefix = (isset($_GET['cat']) && $_GET['cat'] != '') ? $_GET['cat'] : 'olvas';
+							$arg['url'] = $this->list->getUrl($read_prefix, true);
+
+							if ($this->current_page <= 1 && $step == 1) {
+								echo $this->template->get( 'hir-newest', $arg );
+							} else {
 								echo $this->template->get( 'hir', $arg );
 							}
-						} else {
-							?>
-							<div class="no-news">
-								<h3>Nincsenek cikkek.</h3>
-								A keresési feltételek alapján nem találtunk bejegyzéseket.
-							</div>
-							<?
 						}
 						?>
-					</div>
-					<?=($this->list->tree_items > 0)?$this->navigator:''?>
+						</div>
+					<?php else: ?>
+						<div class="no-news">
+							<h3>Nincsenek cikkek.</h3>
+							A keresési feltételek alapján nem találtunk bejegyzéseket.
+						</div>
+					<?php endif; ?>
 				</div>
+				<?=($this->list->tree_items > 0)?$this->navigator:''?>
 			</div>
 		</div>
 		<? endif; ?>

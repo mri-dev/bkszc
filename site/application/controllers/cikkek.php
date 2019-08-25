@@ -82,12 +82,14 @@ class cikkek extends Controller{
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			}
 
+
 			$arg = array(
 				'limit' => 12,
 				'hide_offline' => true,
 				'in_cat' => $cat_id,
-				'page' => (isset($_GET['page'])) ? (int)$_GET['page'] : 1,
+				'page' => (isset($_GET['page'])) ? (int)str_replace('P','', $_GET['page']) : 1,
 			);
+			$this->out('current_page', $arg['page']);
 
 			if (isset($_GET['date'])) {
 				$arg['on_date'] = $_GET['date'];
@@ -98,15 +100,15 @@ class cikkek extends Controller{
 
 			$this->out( 'list', $news->getTree( $arg ) );
 
-			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
+			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.'/kategoriak'.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
 
 			$this->out( 'navigator', (new Pagination(array(
-					'class' 	=> 'pagination pagination-sm center',
-					'current' 	=> $news->getCurrentPage(),
-					'max' 		=> $news->getMaxPage(),
-					'root' => $navroot,
-					'item_limit'=> 12
-				)))->render() );
+				'class' 	=> 'pagination pagination-sm center',
+				'current' 	=> $news->getCurrentPage(),
+				'max' 		=> $news->getMaxPage(),
+				'root' => $navroot,
+				'item_limit'=> 12
+			)))->render() );
 		}
 
 		$this->out( 'cikkroot', $cikkroot );

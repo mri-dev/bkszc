@@ -1,4 +1,5 @@
-<article class="news <?=($belyeg_kep == '')?'no-img':''?>">
+<article class="news newest <?=($belyeg_kep == '')?'no-img':''?>">
+  <h2><div class="cit"><i class="fa fa-clock-o style-red"></i> Legfrissebb</div><div class="fakeline"></div></h2>
   <div class="wrapper">
     <?php if (false): $belyeg_kep = ($belyeg_kep == '') ? IMG.'no-image.png' : \PortalManager\Formater::sourceImg($belyeg_kep); ?>
     <div class="img __autocorrett-height-by-width" data-image-ratio="1:1">
@@ -18,4 +19,5 @@
   	<div class="navlinks"><a href="<?php echo $url; ?>">Bővebben <i class="fa fa-angle-right"></i></a></div>
   	<div class="clr"></div>
   </div>
+  <h2><div class="cit"><i class="fa fa-clock-o style-green"></i> További cikkek</div><div class="fakeline"></div></h2>
 </article>
