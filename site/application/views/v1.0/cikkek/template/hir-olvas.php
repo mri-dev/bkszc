@@ -16,7 +16,7 @@
 			<div class="share">
 				<div class="fb-like" data-href="<?=DOMAIN?>cikkek/<?=$eleres?>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
 			</div>
-			<div class="date"><i class="fa fa-clock-o"></i> <?=substr(\PortalManager\Formater::dateFormat($letrehozva, $date_format),0,-6)?></div>
+			<div class="date" title="Bejegyzés közzétéve"><i class="fa fa-clock-o"></i> <?=substr(\PortalManager\Formater::dateFormat($letrehozva, $date_format),0,-6)?></div>
 			<div class="nav">
 				<ul class="cat-nav">
 					<li><a href="/"><i class="fa fa-home"></i></a></li>
