@@ -572,6 +572,10 @@ class News
 	{
 		return $this->current_get_item['ID'];
 	}
+  public function getDefaultCatID()
+  {
+    return (int)$this->current_get_item['default_cat'];
+  }
 	public function getTitle()
 	{
 		return $this->current_get_item['cim'];
@@ -687,7 +691,7 @@ class News
     FROM cikk_kategoriak as c
     WHERE
       1=1 ";
-    if (isset($arg['usetree'])) {
+    if (isset($arg['usetree']) && !isset($arg['childof'])) {
       $q .= " and c.deep = 0 ";
     }
     if (isset($arg['childof'])) {
@@ -709,7 +713,9 @@ class News
 				$d['label'] = '<span class="cat-label" style="background-color:'.$d['bgcolor'].';">'.$d['neve'].'</span>';
         $passarg = $arg;
         $passarg['childof'] = $d['ID'];
-        $d['children'] = $this->categoryList($passarg);
+        if (isset($arg['usetree']) && $arg['usetree'] === true) {
+          $d['children'] = $this->categoryList($passarg);
+        }
 				$bdata[$d['slug']] = $d;
 			}
 			unset($data);

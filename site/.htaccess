@@ -13,7 +13,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^cikkek(/)?kategoriak(/)?([0-9a-zA-Z_-]+)(/)?(P[0-9]+)?$ index.php?tag=cikkek&list=1&cat=$3&page=$5 [QSA,L]
+RewriteRule ^cikkek(/)?kategoriak(/)?([\.0-9a-zA-Z_-]+)(/)?(P[0-9]+)?$ index.php?tag=cikkek&list=1&cat=$3&page=$5 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -61,7 +61,7 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^kapcsolat(/)?$ index.php?tag=p/kapcsolat [QSA,L]
+RewriteRule ^kapcsolat(/)?$ index.php?tag=cikkek&reader=1&cikk=elerhetoseg [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

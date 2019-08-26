@@ -4,23 +4,31 @@
   </div>
   <div class="divider"></div>
   <div class="sidebar-block">
+    <?php if ($this->currentcat): ?>
+    <h3><strong><?=$this->currentcat['name']?></strong> alkategóriák</h3>
+    <?php else: ?>
     <h3>Kategóriák</h3>
+    <?php endif; ?>
     <div class="list">
       <div class="cat <?=($_GET['cat'] == '')?'active':''?>">
         <a href="<?=$this->cikkroot?>"><span class="dot" style="color:black;"></span> Összes bejegyzés</a>
       </div>
+      <?php if ($this->parent_cat): ?>
+        <div class="backtoparent cat">
+          <a href="/cikkek/kategoriak/<?=$this->parent_cat['slug']?>">< vissza: <strong><?=$this->parent_cat['name']?></strong>  </a>
+        </div>
+      <?php endif; ?>
+
       <?php foreach ( (array)$this->newscats as $nc ): if($this->is_archiv && in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs)) continue; ?>
       <div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
         <a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?>kategoriak/<?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>"> > <?=$nc['neve']?> <span class="cnt">(<?=$nc['postc']?>)</span></a>
       </div>
-      <?php if (!empty($nc['children'])): ?>
-        <?php foreach ($nc['children'] as $nc): ?>
-        <div class="cat deep<?=$nc['deep']?> <?=($_GET['cat'] == ($nc['slug']))?'active':''?>">
-          <a href="<?=(in_array($nc['slug'], (array)$this->history->tematic_cikk_slugs))?'/':$this->cikkroot?>kategoriak/<?=($nc['slug'])?><?=(isset($_GET['src']))?'?src='.$_GET['src']:''?>">> <?=$nc['neve']?> <span class="cnt">(<?=$nc['postc']?>)</span></a>
-        </div>
-        <?php endforeach; ?>
-      <?php endif; ?>
       <?php endforeach; ?>
+      <?php if (empty($this->newscats)): ?>
+        <div class="no-cats cat">
+          Nincsenek további kategóriák.
+        </div>
+      <?php endif; ?>
     </div>
   </div>
   <div class="divider"></div>

@@ -1,17 +1,14 @@
+<?php if ($this->news): ?>
 <div class="news-group">
-<?php for ($i=0; $i < 4 ; $i++) { ?>
+<?php $i = -1; foreach ( (array)$this->news as $new ) { $i++; ?>
   <article class="news">
     <div class="wrapper">
       <div class="title">
-        <a href="#"><strong>Ferenczy Noémi Kollégium</strong></a>
+        <a href="<?=$new->getUrl()?>"><strong><?=$new->getTitle()?></strong></a>
       </div>
-      <div class="desc">
-        Általános tájékoztató az Erasmus +
-programról. Korábbi évek szakmai
-gyakorlatairól információk itt és a Blogon!
-      </div>
+      <div class="desc"><?=$new->getDescription()?></div>
       <div class="navlinks">
-        <a href="#">Bővebben ></a>
+        <a href="<?=$new->getUrl()?>">Bővebben ></a>
       </div>
     </div>
   </article>
@@ -20,3 +17,4 @@ gyakorlatairól információk itt és a Blogon!
   <?php endif; ?>
 <?php } ?>
 </div>
+<?php endif; ?>

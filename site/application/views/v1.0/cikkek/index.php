@@ -17,7 +17,6 @@
 				 <i class="fa fa-search"></i> Keresés, mint: <?php foreach (explode(" ", $_GET['src']) as $src): ?><span><?=$src?></span><?php endforeach; ?>
 				</div>
 			<?php endif; ?>
-
 			<div class="news-block">
 				<div class="holder">
 					<?php if ( $this->list->tree_items > 0 ): ?>

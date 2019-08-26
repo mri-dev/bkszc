@@ -25,7 +25,7 @@
 					<?php endif; ?>
 					<li>
 						<?php foreach ( (array)$categories['list'] as $cat ): ?>
-						<a class="cat" href="<?=($is_tematic)?'/':'/cikkek/'?><?=\Helper::makeSafeUrl($cat['neve'])?>"><?=$cat['label']?></a>
+						<a class="cat" href="<?=($is_tematic)?'/':'/cikkek/kategoriak/'?><?=$cat['slug']?>"><?=$cat['label']?></a>
 						<?php endforeach; ?>
 					</li>
 				</ul>
@@ -33,97 +33,38 @@
 		</div>
 	</div>
 
-	<?php if ($optional_nyitvatartas != ''): $nyitvatartas = json_decode($optional_nyitvatartas, \JSON_UNESCAPED_UNICODE); ?>
-	<?php $noopensdata = 0; foreach ((array)$nyitvatartas as $nap => $v): if($v == '') $noopensdata++; endforeach; ?>
-	<?php if ($noopensdata < 7): ?>
-		<a href="#nyitvatartas" class="mob-quicknav show-on-mobile">Nyitva tartás</a>
-	<?php endif; ?>
-	<?php endif; ?>
-
-	<?php if ($optional_maps != ''): ?>
-		<a href="#terkep" class="mob-quicknav show-on-mobile">Térkép</a>
-	<?php endif; ?>
-
 	<div class="content">
-		<?php if ($optional_firstimage): ?>
-		<div class="content-firstimage">
-			<img src="<?=ADMROOT?><?=$optional_firstimage?>" alt="<?=$cim?>">
+		<?php if ($belyeg_kep != '' || $bevezeto != ''): ?>
+		<div class="abstract">
+			<?php if ($belyeg_kep): ?>
+				<div class="image">
+					<img src="<?php echo UPLOADS.$belyeg_kep; ?>" alt="<?=$cim?>">
+				</div>
+			<?php endif; ?>
+			<div class="text">
+				<?php if (!empty($bevezeto)): ?>
+				<div class="abstext"><?php echo $bevezeto; ?></div>
+				<?php endif; ?>
+			</div>
 		</div>
 		<?php endif; ?>
 		<?=\PortalManager\News::textRewrites($szoveg)?>
-		<?php $contacts = json_decode($optional_contacts, \JSON_UNESCAPED_UNICODE);?>
-		<?php if ($contacts['email'] ||$contacts['phone']): ?>
-			<div class="contact-infos">
-				<h2>Kapcsolat adatok</h2>
-				<?php if ($contacts['email']): ?>
-				<div class="" title="E-mail cím">
-					<i class="fa fa-envelope-o"></i> <a href="mailto:<?=$contacts['email']?>"><?=$contacts['email']?></a>
-				</div>
-				<?php endif; ?>
-				<?php if ($contacts['phone']): ?>
-				<div class="" title="Mobil">
-					<i class="fa fa-mobile"></i> <a href="tel:<?=$contacts['phone']?>"><?=$contacts['phone']?></a>
-				</div>
-				<?php endif; ?>
-				<?php if ($contacts['phone_wired']): ?>
-				<div class="" title="Vezetékes telefonszám">
-					<i class="fa fa-phone"></i> <a href="tel:<?=$contacts['phone_wired']?>"><?=$contacts['phone_wired']?></a>
-				</div>
-				<?php endif; ?>
-			</div>
-		<?php endif; ?>
-	</div>
-
-	<div class="clr"></div>
-	<div class="row">
-		<?php if ($optional_nyitvatartas != ''): $nyitvatartas = json_decode($optional_nyitvatartas, \JSON_UNESCAPED_UNICODE); ?>
-		<?php $noopensdata = 0; foreach ((array)$nyitvatartas as $nap => $v): if($v == '') $noopensdata++; endforeach; ?>
-		<?php  if ($noopensdata < 7): ?>
-		<div class="<?=($optional_maps == '') ? 'col-md-4' : 'col-md-4'?>">
-			<div class="content-block content-nyitvatartas">
-				<div class="wrapper">
-					<div class="header">
-						<a name="nyitvatartas"></a>
-						<i class="fa fa-clock-o"></i> Nyitvatartási idő
-					</div>
-					<div class="nyitvatartas">
-					<?php foreach ((array)$nyitvatartas as $nap => $v): ?>
-					<div class="row">
-						<div class="col-md-4 day">
-							<strong><?=$nap?></strong>
-						</div>
-						<div class="col-md-8 opens">
-							<?=($v != '')?$v:'&mdash;'?>
-						</div>
-					</div>
+		<?php $linkek_list = unserialize($linkek); ?>
+		<?php if ($linkek && count($linkek_list) > 0): ?>
+			<div class="links">
+				<ul>
+					<?php foreach ((array)$linkek_list as $link ): ?>
+						<li class="link">
+							<a href="<?=UPLOADS?>files/<?=$link[2]?>"><strong><?=$link[1]?></strong></a> (<?=$link[4]?>)
+						</li>
 					<?php endforeach; ?>
-					</div>
-				</div>
+				</ul>
 			</div>
-		</div>
 		<?php endif; ?>
-		<?php endif; ?>
-		<?php if ($optional_maps != ''): ?>
-		<div class="<?=($noopensdata == 7) ? 'col-md-12' : 'col-md-8'?>">
-			<div class="content-block content-map">
-				<div class="wrapper">
-					<div class="header">
-						<a name="terkep"></a>
-						<i class="fa fa-map"></i> <?php echo $optional_maps; ?>
-					</div>
-					<div class="map" id="map">
-						<iframe
-						  width="100%"
-						  height="450"
-						  frameborder="0" style="border:0"
-						  src="https://www.google.com/maps/embed/v1/place?
-							key=<?=APIKEY_GOOGLE_MAP_EMBEDKEY?>&
-							q=<?=$optional_maps?>&
-							language=hu-HU" allowfullscreen>
-						</iframe>
-					</div>
-				</div>
-			</div>
+
+		<?php if ($forrasinfo): ?>
+		<div class="source" title="Forrás">
+			<i class="fa fa-link"></i> <?php echo $forrasinfo; ?>
 		</div>
 		<?php endif; ?>
 	</div>

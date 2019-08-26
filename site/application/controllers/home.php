@@ -15,15 +15,42 @@ class home extends Controller{
 			$temp = new Template( VIEW . 'templates/' );
 			$this->out( 'template', $temp );
 
-			// Hírek
+
+			// Aktuális
 			$news = new News( false, array( 'db' => $this->db ) );
 			$hirek = array();
 			$arg = array(
-				'limit' => 2,
+				'limit' => 20,
 				'page' 	=> 1,
-				'exc_cat_slug' => array('boltok','intezmenyek','turizmus','vendeglatas','szolgaltatasok'),
 				'hide_archiv' => true,
 				'hide_offline' => true,
+				'in_cat' => 10,
+				'order' => array(
+					'by' => 'letrehozva',
+					'how' => 'DESC'
+				)
+			);
+			$news->getTree( $arg );
+
+			if ( $news->has_news() ) {
+				while ( $news->walk() ) {
+					$hir = $news->the_news();
+					$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir[ID]);
+				}
+			}
+			$this->out( 'aktual_news', $hirek );
+			unset($news);
+			unset($hirek);
+
+			// Aktuális Hírek
+			$news = new News( false, array( 'db' => $this->db ) );
+			$hirek = array();
+			$arg = array(
+				'limit' => 16,
+				'page' 	=> 1,
+				'hide_archiv' => true,
+				'hide_offline' => true,
+				'in_cat' => 12,
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'
@@ -40,6 +67,16 @@ class home extends Controller{
 			$this->out( 'news', $hirek );
 			unset($news);
 			unset($hirek);
+
+			// Partnerek
+			// id: 7
+			$news = new News( false, array( 'db' => $this->db ) );
+			$arg = array(
+				'page' => 1,
+				'limit' => 999,
+				'in_cat' => 7
+			);
+			$this->out( 'partnereink_news', $news->getTree( $arg ) );
 
 			// Program
 			$programs = new Programs( false, array( 'db' => $this->db ) );

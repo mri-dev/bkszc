@@ -85,7 +85,8 @@
       </div>
       <div class="flex">
         <div class="logo">
-          <a href="<?=$this->settings['page_url']?>"><img src="<?=IMG?>bkszc_logo.svg" style="height:60px;" alt="<?=$this->settings['page_title']?>"></a>
+          <a href="<?=$this->settings['page_url']?>"><img src="<?=IMG?>gk_logo.svg" style="height:80px;" alt="<?=$this->settings['page_title']?>"></a>
+          <img class="bkszc" title="Budapesti Komplex Szakképzési Centrum" src="<?=IMG?>bkszc_logo.svg" style="height:30px;" alt="bkszc">
         </div>
         <div class="actions">
           <div class="kreta">

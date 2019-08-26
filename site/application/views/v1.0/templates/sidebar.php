@@ -8,6 +8,7 @@
   <div class="sidebar-block partner-list">
     <h3>Támogatóink - Partnereink</h3>
     <div class="holder">
+      <?php if (false): ?>
       <div class="logos">
         <?php for ($i=0; $i < 4 ; $i++) { ?>
         <div class="logo">
@@ -17,13 +18,16 @@
         </div>
         <?php } ?>
       </div>
+      <?php endif; ?>      
+      <?php if ( $this->partnereink_news->tree_items > 0 ): ?>
       <div class="partner-links">
-        <?php for ($i=0; $i < 10 ; $i++) { ?>
+        <?php while ( $this->partnereink_news->walk() ) { $this->partnereink_news->the_news(); ?>
         <div class="link">
-          <a href="#">> Támogató partner link</a>
+          <a href="<?=$this->partnereink_news->getUrl()?>">> &nbsp; <?=$this->partnereink_news->getTitle()?></a>
         </div>
         <?php } ?>
       </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>

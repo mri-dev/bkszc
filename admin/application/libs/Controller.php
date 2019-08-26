@@ -131,8 +131,12 @@ class Controller {
           if ( defined('PRODUCTIONSITE') )
           {
             $this->Categories = new Categories(array( 'db' => $this->db, 'ws' => true ));
+            // Cikk lista
+            if ($_GET['tag'] == 'cikkek' && isset($_GET['cat']) && $_GET['list'] == '1') {
+
+            }
             $this->Categories->getTree();
-            $this->out( 'categories', $this->Categories );
+            //$this->out( 'categories', $this->Categories );
           }
 
           // redirector

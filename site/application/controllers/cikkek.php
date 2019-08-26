@@ -20,16 +20,9 @@ class cikkek extends Controller{
 		$news = new News( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
-		$catarg = array();
-		if (isset($_GET['src']) && !empty($_GET['src'])) {
-			$catarg['search'] = trim($_GET['src']);
-		}
-		$catarg['usetree'] = true;
-		$this->out( 'newscats', $news->categoryList($catarg));
-		unset($catarg['usetree']);
-		$this->out( 'newscatslist', $news->categoryList($catarg));
 
 		if ( isset($_GET['cikk']) ) {
+			$this->out( 'bodyclass', 'article singlearticle' );
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
 			$this->out( 'is_tematic_cat', 1);
 			$news->log_view($this->view->news->getId());
@@ -65,9 +58,25 @@ class cikkek extends Controller{
 			$this->out('archive_dates', $archive_dates);
 
 			// Kategória adatok
-			$catdata = $this->db->squery("SELECT ID, neve FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
+			$catdata = $this->db->squery("SELECT ID, neve, szulo_id FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
 			$cat_id = (int)$catdata['ID'];
 			$cat_name = $catdata['neve'];
+			$this->out( 'currentcat', array(
+				'name' => $catdata['neve'],
+				'id' => $catdata['ID'],
+				'slug' =>$catdata['slug']
+			));
+
+			if ($cat_id != 0) {
+				$parentcatdata = $this->db->squery("SELECT ID, neve, slug FROM cikk_kategoriak WHERE ID = :id", array('id' => trim($catdata['szulo_id'])))->fetch(\PDO::FETCH_ASSOC);
+				if ($parentcatdata['neve'] != '') {
+					$this->out( 'parent_cat', array(
+						'name' => $parentcatdata['neve'],
+						'id' => $parentcatdata['ID'],
+						'slug' =>$parentcatdata['slug']
+					));
+				}
+			}
 
 			if ($cat_slug == '') {
 				$headimgtitle = (!$is_archiv) ? 'Bejegyzéseink': 'Archívum';
@@ -81,8 +90,6 @@ class cikkek extends Controller{
 				$this->out( 'head_img_title', (!$is_archiv) ? $cat_name : 'Archívum:'.$this->view->newscatslist[$cat_slug]['neve']  );
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			}
-
-
 			$arg = array(
 				'limit' => 12,
 				'hide_offline' => true,
@@ -110,6 +117,17 @@ class cikkek extends Controller{
 				'item_limit'=> 12
 			)))->render() );
 		}
+
+		$catarg = array();
+		if (isset($_GET['src']) && !empty($_GET['src'])) {
+			$catarg['search'] = trim($_GET['src']);
+		}
+		$catarg['usetree'] = false;
+		if ($cat_id != 0) {
+			$catarg['childof'] = $cat_id;
+		}
+		$this->out( 'newscats', $news->categoryList($catarg));
+		$this->out( 'newscatslist', $this->view->newscats);
 
 		$this->out( 'cikkroot', $cikkroot );
 		$this->out( 'is_archiv', $is_archiv );
