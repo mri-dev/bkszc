@@ -699,8 +699,10 @@ class News
       $qp['szid'] = (int)$arg['childof'];
     }
 
-    $q .= " and (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'and h.archiv = 0' )." ) != 0
-    ORDER BY c.sorrend ASC";
+    if (!isset($arg['showallpostc'])) {
+      $q .= " and (SELECT count(cx.cikk_id) FROM cikk_xref_cat as cx LEFT OUTER JOIN hirek as h ON h.ID = cx.cikk_id WHERE 1=1 ".$searchfilter." and cx.cat_id = c.ID and h.lathato = 1 ".( ($archivfilter)?'and h.archiv = 1':'and h.archiv = 0' )." ) != 0";
+    }
+    $q .= " ORDER BY c.sorrend ASC";
 
 		$qry = $this->db->squery( $q, $qp);
 

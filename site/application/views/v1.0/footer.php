@@ -1,5 +1,7 @@
 		<?php if ($this->gets[0] == 'cikkek'): ?>
 			<? $this->render('templates/sidebar_cikkek'); ?>
+		<?php elseif($this->gets[0] == 'galeria'): ?>
+			<? $this->render('templates/sidebar_gallery'); ?>
 		<?php else: ?>
 			<? $this->render('templates/sidebar'); ?>
 		<?php endif; ?>

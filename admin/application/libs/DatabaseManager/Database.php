@@ -111,12 +111,14 @@ class Database
 	 */
 	public function multi_insert( $table, $head = false, $data = false, $arg = array() )
 	{
-
 		$query 	= null;
 		$debug_str = null;
 		$header	= null;
 		$value 	= null;
 		$debug 	= ( !$arg[debug] ) ? false : true;
+
+		// Kivételkezelés használata
+		$this->db->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
 
 		if( $table == '' ) return false;
 		if( !$head || !is_array( $head ) ) return false;

@@ -15,7 +15,6 @@ class home extends Controller{
 			$temp = new Template( VIEW . 'templates/' );
 			$this->out( 'template', $temp );
 
-
 			// Aktuális
 			$news = new News( false, array( 'db' => $this->db ) );
 			$hirek = array();

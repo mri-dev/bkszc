@@ -19,6 +19,99 @@ class imp extends Controller
     ));
     $this->dbto = new Database();
 	}
+  /*
+    UPDATE Galeria_Items SET
+    filepath = convert(cast(convert(filepath using  latin1) as binary) using utf8),
+    title = convert(cast(convert(title using  latin1) as binary) using utf8),
+    description = convert(cast(convert(description using  latin1) as binary) using utf8),
+    belyeg_kep = convert(cast(convert(belyeg_kep using  latin1) as binary) using utf8)
+  */
+  public function gallery_cat()
+  {
+    $q = "SELECT
+      a.*,
+      wd.field_id_16 as gallery_desc,
+      wd.field_id_17 as gallery_imgs,
+      wd.field_id_18 as gallery_thumb,
+      (SELECT GROUP_CONCAT(c.cat_id) FROM exp_category_posts as c WHERE c.entry_id = a.entry_id) as catss
+    FROM exp_weblog_titles as a
+    LEFT OUTER JOIN exp_weblog_data as wd ON wd.entry_id = a.entry_id
+    WHERE a.weblog_id = 4";
+    $this->dbfrom->query("SET NAMES utf8");
+    $qry = $this->dbfrom->squery( $q );
+    $data = $qry->fetchAll(\PDO::FETCH_ASSOC);
+
+    $header = array('ID', 'title', 'author', 'slug', 'uploaded', 'default_cat', 'belyeg_kep', 'filepath', 'description');
+    $insert = array();
+    $cat_insert = array();
+
+    foreach ((array)$data as $d)
+    {
+      $insert[] = array(
+        $d['entry_id'],
+        addslashes($d['title']),
+        $d['author_id'],
+        addslashes($d['url_title']),
+        date('Y-m-d', $d['entry_date'] ),
+        ($d['primary_category'] == 0 || is_null($d['primary_category']) || $d['primary_category'] == '') ? NULL : $d['primary_category'],
+        addslashes($d['gallery_thumb']),
+        addslashes($d['gallery_imgs']),
+        addslashes($d['gallery_desc'])
+      );
+      if ( $d['catss'] != '' && $d['catss'] != 0 ) {
+        // Galeria_Items_xref_Categories
+        $cat_insert[$d['entry_id']] = explode(",", $d['catss']);
+      }
+    }
+
+    if ($insert) {
+      //echo '<pre>';
+      //print_r($cat_insert);
+
+      /* * /
+      try {
+        $this->dbto->multi_insert(
+          'Galeria_Items',
+          $header,
+          $insert,
+          array(
+            'duplicate_keys' => array('ID', 'title', 'author', 'slug', 'uploaded', 'default_cat', 'belyeg_kep', 'filepath', 'description')
+          )
+        );
+
+        $this->dbto->query("UPDATE Galeria_Items SET
+        filepath = convert(cast(convert(filepath using  latin1) as binary) using utf8),
+        title = convert(cast(convert(title using  latin1) as binary) using utf8),
+        description = convert(cast(convert(description using  latin1) as binary) using utf8),
+        belyeg_kep = convert(cast(convert(belyeg_kep using  latin1) as binary) using utf8)");
+
+        $this->dbto->query("UPDATE Galeria_Items SET belyeg_kep = REPLACE(belyeg_kep, '/system/imagemanager/files', '')");
+
+
+        if ($cat_insert) {
+          foreach ((array)$cat_insert as $gid => $ci) {
+            // remove prev cats
+            $this->dbto->squery("DELETE FROM Galeria_Items_xref_Categories WHERE galeria_id = :gid", array('gid' => $gid));
+
+            foreach ((array)$ci as $c) {
+              if($c == '' || $c == 0) continue;
+              $this->dbto->insert(
+                "Galeria_Items_xref_Categories",
+                array(
+                  'galeria_id' => $gid,
+                  'cat_id' => (int)$c
+                )
+              );
+            }
+          }
+        }
+      } catch (\Exception $e) {
+        echo $e->getMessage();
+      }
+
+      /* */
+    }
+  }
 
   /*
     UPDATE hirek SET cim = convert(cast(convert(cim using  latin1) as binary) using utf8), szoveg = convert(cast(convert(szoveg using  latin1) as binary) using utf8), content_after_szoveg = convert(cast(convert(content_after_szoveg using  latin1) as binary) using utf8), bevezeto = convert(cast(convert(bevezeto using  latin1) as binary) using utf8), linkek = convert(cast(convert(linkek using  latin1) as binary) using utf8), forrasinfo = convert(cast(convert(forrasinfo using  latin1) as binary) using utf8)
@@ -77,6 +170,8 @@ class imp extends Controller
           'duplicate_keys' => array('hashkey', 'cim', 'eleres', 'bevezeto', 'szoveg', 'content_after_szoveg', 'forrasinfo', 'linkek', 'belyeg_kep', 'idopont', 'letrehozva')
         )
       );
+
+      $this->dbto->query("UPDATE hirek SET cim = convert(cast(convert(cim using  latin1) as binary) using utf8), szoveg = convert(cast(convert(szoveg using  latin1) as binary) using utf8), content_after_szoveg = convert(cast(convert(content_after_szoveg using  latin1) as binary) using utf8), bevezeto = convert(cast(convert(bevezeto using  latin1) as binary) using utf8), linkek = convert(cast(convert(linkek using  latin1) as binary) using utf8), forrasinfo = convert(cast(convert(forrasinfo using  latin1) as binary) using utf8)");
       /* */
     }
   }

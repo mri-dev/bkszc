@@ -127,18 +127,6 @@ class Controller {
             $this->out('BANNERS', $this->BANNERS);
           }
 
-          // Kategóriák
-          if ( defined('PRODUCTIONSITE') )
-          {
-            $this->Categories = new Categories(array( 'db' => $this->db, 'ws' => true ));
-            // Cikk lista
-            if ($_GET['tag'] == 'cikkek' && isset($_GET['cat']) && $_GET['list'] == '1') {
-
-            }
-            $this->Categories->getTree();
-            //$this->out( 'categories', $this->Categories );
-          }
-
           // redirector
           if ( defined('PRODUCTIONSITE') )
           {
@@ -164,24 +152,6 @@ class Controller {
           $menu_header->isFinal(true);
           $tree   = $menu_header->getTree(false, array('admin' => false));
           $this->out( 'menu_header',  $tree );
-
-          // Menük
-          $tree = null;
-          $menu_top  = new Menus( false, array( 'db' => $this->db ) );
-          // Header menü
-          $menu_top->addFilter( 'menu_type', 'top' );
-          $menu_top->isFinal(true);
-          $tree   = $menu_top->getTree(false, array('admin' => false));
-          $this->out( 'menu_top',  $tree );
-
-          // Megabox
-          $tree = null;
-          $menu_megabox  = new Menus( false, array( 'db' => $this->db ) );
-          // Header menü
-          $menu_megabox->addFilter( 'menu_type', 'megabox' );
-          $menu_megabox->isFinal(true);
-          $tree   = $menu_megabox->getTree(false, array('admin' => false));
-          $this->out( 'menu_megabox',  $tree );
 
           // Footer menü
           $tree = null;
