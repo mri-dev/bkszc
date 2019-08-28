@@ -1,11 +1,11 @@
 <div class="sidebar-holder">
   <div class="sidebar-block">
-    <?php if (!isset($_GET['root']) && $this->cat != ''): ?>
+    <?php if ((!isset($_GET['root']) && $this->cat != '') || ($this->gallery && $this->cat != '') ): ?>
       <h3><strong><?=$this->folders[$this->cat]['neve']?></strong> galériák:</h3>
       <div class="list">
 
-        <div class="cat <?=($_GET['cat'] == '')?'active':''?>">
-          <a href="<?=$this->cikkroot?>"><span class="dot" style="color:black;"></span> Összes galéria</a>
+        <div class="cat">
+          <a href="<?=$this->cikkroot?>">< Összes galéria</a>
         </div>
 
         <?php if ($this->parent_cat): ?>
@@ -14,7 +14,7 @@
           </div>
         <?php endif; ?>
         <?php foreach ( (array)$this->folders[$this->cat]['items'] as $nc ):?>
-        <div class="cat">
+        <div class="cat <?=($nc['slug'] == $this->gallery['slug'])?'active':''?>">
           <a href="/galeria/folder/<?=$nc['slug']?>"> <i class="fa fa-folder"></i> <?=$nc['title']?> <span class="cnt">(<?=count($nc['images'])?> kép)</span></a>
         </div>
         <?php endforeach; ?>
@@ -24,10 +24,22 @@
     <?php endif; ?>
 
   </div>
-  <div class="sidebar-block">
+  <?php if ( $this->newgalleries ): ?>
+  <div class="sidebar-block partner-list new-gallery-list">
     <h3>Friss galériák</h3>
+    <div class="holder">
+      <div class="partner-links">
+        <?php foreach ((array)$this->newgalleries as $slug => $gal ) { ?>
+          <div class="link">
+            <a href="<?=$gal['url']?>"><i class="fa fa-picture-o"></i>  &nbsp; <?=($gal['default_cat']['neve'])?'<span class="cat">'.$gal['default_cat']['neve'].' / </span>':''?><strong><?=$gal['title']?></strong> (<?=count($gal['images'])?>)</a>
+          </div>
+        <?php } ?>
+      </div>
+    </div>
   </div>
   <div class="divider"></div>
+  <?php endif; ?>
+
   <div class="sidebar-block partner-list">
     <h3>Támogatóink - Partnereink</h3>
     <div class="holder">

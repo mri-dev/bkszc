@@ -969,6 +969,40 @@ body.homepage .sidebar-holder{
 		}
 	}
 }
+.navi {
+	padding: 10px 0 0 0;
+	flex-basis: 100%;
+	.cat-nav{
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		flex-wrap: wrap;
+		li{
+			&:after{
+				content:" / ";
+				color: #b5b5b5;
+			}
+			a{
+				color: black;
+				font-size: 0.9rem;
+				padding: 0 2px;
+			}
+			a.cat{
+				color: white;
+				text-decoration: none;
+				.cat-label{
+					padding: 2px 4px;
+					text-transform: uppercase;
+					font-weight: 300;
+					font-size: 0.7rem;
+				}
+			}
+			&:last-child:after{
+				content:"";
+			}
+		}
+	}
+}
 .news-block{
   & > .holder{
     display: -webkit-box;
@@ -1083,6 +1117,106 @@ body.homepage .sidebar-holder{
 	}
 }
 
+.new-gallery-list{
+	.link {
+		.cat{
+			font-weight: 300;
+			font-size: 0.9rem;
+		}
+	}
+}
+
+.galleries{
+	.uploaddate{
+		margin: 5px 0 15px 0;
+		font-size: 0.85rem;
+    color: #a7a7a7;
+		strong{
+			color: #8c8c8c;
+		}
+	}
+	.image-list{
+		display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+		margin: 20px -5px;
+
+		& > div {
+			flex-basis: calc(100% / 5);
+			padding: 5px;
+
+			.wrapper{
+				overflow: hidden;
+				position: relative;
+				border-radius: 4px;
+			}
+
+			img {
+				max-width: 100%;
+				width: 100%;
+				position:absolute;
+				left: 50%;
+				top: 50%;
+				transform:translate(-50%,-50%);
+			}
+		}
+	}
+	.folder-list{
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		flex-wrap: wrap;
+		& > .folder{
+			flex-basis: calc(100% / 3);
+			padding: 5px;
+			& > .wrapper{
+				border: 0.5px solid #c3c3c3;
+				border-radius: 5px;
+				padding: 15px 10px;
+				height: 100%;
+
+				.title{
+					text-align: center;
+					.glrycnt{
+						margin: 5px 0;
+					}
+					a{
+						text-transform: uppercase;
+						font-weight: bold;
+						font-size: 1.1rem;
+						text-decoration: none;
+						font-weight: bold;
+						color: black;
+						&:hover{
+							color: $color-blue-light;
+						}
+					}
+				}
+				.list{
+					ul{
+						margin: 10px 0 10px 25px;
+					}
+					ul li {
+						list-style: square;
+						padding: 4px 0;
+						span.datetime{
+							font-size: 0.8rem;
+							color: #8c8c8c;
+						}
+					}
+				}
+				.belyegkep{
+					img {
+						max-width: 100%;
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}
+
 article.newest{
 	& > .wrapper{
 		display: -webkit-box;
@@ -1143,14 +1277,34 @@ article.newest{
 }
 
 .galery-block{
-  & > .holder{
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    flex-wrap: wrap;
+	.slick-prev{
+		right: 10px;
+		left: initial;
+		&:before{
+			content:"\f104";
+		}
+	}
+	.slick-next{
+		right: -12px;
+		left: initial;
+		&:before{
+			content:"\f105";
+		}
+	}
+	.slick-prev, .slick-next{
+		top: -28px;
+	}
+	.slick-prev:before, .slick-next:before{
+		color: black;
+		font-family: 'FontAwesome';
+	}
 
-    & > div {
-      flex-basis: calc(100% / 3);
+  & > .holder{
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+
+    .gal {
       & > .wrapper{
         display: -webkit-box;
         display: -ms-flexbox;
@@ -1171,6 +1325,7 @@ article.newest{
         padding: 2rem;
         font-size: 1.1rem;
         overflow: hidden;
+				height: 280px;
         .date{
           line-height: 1.1;
           font-size: 1.6rem;
@@ -1188,6 +1343,9 @@ article.newest{
         }
 
         .title{
+					margin: 0 0 10px 0;
+					height: 40px;
+    			overflow: hidden;
           a{
             font-size: 1.4rem;
             font-weight: 300;
@@ -1203,6 +1361,7 @@ article.newest{
       & > .wrapper{
         position: relative;
         height: 100%;
+				height: 280px;
         &:after{
           position: absolute;
           z-index: 2;
@@ -1232,10 +1391,10 @@ article.newest{
     }
 
 
-    & > div:nth-child(even) > .wrapper > div.text{
+    .gal:nth-child(even) > .wrapper > div.text{
       order: 1;
     }
-    & > div:nth-child(even)  > .wrapper > div.image{
+  	.gal:nth-child(even)  > .wrapper > div.image{
       order: 0;
       & > .wrapper{
         &:after{

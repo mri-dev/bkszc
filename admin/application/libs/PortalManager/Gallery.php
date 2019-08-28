@@ -82,6 +82,32 @@ class Gallery implements InstallModules
     return $cat;
   }
 
+  public function getCategoryData( $id = 0 )
+  {
+    $id = (int)$id;
+
+    $list = array();
+    $qarg = array();
+
+    $groupqry = "SELECT
+      c.*
+    FROM cikk_kategoriak as c
+    WHERE c.ID = :id
+    ";
+    $qarg['id'] = $id;
+
+    $groupqry = $this->db->squery( $groupqry, $qarg );
+
+    if ($groupqry->rowCount() == 0) {
+      return $list;
+    }
+
+    $list = $groupqry->fetch(\PDO::FETCH_ASSOC);
+    $list['url'] = '/galeria/folders/kategoriak/'.$list['slug'];
+
+    return $list;
+  }
+
   public function getCategoryItems( $cat_id )
   {
     $list = array();
@@ -110,6 +136,35 @@ class Gallery implements InstallModules
     }
 
     return $list;
+  }
+
+  public function getGallery( $slug )
+  {
+    $list = array();
+
+    $groupqry = "SELECT
+      g.*
+    FROM ".self::DBTABLE." as g
+    WHERE 1=1 and g.slug = :slug
+    ORDER BY g.sorrend ASC
+    ";
+
+    $groupqry = $this->db->squery( $groupqry, array('slug' => $slug) );
+
+    if ($groupqry->rowCount() == 0) {
+      return $list;
+    }
+
+    foreach ($groupqry->fetchAll(\PDO::FETCH_ASSOC) as $d)
+    {
+      $d['url'] = '/galeria/folder/'.$d['slug'];
+      $d['images'] = unserialize($d['filepath']);
+      $d['default_cat'] = $this->getCategoryData( $d['default_cat'] );
+      unset($d['filepath']);
+      $list[$d['slug']] = $d;
+    }
+
+    return $list[$slug];
   }
 
   public function loadGalleries()
@@ -190,6 +245,36 @@ class Gallery implements InstallModules
     {
       $d['filepath'] = str_replace("/src/images/","", IMG) . '/' . $d['filepath'];
       $list[] = $d;
+    }
+
+    return $list;
+  }
+
+  public function getLastGalleries()
+  {
+    $list = array();
+
+    $groupqry = "SELECT
+      g.*
+    FROM ".self::DBTABLE." as g
+    WHERE 1=1
+    ORDER BY g.uploaded DESC
+    LIMIT 0, 10
+    ";
+
+    $groupqry = $this->db->squery( $groupqry, array('slug' => $slug) );
+
+    if ($groupqry->rowCount() == 0) {
+      return $list;
+    }
+
+    foreach ($groupqry->fetchAll(\PDO::FETCH_ASSOC) as $d)
+    {
+      $d['url'] = '/galeria/folder/'.$d['slug'];
+      $d['images'] = unserialize($d['filepath']);
+      $d['default_cat'] = $this->getCategoryData( $d['default_cat'] );
+      unset($d['filepath']);
+      $list[$d['slug']] = $d;
     }
 
     return $list;

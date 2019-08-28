@@ -1,21 +1,26 @@
-<?php for ($i=0; $i < 3 ; $i++) { ?>
+<?php foreach ((array)$this->newgalleries as $galslug => $gal ) { $date = strtotime($gal['uploaded']); ?>
 <div class="gal">
   <div class="wrapper">
-    <div class="text autocorrett-height-by-width" data-image-ratio="1:1">
+    <div class="text __autocorrett-height-by-width" data-image-ratio="1:1">
       <div class="wrapper">
         <div class="date">
-          <div class="year">2019</div>
-          <div class="month">augusztus</div>
-          <div class="day">02.</div>
+          <div class="year"><?=date('Y', $date)?></div>
+          <div class="month"><?=utf8_encode(strftime('%B', $date))?></div>
+          <div class="day"><?=date('d.', $date)?></div>
         </div>
-        <div class="title">
-          <a href="#">Nemzetközi Szavaló Verseny</a>
-        </div>
+        <div class="title" title="<?=$gal['title']?>"><a href="<?=$gal['url']?>"><?=$gal['title']?></a></div>
+        <div class="images"><?=count($gal['images'])?> db kép</div>
       </div>
     </div>
-    <div class="image autocorrett-height-by-width" data-image-ratio="1:1">
+    <div class="image __autocorrett-height-by-width" data-image-ratio="1:1">
+      <?php
+        $image = SOURCE . 'images/no-image-gallery.jpg';
+        if ($gal['belyeg_kep'] != '') {
+          $image = UPLOADS . $gal['belyeg_kep'];
+        }
+      ?>
       <div class="wrapper">
-        <a href="#"><img src="http://cp.bkszc.ideasandbox.eu//src/uploads/boritokepek/home-borito.jpg" alt=""></a>
+        <a href="<?=$gal['url']?>"><img src="<?=$image?>" alt="<?=$gal['title']?>"></a>
       </div>
     </div>
   </div>

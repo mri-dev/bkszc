@@ -2,6 +2,7 @@
 use PortalManager\News;
 use PortalManager\Programs;
 use PortalManager\Template;
+use PortalManager\Gallery;
 
 class home extends Controller{
 		function __construct(){
@@ -84,6 +85,11 @@ class home extends Controller{
 				'datesoff' => true
 			));
 			$this->out( 'futureprograms', $future_programs['data'] );
+
+			// Galériák - friss
+			$galleries = new Gallery(array('db' => $this->db));
+			$newgalleries = $galleries->getLastGalleries();
+			$this->out( 'newgalleries', $newgalleries );
 
 
 			$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );

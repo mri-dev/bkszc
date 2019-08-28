@@ -27,8 +27,8 @@ RewriteCond %{HTTPS} off
 RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
 RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-RewriteCond %{HTTP_HOST} ^bkszc.web-pro.hu$ [NC,OR]
-RewriteCond %{HTTP_HOST} ^www.bkszc.web-pro.hu$
+RewriteCond %{HTTP_HOST} ^bkszc.ideasandbox.eu$ [NC,OR]
+RewriteCond %{HTTP_HOST} ^www.bkszc.ideasandbox.eu$
 RewriteCond %{REQUEST_URI} !site/
 RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
 RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$

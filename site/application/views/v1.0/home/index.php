@@ -66,10 +66,22 @@
     <div class="article-block galery-block">
       <div class="head">
         <h3><img src="<?=IMG?>icons/ico-galery-img-circle.svg" alt="Galéria" class="ico">Galéria</h3>
+        <div class="links"><a href="/galeria">Összes galéria</a></div>
       </div>
       <div class="holder">
         <? $this->render('templates/galeryblock'); ?>
       </div>
+      <script type="text/javascript">
+        $(function(){
+          $('.galery-block > .holder').slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            dots: false,
+            arrow: true
+          });
+        })
+      </script>
     </div>
   </div>
 </div>
