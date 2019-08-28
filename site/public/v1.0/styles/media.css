@@ -2101,7 +2101,7 @@ article.newest h2 i.style-green {
 }
 /* line 1486, sass/_base.scss */
 .actual-news-block .slick-next {
-  background: rgba(237, 237, 237, 0.8);
+  background: rgba(237, 237, 237, 0.81);
 }
 /* line 1488, sass/_base.scss */
 .actual-news-block .slick-next:hover {
