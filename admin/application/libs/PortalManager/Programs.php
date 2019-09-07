@@ -597,7 +597,7 @@ class Programs
 	}
 	public function getUrl( $cat_prefix = false )
 	{
-		return DOMAIN.'programok/'.( ($cat_prefix) ? $cat_prefix : 'olvas' ).'/'.$this->current_get_item['eleres'];
+		return DOMAIN.'esemeny/'.$this->current_get_item['eleres'].'/';
 	}
 	public function getAccessKey()
 	{

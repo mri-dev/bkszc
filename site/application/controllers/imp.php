@@ -19,6 +19,62 @@ class imp extends Controller
     ));
     $this->dbto = new Database();
 	}
+
+
+  public function esemenyek()
+  {
+    $q = "SELECT
+      a.*,
+      wd.field_id_1,
+      wd.field_id_2
+    FROM exp_weblog_titles as a
+    LEFT OUTER JOIN exp_weblog_data as wd ON wd.entry_id = a.entry_id
+    WHERE a.weblog_id = 3";
+    $this->dbfrom->query("SET NAMES utf8");
+    $qry = $this->dbfrom->squery( $q );
+    $data = $qry->fetchAll(\PDO::FETCH_ASSOC);
+
+    $header = array('ID', 'cim', 'szoveg', 'bevezeto', 'eleres', 'default_cat', 'idopont', 'letrehozva', 'lathato');
+    $insert = array();
+
+    foreach ((array)$data as $d)
+    {
+      $insert[] = array(
+        $d['entry_id'],
+        addslashes($d['title']),
+        addslashes($d['field_id_2']),
+        addslashes($d['field_id_1']),
+        $d['url_title'],
+        ($d['primary_category'] == 0 || is_null($d['primary_category']) || $d['primary_category'] == '') ? NULL : $d['primary_category'],
+        $d['year'].'-'.$d['month'].'-'.$d['day'],
+        date('Y-m-d', $d['entry_date'] ),
+        ( ($d['status'] == 'closed') ? 0 : 1 )
+      );
+    }
+
+    if ($insert) {
+      echo '<pre>';
+      print_r($insert);
+
+      /* */
+      $this->dbto->multi_insert(
+        'programok',
+        $header,
+        $insert,
+        array(
+          'duplicate_keys' => array('ID', 'cim', 'eleres', 'bevezeto', 'szoveg', 'default_cat', 'idopont', 'letrehozva', 'lathato')
+        )
+      );
+
+      $this->dbto->query("UPDATE programok SET
+      cim = convert(cast(convert(cim using  latin1) as binary) using utf8),
+      eleres = convert(cast(convert(eleres using  latin1) as binary) using utf8),
+      bevezeto = convert(cast(convert(bevezeto using  latin1) as binary) using utf8),
+      szoveg = convert(cast(convert(szoveg using  latin1) as binary) using utf8)");
+      /* */
+    }
+  }
+
   /*
     UPDATE Galeria_Items SET
     filepath = convert(cast(convert(filepath using  latin1) as binary) using utf8),

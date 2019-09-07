@@ -19,31 +19,24 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^archivum(/)?([0-9+])?$ index.php?tag=cikkek&list=1&archiv=1&page=$2 [QSA,L]
+RewriteRule ^cikk/([\.0-9a-zA-Z_-]+)?$ index.php?tag=cikkek&reader=1&cikk=$1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^archivum/date/([0-9a-zA-Z_-]+)(/)?([0-9+])?$ index.php?tag=cikkek&list=1&archiv=1&date=$1&page=$3 [QSA,L]
+# Események
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^esemenyek(/)?(P[0-9]+)?(/)?$ index.php?tag=esemenyek&list=1&page=$2 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-RewriteRule ^archivum/([0-9a-zA-Z_-]+)(/)?([0-9+])?(/)?$ index.php?tag=cikkek&list=1&cat=$1&page=$3&archiv=1 [QSA,L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-
-RewriteRule ^cikk/([0-9a-zA-Z_-]+)?$ index.php?tag=cikkek&reader=1&cikk=$1 [QSA,L]
-
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-
-RewriteRule ^archivum/([0-9a-zA-Z_-]+)/([0-9a-zA-Z_-]+)(/)?$ index.php?tag=cikkek&reader=1&cikk=$2&cat=$1&archiv=1 [QSA,L]
+RewriteRule ^esemeny/([\.0-9a-zA-Z_-]+)(/)?$ index.php?tag=esemenyek&list=0&cikk=$1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

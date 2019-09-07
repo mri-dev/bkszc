@@ -2,6 +2,8 @@
 			<? $this->render('templates/sidebar_cikkek'); ?>
 		<?php elseif($this->gets[0] == 'galeria'): ?>
 			<? $this->render('templates/sidebar_gallery'); ?>
+		<?php elseif($this->gets[0] == 'esemenyek'): ?>
+			<? $this->render('templates/sidebar_esemenyek'); ?>
 		<?php else: ?>
 			<? $this->render('templates/sidebar'); ?>
 		<?php endif; ?>
