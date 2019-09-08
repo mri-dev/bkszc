@@ -144,6 +144,9 @@ class News
     $optional = $data['optional'];
     $optional_data = array();
 
+    $downloads_raw = $this->prepareRAWDownloads($data['downloads']);
+    $downloads = ($downloads_raw) ? serialize($downloads_raw) : NULL;
+
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
 
 		if (!$eleres) {
@@ -173,6 +176,7 @@ class News
       'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
       'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
       'archiv' => $archiv,
+      'linkek' => $downloads,
       'sorrend' => $sorrend
     );
 
@@ -193,6 +197,25 @@ class News
 
 		$this->resaveCategories( $this->selected_news_id, $data['cats'] );
 	}
+
+  private function prepareRAWDownloads( $postarr )
+  {
+    $arr = array();
+    if ($postarr) {
+      $i = -1;
+      foreach ((array)$postarr['name'] as $pn ) {
+        $i++;
+        $pinf = pathinfo($postarr['file'][$i]);
+        $arr[] = array(
+          1 =>$pn,
+          2 => $postarr['file'][$i],
+          4 => '.'.$pinf['extension']
+        );
+      }
+    }
+
+    return (!empty($arr)) ? $arr : false;
+  }
 
 	public function resaveCategories( $id, $cats = array() )
 	{
@@ -559,6 +582,11 @@ class News
 	{
 		return $this->current_get_item;
 	}
+
+  public function getValue( $key )
+  {
+    return (isset($this->current_get_item[$key])? $this->current_get_item[$key] : false);
+  }
 
 	public function getImage( $url = false )
 	{

@@ -1,6 +1,4 @@
-<?
-use PortalManager\Portal;
-use PortalManager\Traffic;
+<?php
 
 class home extends Controller{
 		function __construct(){
@@ -21,34 +19,10 @@ class home extends Controller{
 				$this->AdminUser->logout();
 			}
 
-			$portal = new Portal( array( 'db' => $this->db ) );
-			// Nem használt termék képek
-			$this->out( 'unused_images', $portal->checkUnusedProductImage() );
+			if ($this->view->adm->user) {
+				\Helper::reload('/cikkek');
+			}
 
-			//print_r($this->view->adm);
-
-			// STATISZTIKÁK
-			/////////////////////////////////////////////////////////
-			// Általános statisztikák
-			$this->view->stats 		= $this->AdminUser->getStats($this->view->adm->user);
-			// Forgalom statisztikák
-			$this->traffic     		= new Traffic( array( 'db' => $this->db ));
-			$this->view->tafficInfo = $this->traffic->calcTrafficInfo();
-
-			$arg 		= array();
-			$arg[limit] = 10;
-			$filters = Helper::getCookieFilter('filter',array('filtered'));
-			$filters['user_group'] 	= array('sales','reseller');
-
-			$arg['onlyreferersale'] = true;
-			$arg['order'] 			= "totalReferredOrderPrices DESC";
-
-			$arg['referertime'] = array(
-				'from' 	=> date('Y-m-d', strtotime('-30 days'))
-			);
-			$arg[filters] = $filters;
-
-			$this->view->refusers = $this->User->getUserList($arg);
 
 			// SEO Információk
 			$SEO = null;

@@ -105,10 +105,10 @@
 <div id="top" class="container-fluid">
 	<div class="row">
 		<? if(!$this->adm->logged): ?>
-		<div class="col-md-12 center"><img height="34" src="<?=IMG?>logo_white.svg" alt="<?=TITLE?>"></div>
+		<div class="col-md-12 center"><img height="34" src="<?=IMG?>logo_white.svg" alt="<?=$this->settings['page_title']?>"></div>
 		<? else: ?>
     	<div class="col-md-7 left">
-    		<img height="34" class="top-logo" src="<?=IMG?>vemend_cimer_35px.png" alt="<?=TITLE?>">
+    		<img height="34" class="top-logo" src="<?=IMG?>GK_logo_pikto.svg" alt="<?=$this->settings['page_title']?>">
     		<div class="link">
     			<a href="<?=HOMEDOMAIN?>" target="_blank"><?=$this->settings['page_title']?> - <?=$this->settings['page_description']?></a>
     		</div>
@@ -126,7 +126,7 @@
                 </div>
             </div>
         	<div class="shower no-bg">
-        		<a href="<?=FILE_BROWSER_IMAGE?>" data-fancybox-type="iframe" class="iframe-btn">Galéria <i class="fa fa-picture-o"></i></a>
+        		<a href="<?=FILE_BROWSER_IMAGE?>" data-fancybox-type="iframe" class="iframe-btn">Fájlkezelő <i class="fa fa-picture-o"></i></a>
             </div>
         </div>
         <? endif; ?>
@@ -137,7 +137,7 @@
 <? if(!$this->adm->logged): ?>
 <div id="login" class="container-fluid">
   <div class="cimer">
-    <img src="<?=IMG?>vemend_cimer.jpg" alt="Véménd">
+    <img src="<?=IMG?>GK_logo_pikto.svg" alt="<?=$this->settings['page_title']?>">
   </div>
 	<div class="row">
 	    <div class="bg col-md-4 col-md-offset-4">
@@ -171,18 +171,6 @@
       <div class="clr"></div>
    		<div class="menu">
         	<ul>
-            	<li class="<?=($this->gets[0] == 'home')?'on':''?>"><a href="/" title="Dashboard"><span class="ni">1</span><i class="fa fa-life-saver"></i> Dashboard</a></li>
-              <?php if ( $this->USERS->hasPermission($this->adm->user, array('adminuser','admin'), 'webshop')): ?>
-              <li class=""><a href="/megrendelesek" title="Webshop"><span class="ni">2</span><i class="fa fa-cubes"></i> Webshop</a></li>
-              <?php if (in_array($this->gets[0], array('termekek', 'kategoriak', 'megrendelesek','markak'))): ?>
-                <li class="sub <?=($this->gets[0] == 'megrendelesek')?'on':''?>"><a href="/megrendelesek" title="Megrendelések"><span class="ni">2</span>Megrendelések</a></li>
-                <li class="sub <?=($this->gets[0] == 'termekek' && $this->gets[1] == '')?'on':''?>"><a href="/termekek" title="Termékek"><span class="ni">2</span>Termékek</a></li>
-                <li class="sub <?=($this->gets[0] == 'kategoriak')?'on':''?>"><a href="/kategoriak" title="Kategóriák"><span class="ni">6</span>Kategóriák</a></li>
-                <li class="sub <?=($this->gets[0] == 'markak')?'on':''?>"><a href="/markak" title="Márkák"><span class="ni">7</span>Márkák</a></li>
-                <li class="sub <?=($this->gets[0] == 'termekek' && $this->gets[1] == 'beallitasok')?'on':''?>"><a href="/termekek/beallitasok" title="Beállítások"><span class="ni">7</span>Beállítások</a></li>
-              <?php endif; ?>
-              <?php endif; ?>
-
               <?php if ( $this->adm->user['user_group'] == 'admin'): ?>
                 <?php if ($this->adm->user['user_group'] == 'admin' || $this->adm->hasPermission($this->adm->user['permissions'], array('users'))): ?>
                   <li class="<?=($this->gets[0] == 'felhasznalok')?'on':''?>"><a href="/felhasznalok" title="Felhasználók"><span class="ni">2</span><i class="fa fa-group"></i> Felhasználók</a></li>
