@@ -129,13 +129,13 @@ class cikkek extends Controller{
 			switch($this->view->gets[2]){
 				case 'szerkeszt':
 					if(Post::on('save')){
-						/*
+						/* * /
 						echo '<pre>';
 						print_r($_POST);
 						print_r($_FILES);
 						echo '</pre>';
 						exit;
-						*/
+						/* */
 						try{
 							$news->save($_POST);
 							Helper::reload();

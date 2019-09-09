@@ -140,6 +140,7 @@ class News
 		$lathato= ($data['lathato']) ? 1 : 0;
 		$archiv = ($data['archiv']) ? 1 : 0;
 		$sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
+    $forrasinfo = ($data['forrasinfo']) ?: NULL;
     $archivalva = NULL;
     $optional = $data['optional'];
     $optional_data = array();
@@ -177,17 +178,9 @@ class News
       'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
       'archiv' => $archiv,
       'linkek' => $downloads,
+      'forrasinfo' => $forrasinfo,
       'sorrend' => $sorrend
     );
-
-    // Check archivalás
-    if ($archiv == 1) {
-      $prearch = (int)$this->db->squery("SELECT archiv FROM hirek WHERE ID = :id", array('id' => $this->selected_news_id))->fetchColumn();
-      if ($prearch == 0) {
-        $archivalva = NOW;
-        $upd['archivalva'] = $archivalva;
-      }
-    }
 
 		$this->db->update(
 			"hirek",
@@ -220,7 +213,7 @@ class News
 	public function resaveCategories( $id, $cats = array() )
 	{
 		// delete previous
-		$this->db->squery("DELETE FROM cikk_xref_cat WHERE cikk_id = :cikkid", array(
+		$this->db->squery("DELETE FROM cikk_xref_cat WHERE ctype = 'article' and cikk_id = :cikkid", array(
 			'cikkid' => $id
 		));
 
@@ -230,6 +223,7 @@ class News
 			$this->db->insert(
 				'cikk_xref_cat',
 				array(
+          'ctype' => 'article',
 					'cikk_id' => $id,
 					'cat_id' => $cid
 				)

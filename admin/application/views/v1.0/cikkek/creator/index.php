@@ -159,11 +159,11 @@
               <br />
               <div class="row">
                 <div class="col-md-12">
-										<?php $linkek = unserialize($this->news->getValue('linkek')); ?>
+										<?php if($this->news): $linkek = unserialize($this->news->getValue('linkek')); endif; ?>
                     <label for="linkek">Letöltések</label>
 										<br><br>
 										<div class="link-set">
-											<?php $li =-1;foreach ( (array)$linkek as $link ): $li++; ?>
+											<?php if($linkek): $li =-1;foreach ( (array)$linkek as $link ): $li++; ?>
 											<div class="link">
 												<div class="row-neg">
 													<div class="row">
@@ -180,7 +180,7 @@
 													</div>
 												</div>
 											</div>
-											<?php endforeach; ?>
+										<?php endforeach; endif; ?>
 											<div class="link">
 												<div class="row-neg">
 													<div class="row">
