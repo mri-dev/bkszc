@@ -230,6 +230,46 @@ class imp extends Controller
       $this->dbto->query("UPDATE hirek SET cim = convert(cast(convert(cim using  latin1) as binary) using utf8), szoveg = convert(cast(convert(szoveg using  latin1) as binary) using utf8), content_after_szoveg = convert(cast(convert(content_after_szoveg using  latin1) as binary) using utf8), bevezeto = convert(cast(convert(bevezeto using  latin1) as binary) using utf8), linkek = convert(cast(convert(linkek using  latin1) as binary) using utf8), forrasinfo = convert(cast(convert(forrasinfo using  latin1) as binary) using utf8)");
       /* */
     }
+    unset($insert);
+    $this->article_fix_links();
+  }
+
+  public function article_fix_links()
+  {
+    $q = "SELECT
+      a.linkek,
+      a.ID
+    FROM hirek as a";
+    $this->dbto->query("SET NAMES utf8");
+    $qry = $this->dbto->squery( $q );
+    $data = $qry->fetchAll(\PDO::FETCH_ASSOC);
+
+    foreach ((array)$data as $d) {
+      if ($d['linkek'] != '') {
+        $links = unserialize($d['linkek']);
+        $links = array_map(function( $i ){
+          if ( strpos($i[2], 'src/uploaded_files/') === false)  {
+            $i[2] = 'src/uploaded_files/'.$i[2];
+          }else {
+            $sc =  substr_count($i[2], 'src/uploaded_files/');
+            $ix = explode("/", $i[2]);
+            $i[2] = 'src/uploaded_files/'.end($ix);
+          }
+          return $i;
+        }, $links);
+
+        $links = serialize($links);
+
+        $this->dbto->update(
+          'hirek',
+          array(
+            'linkek' => $links
+          ),
+          sprintf("ID = %d", (int)$d['ID'])
+        );
+      }
+    }
+    unset($data);
   }
 
   public function article_cats()

@@ -71,7 +71,6 @@ class News
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
 
-
 		if (!$eleres) {
 			$eleres = $this->checkEleres( $cim );
 		}
@@ -87,6 +86,7 @@ class News
 
     $upd = array(
       'cim' => $cim,
+      'hashkey' => md5(uniqid()),
       'eleres' => $eleres,
       'szoveg' => $szoveg,
       'bevezeto' => $bevezeto,
@@ -145,9 +145,6 @@ class News
     $optional = $data['optional'];
     $optional_data = array();
 
-    $downloads_raw = $this->prepareRAWDownloads($data['downloads']);
-    $downloads = ($downloads_raw) ? serialize($downloads_raw) : NULL;
-
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg a <strong>Cikk címét</strong>!"); }
 
 		if (!$eleres) {
@@ -162,6 +159,53 @@ class News
         }
       }
     }
+
+    // downloads delete
+    if (!empty($data['del_downloads']))
+    {
+      $tempdownloads = array();
+      $di = -1;
+      foreach ((array)$data['downloads']['name'] as $d)
+      { $di++;
+        if (!in_array($data['downloads']['file'][$di], (array)$data['del_downloads']))
+        {
+          $tempdownloads['name'][] = $data['downloads']['name'][$di];
+          $tempdownloads['file'][] = $data['downloads']['file'][$di];
+        } else {
+          // delete
+          if (file_exists($data['downloads']['file'][$di])) {
+            @unlink($data['downloads']['file'][$di]);
+          }
+        }
+      }
+      $data['downloads'] = $tempdownloads;
+      unset($tempdownloads);
+    }
+
+    // new downloads
+    if (isset($data['newdownloads']) && $data['newdownloads']['name'][0] != '')
+    {
+      $dli = -1;
+      foreach ( (array)$data['newdownloads'] as $dl )
+      {
+        $dli++;
+        $name = $data['newdownloads']['name'][$dli];
+        $file_tmp = $_FILES['downloads']['tmp_name']['file'][$dli];
+        $file_err = $_FILES['downloads']['error']['file'][$dli];
+        $file_name = uniqid().'_'.basename($_FILES['downloads']['name']['file'][$dli]);
+
+        if ( !empty($name) && !empty($file_tmp) && $file_err == \UPLOAD_ERR_OK ) {
+          if(move_uploaded_file( $file_tmp, 'src/uploaded_files/'.$file_name )){
+            usleep(500);
+            $data['downloads']['name'][] = $name;
+            $data['downloads']['file'][] = 'src/uploaded_files/'.$file_name;
+          }
+        }
+      }
+    }
+
+    $downloads_raw = $this->prepareRAWDownloads($data['downloads']);
+    $downloads = ($downloads_raw) ? serialize($downloads_raw) : NULL;
 
     $upd = array(
       'cim' => $cim,
@@ -246,7 +290,6 @@ class News
 		$last_text = $qry->fetch(\PDO::FETCH_COLUMN);
 
 		if( $qry->rowCount() > 0 ) {
-
 			$last_int = (int)end(explode("-",$last_text));
 
 			if( $last_int != 0 ){

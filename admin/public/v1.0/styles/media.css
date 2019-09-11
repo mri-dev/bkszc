@@ -4133,6 +4133,14 @@ input[type=file].lab-selector + label img {
   max-width: 100%;
   margin: 10px 0 0 0;
 }
+.link-set .link{
+  position: relative;
+}
+.link-set .link i {
+  position: absolute;
+  left: 3px;
+  top: 12px;
+}
 .link-set .link + .link {
   margin: 20px 0 0 0;
 }

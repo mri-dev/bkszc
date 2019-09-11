@@ -55,7 +55,7 @@
 				<ul>
 					<?php foreach ((array)$linkek_list as $link ): ?>
 						<li class="link">
-							<a href="<?=UPLOADS?>files/<?=$link[2]?>"><strong><?=$link[1]?></strong></a> (<?=$link[4]?>)
+							<a href="<?=ADMROOT?><?=$link[2]?>"><strong><?=$link[1]?></strong></a> (<?=$link[4]?>)
 						</li>
 					<?php endforeach; ?>
 				</ul>

@@ -168,14 +168,15 @@
 												<div class="row-neg">
 													<div class="row">
 														<div class="col-md-5">
+															<i class="fa fa-arrows-v"></i>
 															<input type="text" placeholder="Letöltés elnevezése" name="downloads[name][]" value="<?=$link[1]?>" class="form-control">
 														</div>
 														<div class="col-md-6">
-															<a href="<?=DOMAIN.UPLOADS.'files/'.$link[2]?>" target="_blank"><?=DOMAIN.UPLOADS.'files/<strong>'.$link[2].'</strong>'?></a>
+															<a href="<?=DOMAIN.$link[2]?>" target="_blank"><?=DOMAIN.'<strong>'.$link[2].'</strong>'?></a>
 															<input type="hidden" name="downloads[file][]" value="<?=$link[2]?>">
 														</div>
 														<div class="col-md-1">
-
+																<input type="checkbox" id="dl_del_<?=$li?>" name="del_downloads[]" value="<?=$link[2]?>"> <label for="dl_del_<?=$li?>">törlés</label>
 														</div>
 													</div>
 												</div>
@@ -185,6 +186,7 @@
 												<div class="row-neg">
 													<div class="row">
 														<div class="col-md-5">
+															<i class="fa fa-arrows-v"></i>
 															<input type="text" placeholder="Letöltés elnevezése" name="newdownloads[name][]" value="" class="form-control">
 														</div>
 														<div class="col-md-7">
@@ -194,6 +196,7 @@
 												</div>
 											</div>
 										</div>
+										<br>
 										<a onclick="addmoredownload()" href="javascript:void(0);">+ új letöltés</a>
                   </div>
               </div>
@@ -264,7 +267,7 @@
 			var e = '<div class="link">'+
 				'<div class="row-neg">'+
 					'<div class="row">'+
-						'<div class="col-md-5">'+
+						'<div class="col-md-5"><i class="fa fa-arrows-v"></i>'+
 							'<input type="text" placeholder="Letöltés elnevezése" name="downloads[name][]" value="" class="form-control">'+
 						'</div>'+
 						'<div class="col-md-7">'+
