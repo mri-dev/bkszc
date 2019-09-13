@@ -15,11 +15,41 @@ class cikkek extends Controller{
 		$title = 'Bejegyzéseink';
 		$description = $this->view->settings['page_title'].' friss bejegyzései. Kövesd oldalunkat és tájékozódj az újdonságokról!';
 		$cikkroot = '/cikkek/';
-		$is_archiv = false;
+		$is_archiv = (isset($_GET['archive'])) ? true : false;
+
+		// Aktuális
+		$news = new News( false, array( 'db' => $this->db ) );
+		$hirek = array();
+		$arg = array(
+			'limit' => 25,
+			'page' 	=> 1,
+			'hide_archiv' => true,
+			'hide_offline' => true,
+			'order' => array(
+				'by' => 'letrehozva',
+				'how' => 'DESC'
+			)
+		);
+		$news->getTree( $arg );
+
+		if ( $news->has_news() ) {
+			while ( $news->walk() ) {
+				$hir = $news->the_news();
+				$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir[ID]);
+			}
+		}
+		$this->out( 'aktual_news', $hirek );
+		unset($news);
+		unset($hirek);
 
 		$news = new News( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
+
+		// archív dátumok
+		$adlimit = (isset($_GET['archive'])) ? false : 25;
+		$archive_dates = $news->getArchiveDates( $adlimit );
+		$this->out('archive_dates', $archive_dates);
 
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'bodyclass', 'article singlearticle' );
@@ -53,10 +83,6 @@ class cikkek extends Controller{
 		} else {
 			$cat_slug =  trim($_GET['cat']);
 
-			// archív dátumok
-			$archive_dates = $news->getArchiveDates();
-			$this->out('archive_dates', $archive_dates);
-
 			// Kategória adatok
 			$catdata = $this->db->squery("SELECT ID, neve, szulo_id FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
 			$cat_id = (int)$catdata['ID'];
@@ -82,6 +108,7 @@ class cikkek extends Controller{
 				$headimgtitle = (!$is_archiv) ? 'Bejegyzéseink': 'Archívum';
 				if (isset($_GET['date'])) {
 					$headimgtitle .= ' - '.utf8_encode(strftime ('%Y. %B', strtotime($_GET['date'])));
+					$title = $headimgtitle;
 				}
 
 				$this->out( 'head_img_title', $headimgtitle);
@@ -108,6 +135,10 @@ class cikkek extends Controller{
 			$this->out( 'list', $news->getTree( $arg ) );
 
 			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.'/kategoriak'.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
+
+			if ($is_archiv) {
+				$navroot = '/'.__CLASS__.'/date/'.$_GET['date'];
+			}
 
 			$this->out( 'navigator', (new Pagination(array(
 				'class' 	=> 'pagination pagination-sm center',

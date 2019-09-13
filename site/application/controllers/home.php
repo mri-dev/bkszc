@@ -91,7 +91,6 @@ class home extends Controller{
 			$newgalleries = $galleries->getLastGalleries();
 			$this->out( 'newgalleries', $newgalleries );
 
-
 			$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
 			// SEO Információk
 			$SEO = null;

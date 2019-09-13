@@ -489,7 +489,7 @@ class News
 		return $text;
 	}
 
-  public function getArchiveDates()
+  public function getArchiveDates( $limit = false )
   {
     $list = array();
 
@@ -497,12 +497,13 @@ class News
       substr(letrehozva,1,7) as dateg,
       count(ID) as counts
     FROM `hirek`
-    WHERE
-      lathato = 1 and
-      archiv = 1
+    WHERE lathato = 1
     GROUP BY dateg
     ORDER BY dateg DESC";
 
+    if ($limit) {
+      $qry .= " LIMIT 0,".$limit;
+    }
     $qry = $this->db->query($qry);
 
     if ($qry->rowCount() == 0 ) {

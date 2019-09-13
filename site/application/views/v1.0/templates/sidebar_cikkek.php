@@ -1,8 +1,35 @@
 <div class="sidebar-holder">
-  <div class="sidebar-block">
+  <?php if ( $this->aktual_news ): ?>
+  <div class="sidebar-block newest-articles dot-navs dot-nav-arrows">
     <h3>Legutóbbi bejegyzések</h3>
+    <div class="holder">
+      <div class="article-group">
+        <?php $i = 0; foreach ((array)$this->aktual_news as $new): $i++; ?>
+        <article>
+          <a href="<?php echo $new->getURL(); ?>"><?php echo $new->getTitle(); ?></a>
+        </article>
+        <?php if ( $i % 5 === 0 && $i < 25): ?>
+        </div><div class="article-group">
+        <?php endif; ?>
+        <?php endforeach; ?>
+      </div>
+    </div>
   </div>
+  <script type="text/javascript">
+    $(function(){
+      $('.newest-articles > .holder').slick({
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        dots: true,
+        arrow: true,
+        autoplay: false,
+        speed: 400
+      });
+    })
+  </script>
   <div class="divider"></div>
+  <?php endif; ?>
   <div class="sidebar-block">
     <?php if ($this->currentcat): ?>
     <h3><strong><?=$this->currentcat['name']?></strong> alkategóriák</h3>
@@ -36,12 +63,9 @@
     <h3>Archívum</h3>
     <?php if (true): ?>
     <div class="list">
-      <div class="cat <?=($_GET['date'] == '')?'active':''?>">
-        <a href="<?=$this->cikkroot?>">Összes</a>
-      </div>
       <?php foreach ((array)$this->archive_dates as $nc): ?>
       <div class="cat <?=($_GET['date'] == ($nc['date']))?'active':''?>">
-        <a href="<?=$this->cikkroot.'date/'.$nc['date'].'/1'?>"><?=$nc['datef']?> <span class="badge"><?=$nc['posts']?></span></a>
+        <a href="<?=$this->cikkroot.'date/'.$nc['date'].'/1'?>">> <?=$nc['datef']?> (<?=$nc['posts']?>)</a>
       </div>
       <?php endforeach; ?>
     </div>

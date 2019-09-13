@@ -155,7 +155,7 @@
   </div>
   <?php if ( !$this->hideheadimg ): ?>
   <?php
-    $imgheader = @get_headers($this->head_img);
+    $imgheader = get_headers($this->head_img);
     $valid_imghead = (strpos($imgheader[0], '200 OK') !== false) ? true : false;
   ?>
   <div class="header-img<?=(!$valid_imghead)?' noimage':''?><?=($this->head_img_title != '')?' has-text':''?>" style="<?=($valid_imghead)?'background-image: url(\''.$this->head_img.'\');':''?>">

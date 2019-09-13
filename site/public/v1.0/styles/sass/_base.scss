@@ -2083,7 +2083,7 @@ body.article{
 		.divider{
 			height: 1px;
 			background: #d5d5d5;
-			margin: 10px 0;
+			margin: 20px 0;
 			display: block;
 			clear:both;
 		}
@@ -2195,6 +2195,41 @@ footer{
 			}
 			a:hover{
 				color:$color-blue-light;
+			}
+		}
+	}
+}
+
+.newest-articles{
+	&  > .holder{
+		display: table;
+		table-layout: fixed;
+		width: 100%;
+	}
+	.article-group{
+		article{
+			margin: 15px 0;
+			outline: none;
+			a{
+				outline: none;
+				color: #6c6c6c;
+				text-decoration: none;
+				font-size: 1.05rem;
+				font-weight: 600;
+		    line-height: 1.2;
+				position: relative;
+				display: block;
+				padding-left: 20px;
+
+				&:hover{
+					color: $color-blue-light;
+				}
+
+				&:before{
+					content:">";
+					position: absolute;
+					left: 4px;
+				}
 			}
 		}
 	}

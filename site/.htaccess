@@ -25,6 +25,13 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
+# Archivum dátumok
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^cikkek/date/([0-9-]+)(/)?((P)?[0-9]+)?$ index.php?tag=cikkek&list=1&archive=1&date=$1&page=$3 [QSA,L]
+
 # Események
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
