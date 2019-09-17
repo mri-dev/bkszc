@@ -61,6 +61,12 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
+RewriteRule ^search(/)?$ index.php?tag=kereses [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
 RewriteRule ^kapcsolat(/)?$ index.php?tag=cikkek&reader=1&cikk=elerhetoseg [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f

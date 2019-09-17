@@ -22,6 +22,7 @@
       slidesToShow: 1,
       slidesToScroll: 1,
       autoplay: true,
+      dots: true,
       speed: 400,
       delay: 5000
     });

@@ -778,6 +778,9 @@ header {
     display: -ms-flexbox;
     display: flex;
 		flex-wrap: wrap;
+		& > div:not(.sidebar-holder){
+			flex: 1;
+		}
   }
 }
 
@@ -791,7 +794,7 @@ header {
   flex-basis: $size-sidebar;
 	padding: 0 0 0 15px;
   .sidebar-block + .sidebar-block {
-    margin: 15px 0 0 0;
+    margin: 25px 0 0 0;
   }
 
 }
@@ -1232,9 +1235,12 @@ article.newest{
 		align-items: flex-start;
 		& > .data{
 			flex: 1;
+			padding: 0 0 0 20px;
+			h2{
+				margin: 0 0 15px 0;
+			}
 		}
 		& > .img{
-			padding: 5px 20px
 			img {
 				max-width: 100%;
 			}
@@ -2021,6 +2027,33 @@ article.newest{
 	.slick-next:before{
 		content:"\f105";
 	}
+
+	.slick-dots{
+		bottom: -20px;
+		text-align: right;
+		z-index: 1;
+	}
+
+	.slick-dots li{
+		margin: 0 1px;
+	}
+
+	.slick-dots li button{
+		color: black;
+		font-size: 0.8rem;
+		background: white;
+		border: 0.5px solid #d3d3d3;
+		font-weight: bold;
+	}
+	.slick-dots li button:before,
+	.slick-dots li.slick-active button:before{
+		display: none !important;
+	}
+	.slick-dots li.slick-active button{
+		color: white;
+		background: $color-blue-light;
+	}
+
 	& > .wrapper{
 		margin: 0 !important;
 		background: #f1f1f1;
@@ -2105,12 +2138,18 @@ body.article{
 			.cat{
 				padding: 0 0 0 10px;
 				a{
-					color: $color-grey-dark;
+					color: #3a3a3a;
 					display: block;
 					padding: 5px 0;
 					text-decoration: none;
+					font-size: 1.05rem;
 					&:hover{
 						color: $color-blue-light;
+					}
+
+					.cnt{
+						color: #acacac;
+						font-size: 0.9rem;
 					}
 				}
 				&.active{
@@ -2128,6 +2167,11 @@ body.article{
 					a{
 						color: $color-green;
 					}
+				}
+
+				&.no-cats{
+					margin: 10px 0 5px 0;
+					color: $color-grey-dark;
 				}
 			}
 		}
@@ -2205,6 +2249,58 @@ footer{
 		display: table;
 		table-layout: fixed;
 		width: 100%;
+
+		.slick-prev, .slick-next{
+			top: inherit;
+			bottom: -25px;
+			background: white;
+			border: 0.5px solid #d3d3d3;
+			left: initial;
+			right: 0;
+			z-index: 2;
+		}
+		.slick-prev{
+			right: 21px;
+		}
+		.slick-prev:before, .slick-next:before{
+			font-family: 'FontAwesome';
+			color: black;
+			font-size: 1rem;
+			font-weight: bold;
+		}
+		.slick-prev:before{
+			content:"\f104";
+		}
+		.slick-next:before{
+			content:"\f105";
+		}
+
+		.slick-dots{
+			bottom: -15px;
+			text-align: right;
+    	padding-right: 42px;
+			z-index: 1;
+		}
+
+		.slick-dots li{
+			margin: 0 1px;
+		}
+
+		.slick-dots li button{
+			color: black;
+			font-size: 0.8rem;
+			background: white;
+			border: 0.5px solid #d3d3d3;
+			font-weight: bold;
+		}
+		.slick-dots li button:before,
+		.slick-dots li.slick-active button:before{
+			display: none !important;
+		}
+		.slick-dots li.slick-active button{
+			color: white;
+			background: $color-blue-light;
+		}
 	}
 	.article-group{
 		article{
@@ -2229,6 +2325,101 @@ footer{
 					content:">";
 					position: absolute;
 					left: 4px;
+				}
+			}
+		}
+	}
+}
+
+body.searchresult{
+	.search{
+		& > .header{
+			margin-top: -58px;
+			.titleblock{
+				float: left;
+				background: #f5f5f5;
+		    color: #101010;
+		    text-transform: uppercase;
+		    padding: 15px 25px;
+		    position: relative;
+		    z-index: 2;
+			}
+		}
+
+		.search-form{
+			background: #f5f5f5;
+			& > .wrapper{
+				padding: 10px;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: flex-start;
+				width: 100%;
+
+				.w {
+					padding: 10px 15px;
+				}
+
+				& > .text{
+					flex-basis: 100%;
+				}
+
+				& > .cats{
+					select{
+						height: 245px;
+						padding: 10px;
+
+						option{
+							border-radius: 3px;
+							font-size: 0.9rem;
+							color: black;
+							margin: 1px 0;
+							cursor: pointer;
+							&:hover{
+								background: $color-grey;
+							}
+						}
+						option.deep1{
+							padding-left: 20px;
+						}
+						option.deep2{
+							padding-left: 40px;
+						}
+						option.deep3{
+							padding-left: 60px;
+						}
+					}
+				}
+
+				input, select{
+					border: 0.5px solid #dddddd;
+				}
+
+				button {
+					background: $color-blue-light;
+					color: white;
+					font-weight: bold;
+					border: none;
+					line-height: 45px;
+    			padding: 0 15px;
+				}
+
+				input[type=text].srcfilter{
+					padding: 0 15px;
+					line-height: 45px;
+					height: auto;
+					color: $color-blue-light;
+					font-size: 1.2rem;
+				}
+
+				label .ftext{
+					color: $color-green;
+				}
+
+				label + input,
+				label + select{
+					margin: 10px 0 0 0;
 				}
 			}
 		}
