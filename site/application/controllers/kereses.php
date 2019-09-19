@@ -21,23 +21,50 @@ class kereses extends Controller{
 			);
 			$this->out( 'partnereink_news', $news->getTree( $arg ) );
 
-			// Cikk keresés
-			$news = new News( false, array( 'db' => $this->db ) );
-			$arg = array(
+			$navroot = '/search';
 
-			);
-			$list = $news->getTree( $arg );
-			$bodyclass .= ' articles';
+			////////////////////////////////////////
+			// KERESÉS
+			////////////////////////////////////////
+
+			// Cikk keresés
+			if ($_GET['group'] == 'article')
+			{
+				$news = new News( false, array( 'db' => $this->db ) );
+				$search = array();
+				$search['text'] = $_GET['src'];
+				$search['method'] = (!isset($_GET['src_type'])) ? 'ft' : $_GET['src_type'];
+				$arg = array(
+					'limit' => 10,
+					'search' => $search,
+					'page' => (isset($_GET['page'])) ? (int)str_replace('P','', $_GET['page']) : 1
+				);
+				$list = $news->getTree( $arg );
+				$page_current = $news->getCurrentPage();
+				$page_max = $news->getMaxPage();
+				$bodyclass .= ' articles';
+			}
+
+			////////////////////////////////////////
+			// END of KERESÉS
+			////////////////////////////////////////
 
 			// Lista output
 			$this->out( 'list', $list );
+			$this->out( 'listgroup', $_GET['group'] );
 			$this->out( 'bodyclass', $bodyclass );
 
+			$navafter = '/?';
+			$srcq = $_GET;
+			unset($srcq['tag']);
+			unset($srcq['page']);
+			$navafter .= http_build_query($srcq);
 			$this->out( 'navigator', (new Pagination(array(
 				'class' 	=> 'pagination pagination-sm center',
-				'current' 	=> $news->getCurrentPage(),
-				'max' 		=> $news->getMaxPage(),
+				'current' 	=> $page_current,
+				'max' 		=> $page_max,
 				'root' => $navroot,
+				'after' => $navafter,
 				'item_limit'=> 12
 			)))->render() );
 

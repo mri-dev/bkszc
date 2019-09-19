@@ -347,14 +347,6 @@ class News
       $qry .= " and h.lathato = 1";
     }
 
-    if( isset($arg['hide_archiv']) && !empty($arg['hide_archiv']) ) {
-      $qry .= " and h.archiv = 0";
-    }
-
-    if( isset($arg['only_archiv']) && !empty($arg['only_archiv']) ) {
-      $qry .= " and h.archiv = 1";
-    }
-
     if( isset($arg['on_date']) && !empty($arg['on_date']) ) {
       $qry .= " and h.letrehozva LIKE '".addslashes($arg['on_date'])."%'";
     }
@@ -377,19 +369,43 @@ class News
 			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID)";
 		}
 
-    if (isset($arg['search']) && !empty($arg['search']))
+    // Keresés
+    if ( isset($arg['search']) && !empty($arg['search']) )
     {
-      $xs = explode(" ", trim($arg['search']));
-      if ($xs && $xs[0] != "") {
-        $qry .= " and (";
-        $srcs = '';
-        foreach ($xs as $xsrc) {
-          $srcs .= "h.cim LIKE '%".trim($xsrc)."%' or ";
+      $src = '';
+
+      if ( $arg['search']['text'] == '' ) {
+        $src .= ' and 2=1';
+      } else {
+        switch ($arg['search']['method'])
+        {
+          // bármilyen szóra
+          case 'ee':
+            $xtext = explode(" ", trim($arg['search']['text']));
+            $src .= ' and (';
+            foreach ((array)$xtext as $xt) {
+              $src .= "(h.cim LIKE '%".trim($xt)."%' or h.bevezeto LIKE '%".trim($xt)."%') or ";
+            }
+            $src = rtrim($src, ' or ');
+            $src .= ')';
+          break;
+          case 'ae':
+            $xtext = explode(" ", trim($arg['search']['text']));
+            $src .= ' and (';
+            foreach ((array)$xtext as $xt) {
+              $src .= "(h.cim LIKE '%".trim($xt)."%' or h.bevezeto LIKE '%".trim($xt)."%') and ";
+            }
+            $src = rtrim($src, ' and ');
+            $src .= ')';
+          break;
+          // Alap és teljes szöveg
+          default: case 'ft':
+            $src .= " and (h.cim LIKE '%".$arg['search']['text']."%' or h.bevezeto LIKE '%".$arg['search']['text']."%')";
+          break;
         }
-        $srcs = rtrim($srcs," or ");
-        $qry .= $srcs;
-        $qry .= ")";
       }
+
+      $qry .= $src;
 		}
 
 
@@ -407,6 +423,8 @@ class News
 		$current_page = ($arg['page'] ?: 1);
 		$start_item = $current_page * $this->item_limit_per_page - $this->item_limit_per_page;
 		$qry .= " LIMIT ".$start_item.",".$this->item_limit_per_page.";";
+
+    //echo $qry;
 
 		$top_news_qry 	= $this->db->query($qry);
 		$top_page_data 	= $top_news_qry->fetchAll(\PDO::FETCH_ASSOC);
@@ -485,6 +503,8 @@ class News
 	{
 		// Kép
 		$text = str_replace( '../../../src/uploads/', UPLOADS, $text );
+		$text = str_replace( '/system/imagemanager/files/', UPLOADS, $text );
+
 
 		return $text;
 	}
@@ -629,6 +649,9 @@ class News
 	public function getImage( $url = false )
 	{
 		if ( $url ) {
+      if ($this->current_get_item['belyeg_kep'] == '') {
+        return false;
+      }
 			return UPLOADS . str_replace('/src/uploads/','',$this->current_get_item['belyeg_kep']);
 		} else {
 			return $this->current_get_item['belyeg_kep'];

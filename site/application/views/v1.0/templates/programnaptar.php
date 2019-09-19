@@ -43,6 +43,9 @@
         <div class="programs-list">
           <div class="wrapper">
             <div class="cont">
+              <div class="actual-month">
+                <a href="/esemenyek/<?=date('Y/m')?>">Tovább az aktuális hónap eseményeihez >></a>
+              </div>
               <div class="loading" ng-show="syncing">
                 <?php echo __('Események betöltése folyamatban...', TD); ?> <i class="fa fa-spin fa-spinner"></i>
               </div>

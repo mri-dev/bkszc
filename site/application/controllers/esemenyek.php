@@ -11,6 +11,8 @@ class esemenyek extends Controller
 
 		$this->out( 'bodyclass', 'article esemenyek' );
 
+		print_r($_GET);
+
 		$url = DOMAIN.__CLASS__;
 		$image = \PortalManager\Formater::sourceImg($this->view->settings['logo']);
 		$title = 'Események';
