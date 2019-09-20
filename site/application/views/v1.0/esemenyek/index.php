@@ -1,6 +1,17 @@
 <div class="news-page">
+  <?php if ($_GET['datelist'] == '1'): setlocale(LC_TIME, 'hu_HU'); ?>
+  <h1><strong><?=$_GET['year']?>. <?=utf8_encode(strftime('%B', mktime(0, 0, 0, $_GET['month'])))?></strong> események</h1>
+  <div class="navi">
+    <ul class="cat-nav">
+      <li><a href="/"><i class="fa fa-home"></i></a></li>
+      <li><a href="/esemenyek">Események</a></li>
+      <li>Archívum: <strong><?=$_GET['year']?>. / <?=$_GET['month']?>. hó</strong></li>
+    </ul>
+  </div>
+  <br>
+  <?php endif; ?>
   <?php if ($_GET['list'] == 1): ?>
-    <?php if ($this->newest->has_news()): ?>
+    <?php if ($this->newest->has_news() && !isset($_GET['datelist'])): ?>
       <div class="esemeny">
         <article class="newest">
           <h2><div class="cit"><i class="fa fa-clock-o style-red"></i> Legújabb esemény</div><div class="fakeline"></div></h2>
@@ -24,7 +35,7 @@
       </div>
     <?php endif; ?>
     <article class="newest">
-      <h2><div class="cit"><i class="fa fa-clock-o style-blue"></i> Közelgő események</div><div class="fakeline"></div></h2>
+      <h2><div class="cit"><i class="fa fa-clock-o style-blue"></i> <?=(!isset($_GET['datelist']))?'Közelgő események':'Események'?></div><div class="fakeline"></div></h2>
     </article>
     <div class="esemenyek">
       <div class="wrapper">
@@ -46,7 +57,7 @@
           <?php endwhile; ?>
         <?php else: ?>
           <div class="no-data">
-            Nincsenek jelenleg közelgő események!
+            Nincsenek megjeleníthető események!
           </div>
         <?php endif; ?>
       </div>
@@ -64,6 +75,11 @@
       				<ul class="cat-nav">
       					<li><a href="/"><i class="fa fa-home"></i></a></li>
                 <li><a href="/esemenyek">Események</a></li>
+                <?php
+                  $dyear = $this->news->getIdopont('Y');
+                  $dmonth = $this->news->getIdopont('m');
+                ?>
+                <li><a href="/esemenyek/<?=$dyear?>/<?=$dmonth?>"><strong><?=$dyear?>. / <?=$dmonth?>. hó</strong></a></li>
       				</ul>
       			</div>
           </div>
@@ -71,7 +87,7 @@
           <div class="image"><img src="<?=$this->news->getImage()?>" alt="<?php echo $this->news->getTitle(); ?>"></div>
           <?php endif; ?>
           <div class="bevezeto"><?php echo $this->news->getDescription(); ?></div>
-          <div class="desc"><?php echo $this->news->getHtmlContent(); ?></div>
+          <div class="desc"><?php echo \PortalManager\Programs::textRewrites($this->news->getHtmlContent()); ?></div>
         </div>
       </article>
     <?php else: ?>

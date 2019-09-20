@@ -498,13 +498,11 @@ class News
 		return $this->current_item;
 	}
 
-
 	public static function textRewrites( $text )
 	{
 		// Kép
 		$text = str_replace( '../../../src/uploads/', UPLOADS, $text );
 		$text = str_replace( '/system/imagemanager/files/', UPLOADS, $text );
-
 
 		return $text;
 	}

@@ -16,8 +16,6 @@ class esemenyek extends Controller
 		$title = 'Események';
 		$description = $this->view->settings['page_title'].' esemény naptára. Kövesd oldalunkat és tájékozódj az eseményekről!';
 
-		//print_r($_GET);
-
 		$news = new Programs( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
@@ -31,8 +29,18 @@ class esemenyek extends Controller
 				'how' => 'ASC'
 			)
 		);
-		$arg['date']['min'] = date('Y-m-d');
+		if (isset($_GET['datelist'])) {
+			$arg['in_year'] = $_GET['year'];
+			$arg['in_month'] = $_GET['month'];
+			$this->out( 'bodyclass', 'article esemenyek datearchive' );
+		} else {
+			$arg['date']['min'] = date('Y-m-d');
+		}
+
 		$this->out( 'list', $news->getTree( $arg ) );
+
+		$dategroups = $news->getArchiveDates();
+		$this->out('archive_dates', $dategroups);
 
 		if ( isset($_GET['cikk']) )
 		{
@@ -50,15 +58,12 @@ class esemenyek extends Controller
 		}
 		else
 		{
-			// Lista oldal
-			if ($cat_slug == '') {
-				$this->out( 'head_img_title', 'Események' );
-				//$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+			if ( isset($_GET['datelist']) ) {
+				$this->out( 'head_img_title', 'Esemény archívum: '.$_GET['year'].'. / '.$_GET['month'].'. hó' );
+				$title = $this->view->head_img_title. ' | Események';
 			} else {
-				$this->out( 'head_img_title', $this->view->programcats[$cat_slug]['neve'] );
-				//$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );
+				$this->out( 'head_img_title', 'Események' );
 			}
-
 			$this->out( 'navigator', (new Pagination(array(
 				'class' 	=> 'pagination pagination-sm center',
 				'current' 	=> $news->getCurrentPage(),
@@ -75,6 +80,9 @@ class esemenyek extends Controller
 		}
 
 		unset($news);
+
+		parent::$pageTitle = $title;
+		$keywords = 'esemének, programok, rendezvények';
 
 		// SEO Információk
 		$SEO = null;

@@ -232,6 +232,14 @@ class Programs
       $qry .= " and h.ID IN(".implode(",", (array)$arg['in_id']).")";
     }
 
+    if( isset($arg['in_year']) && !empty($arg['in_year']) ) {
+      $qry .= " and substr(h.idopont,1,4) = '".$arg['in_year']."'";
+    }
+
+    if( isset($arg['in_month']) && !empty($arg['in_month']) ) {
+      $qry .= " and substr(h.idopont,6,2) = '".$arg['in_month']."'";
+    }
+
 		if (isset($arg['in_cat']) && !empty($arg['in_cat']) && $arg['in_cat'] != 0) {
 			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM ".self::DBXREF." WHERE cikk_id = h.ID)";
 		}
@@ -291,6 +299,51 @@ class Programs
 		return $this;
 	}
 
+  public static function textRewrites( $text )
+  {
+    // Kép
+    $text = str_replace( '../../../src/uploads/', UPLOADS, $text );
+    $text = str_replace( '/system/imagemanager/files/', UPLOADS, $text );
+
+    return $text;
+  }
+
+  public function getArchiveDates( $limit = false )
+  {
+    $list = array();
+
+    $qry = "SELECT
+      substr(idopont,1,7) as dateg,
+      count(ID) as counts
+    FROM ".self::DBTABLE."
+    WHERE lathato = 1
+    GROUP BY dateg
+    ORDER BY dateg DESC";
+
+    if ($limit) {
+      $qry .= " LIMIT 0,".$limit;
+    }
+    $qry = $this->db->query($qry);
+
+    if ($qry->rowCount() == 0 ) {
+      return $list;
+    }
+
+    foreach ((array)$qry->fetchAll(\PDO::FETCH_ASSOC) as $d) {
+      $xdate = explode("-",$d['dateg']);
+      $list[] = array(
+        'date' => $d['dateg'],
+        'year' => $xdate[0],
+        'month' => $xdate[1],
+        'dategroup' => str_replace('-','/',$d['dateg']),
+        'datef' => utf8_encode(strftime ('%Y. %B', strtotime($d['dateg']))),
+        'posts' => (int)$d['counts'],
+      );
+    }
+
+    return $list;
+  }
+
 	public function has_news()
 	{
 		return ($this->tree_items === 0) ? false : true;
@@ -339,15 +392,6 @@ class Programs
 	public function the_news()
 	{
 		return $this->current_item;
-	}
-
-
-	public static function textRewrites( $text )
-	{
-		// Kép
-		$text = str_replace( '../../../src/uploads/', UPLOADS, $text );
-
-		return $text;
 	}
 
   public function historyList( $limit = 5 )

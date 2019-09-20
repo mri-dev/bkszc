@@ -31,4 +31,18 @@
     </article>
   </div>
   <?php endif; ?>
+
+  <div class="divider"></div>
+  <div class="sidebar-block">
+    <h3>Esemény archívum</h3>
+    <?php if (true): ?>
+    <div class="list">
+      <?php foreach ((array)$this->archive_dates as $nc): ?>
+      <div class="cat <?=($_GET['year'] == $nc['year'] && $_GET['month'] == $nc['month'])?'active':''?>">
+        <a href="/esemenyek/<?=$nc['dategroup']?>">> <?=$nc['datef']?> (<?=$nc['posts']?>)</a>
+      </div>
+      <?php endforeach; ?>
+    </div>
+    <?php endif; ?>
+  </div>
 </div>
