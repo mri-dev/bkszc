@@ -4,10 +4,10 @@
 <link rel="icon" href="<?=IMG?>icons/favicon.ico" type="image/x-icon">
 <?=$this->addStyle('master', 'media="all"')?>
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-<?=$this->addStyle('bootstrap.min', 'media="all"')?>
-<?=$this->addStyle('bootstrap-theme.min', 'media="all"')?>
-<?=$this->addStyle('FontAwesome.min', 'media="all"')?>
-<?=$this->addStyle('dashicons.min','media="all"')?>
+<?=$this->addStyle('bootstrap.min', 'media="all"', true, true)?>
+<?=$this->addStyle('bootstrap-theme.min', 'media="all"', true, true)?>
+<?=$this->addStyle('FontAwesome.min', 'media="all"', true, true)?>
+<?=$this->addStyle('dashicons.min','media="all"', true, true)?>
 <!--<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
 <?=$this->addStyle('media', 'media="all"', false)?>
 <link rel="stylesheet" type="text/css" href="<?=JS?>fancybox/jquery.fancybox.css?v=2.1.4" media="all" />
@@ -33,16 +33,16 @@
 
 <!-- Angular Material Library -->
 <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
-<?=$this->addJS('bootstrap.min',false)?>
-<?=$this->addJS('jquery.cookieaccept',false,false)?>
+<?=$this->addJS('bootstrap.min', false, true, true)?>
+<?=$this->addJS('jquery.cookieaccept',false,false, true)?>
 <?=$this->addJS('master',false,false)?>
-<?=$this->addJS('pageOpener',false,false)?>
-<?=$this->addJS('user',false,false)?>
-<?=$this->addJS('jquery.cookie',false)?>
-<?=$this->addJS('angular.min',false)?>
+<?=$this->addJS('pageOpener',false,false, true)?>
+<?=$this->addJS('user',false,false, true)?>
+<?=$this->addJS('jquery.cookie',false, true, true)?>
+<?=$this->addJS('angular.min',false, true, true)?>
 <?=$this->addJS('app',false,false)?>
-<?=$this->addJS('upload',false,false)?>
-<?=$this->addJS('angular-cookies',false, false)?>
+<?=$this->addJS('upload',false,false, true)?>
+<?=$this->addJS('angular-cookies',false, false, true)?>
 <? //$this->addJS('jquery.cetelemCalculator',false, false); ?>
 
 <script type="text/javascript" src="/src/vendors/autocomplete/scripts/jquery.mockjax.js"></script>

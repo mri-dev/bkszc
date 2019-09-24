@@ -26,9 +26,9 @@ class kereses extends Controller{
 			////////////////////////////////////////
 			// KERESÉS
 			////////////////////////////////////////
-
+			$lisgroup = (!empty($_GET['group'])) ? $_GET['group'] : 'article';
 			// Cikk keresés
-			if ($_GET['group'] == 'article')
+			if ($lisgroup == 'article')
 			{
 				$news = new News( false, array( 'db' => $this->db ) );
 				$search = array();
@@ -51,7 +51,7 @@ class kereses extends Controller{
 
 			// Lista output
 			$this->out( 'list', $list );
-			$this->out( 'listgroup', $_GET['group'] );
+			$this->out( 'listgroup', $lisgroup );
 			$this->out( 'bodyclass', $bodyclass );
 
 			$navafter = '/?';

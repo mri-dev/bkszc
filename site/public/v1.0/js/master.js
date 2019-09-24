@@ -311,7 +311,7 @@ $(function(){
 								});
 								$('body').addClass('mobiltoggled');
 							}
-
+							
 							$('.mb-tgl-close').removeClass('opened');
 							t.addClass('opened');
 						}

@@ -71,6 +71,12 @@
           <div class="title">
             <h1><?php echo $this->news->getTitle(); ?></h1>
             <div class="date"><i class="fa fa-clock-o style-blue"></i> <?php echo $this->news->getIdopont('Y. m. d.'); ?></div>
+            <?php $helyszin = $this->news->getHelyszin();  ?>
+            <?php if (!empty($helyszin)): ?>
+            <div class="position">
+              <i class="fa fa-map-pin"></i> Helyszín: <strong><?=$helyszin?></strong>
+            </div>
+            <?php endif; ?>
             <div class="navi">
       				<ul class="cat-nav">
       					<li><a href="/"><i class="fa fa-home"></i></a></li>

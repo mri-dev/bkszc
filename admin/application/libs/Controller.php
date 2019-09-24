@@ -59,6 +59,7 @@ class Controller {
           $this->view->adm->logged = $this->AdminUser->isLogged();
         }
 
+
         $this->User = new Users(array(
           'db' => $this->db,
           'view' => $this->view,
@@ -66,54 +67,28 @@ class Controller {
         ));
         $this->out( 'USERS', $this->User);
 
+
+        /*
         $this->shop = new Shop(array(
           'db' => $this->db,
           'view' => $this->view,
           'user' => $this->User->get()
-        ));
+        ));*/
 
-        $this->Portal = new Portal( array( 'db' => $this->db, 'view' => $this->view )  );
+        //$this->Portal = new Portal( array( 'db' => $this->db, 'view' => $this->view )  );
+        /* * /
         $this->captcha = (new Captcha)
         ->init(
             $this->view->settings['recaptcha_public_key'],
             $this->view->settings['recaptcha_private_key']
         );
+        /**/
 
         $this->out( 'db',   $this->db );
         $this->out( 'user', $this->User->get( self::$user_opt ) );
 
         if ($this->gets[0] != 'ajax')
         {
-          // keresés controller
-          $searchercontrol = array(
-            'placeholder' => 'Keresés...',
-            'url' => '/cikkek/'
-          );
-          // Webshop kereső controller
-          if ( rtrim($_GET['tag'],'/') == 'termekek' || strpos($_GET['tag'],'termek/') !== false )
-    			{
-            $xservuri = explode("?", $_SERVER['REQUEST_URI']);
-            $searchercontrol = array(
-              'placeholder' => 'Keresés a termékekben...',
-              'url' => $xservuri[0]
-            );
-
-            if (strpos($_GET['tag'],'termek/') !== false) {
-              $xservuri[0] = ltrim($xservuri[0], "/");
-              $xservuri[0] = rtrim($xservuri[0], "/");
-              //var_dump(count($xservuritemp));
-              $slastrimuri = explode("/", $xservuri[0]);
-              unset($slastrimuri[count($slastrimuri)-1]);
-              $slastrimuri = implode("/",$slastrimuri);
-
-              if ($slastrimuri) {
-                $searchercontrol['url'] = '/'.$slastrimuri;
-              }
-            }
-    			}
-
-          $this->out('searchercontrol', $searchercontrol);
-
           // Only admin
           if ( !defined('PRODUCTIONSITE') )
           {
@@ -121,11 +96,12 @@ class Controller {
           }
 
           // Bannerek
+          /*
           if ( defined('PRODUCTIONSITE') )
           {
             $this->BANNERS = new Banners(array( 'db' => $this->db ));
             $this->out('BANNERS', $this->BANNERS);
-          }
+          }*/
 
           // redirector
           if ( defined('PRODUCTIONSITE') )
@@ -136,13 +112,8 @@ class Controller {
 
           $templates = new Template( VIEW . 'templates/' );
           $this->out( 'templates', $templates );
-          $this->out( 'highlight_text', $this->Portal->getHighlightItems() );
-          $this->out( 'slideshow', $this->Portal->getSlideshow() );
-          $showwebshop = true;
-          if (isset($_COOKIE['showwebshop'])) {
-            $showwebshop = true;
-          }
-          $this->out( 'show_webshop', $showwebshop);
+          //$this->out( 'highlight_text', $this->Portal->getHighlightItems() );
+          //$this->out( 'slideshow', $this->Portal->getSlideshow() );
 
           // Menük
           $tree = null;
@@ -209,13 +180,11 @@ class Controller {
             18=>"Veszprém",
             19=>"Zala",
         ) );
-
-
-          $this->out( 'kozterulet_jellege', $this->kozterulet_jellege() );
+        $this->out( 'kozterulet_jellege', $this->kozterulet_jellege() );
 
         if(!$arg[hidePatern]){ $this->hidePatern = false; }
 
-         $this->view->valuta  = 'Ft';
+        $this->view->valuta  = 'Ft';
     }
 
     function out( $viewKey, $output ){

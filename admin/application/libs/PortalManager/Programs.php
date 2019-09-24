@@ -6,8 +6,8 @@ use PortalManager\Formater;
 class Programs
 {
   const DBTABLE = 'programok';
-  const DBCAT= 'program_kategoriak';
-  const DBXREF = 'program_xref_cat';
+  const DBCAT= 'cikk_kategoriak';
+  const DBXREF = 'cikk_xref_cat';
   const DBVIEW = 'program_views';
   const DBVIEWHISTORY = 'program_view_history';
 
@@ -61,7 +61,7 @@ class Programs
     $end_idopont = ($data['end_idopont']) ?: NULL;
     $helyszin = ($data['helyszin']) ?: NULL;
 
-		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
+		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Program címét</strong>!"); }
 
 
 		if (!$eleres) {
@@ -133,7 +133,7 @@ class Programs
 	public function resaveCategories( $id, $cats = array() )
 	{
 		// delete previous
-		$this->db->squery("DELETE FROM ".self::DBXREF." WHERE cikk_id = :cikkid", array(
+		$this->db->squery("DELETE FROM ".self::DBXREF." WHERE cikk_id = :cikkid and ctype = 'program'", array(
 			'cikkid' => $id
 		));
 
@@ -144,7 +144,8 @@ class Programs
 				self::DBXREF,
 				array(
 					'cikk_id' => $id,
-					'cat_id' => $cid
+					'cat_id' => $cid,
+          'ctype' => 'program'
 				)
 			);
 		}
@@ -739,7 +740,7 @@ class Programs
 		FROM
 		".self::DBXREF." as c
 		LEFT OUTER JOIN ".self::DBCAT." as ct ON ct.ID = c.cat_id
-		WHERE 1=1 and ";
+		WHERE 1=1 and ctype = 'program' and ";
 		if ($by_cikk) {
 				$q .= " c.cikk_id = :cikk";
 		}

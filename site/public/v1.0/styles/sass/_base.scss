@@ -654,6 +654,83 @@ header {
 	}
 }
 
+.searcher-block{
+	& > .pw{
+		position: relative;
+	}
+	.searcherwrap{
+		position: absolute;
+		z-index: 10;
+		right: 0;
+		bottom: -50px;
+		height: 50px;
+		background: white;
+
+		& > form {
+			display: -webkit-box;
+	    display: -ms-flexbox;
+	    display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+
+			input[type=text]{
+				height: 50px;
+				line-height: 50px;
+				padding: 0 15px;
+				font-size: 1.2rem;
+				color: black;
+				border: none;
+				background: transparent;
+			}
+		}
+
+		.search-inp-holder{
+			display: none;
+		}
+
+		.search-sender{
+			display: none;
+			button{
+				height: 50px;
+				line-height: 50px;
+				padding: 0 15px;
+				font-size: 1.2rem;
+				color: black;
+				border: none;
+				background: $color-blue-light;
+				color: white;
+				text-transform: uppercase;
+				&:hover{
+					background: $color-blue;
+				}
+			}
+		}
+
+		.toggler{
+			background: $color-green;
+			height: 50px;
+			width: 50px;
+			position: relative;
+			i{
+				color: white;
+				position: absolute;
+				-moz-transform:translate(-50%,-50%);
+				transform:translate(-50%,-50%);
+				left: 50%;
+				top: 50%;
+				font-size: 24px;
+			}
+		}
+
+		&.opened{
+			.search-inp-holder,
+			.search-sender{
+				display: block;
+			}
+		}
+	}
+}
+
 .general-sidebar {
 	width: 20%;
 	float: left;
@@ -1319,6 +1396,11 @@ article.newest{
 				background: #666666;
 				color: white;
 			}
+		}
+		.position{
+			margin: 10px 0 10px 4px;
+			font-size: 0.9rem;
+			color: $color-red;
 		}
 		.bevezeto {
 			font-size: 1.2rem;

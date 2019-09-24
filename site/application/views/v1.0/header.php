@@ -152,6 +152,23 @@
   			</div>
       </div>
     </div>
+    <div class="searcher-block">
+      <div class="pw">
+        <div class="searcherwrap">
+          <form class="" action="/search" method="get">
+            <div class="search-inp-holder">
+              <input type="text" name="src" value="<?=$_GET['src']?>" placeholder="Keresés...">
+            </div>
+            <div class="search-sender">
+              <button type="submit">Keresés</button>
+            </div>
+            <div class="toggler" mb-event="true" data-mb='{ "event": "toggleOnClick", "target" : ".searcherwrap", "searcher": true}'>
+              <i class="fa fa-search"></i>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
   <?php if ( !$this->hideheadimg ): ?>
   <?php
