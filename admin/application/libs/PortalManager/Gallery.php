@@ -280,6 +280,274 @@ class Gallery implements InstallModules
     return $list;
   }
 
+  /**
+  * Simple list gallery
+  **/
+  public function addSimpleGallery( $uid, $data )
+	{
+		$cim = ($data['cim']) ?: false;
+		$eleres = ($data['eleres']) ?: false;
+		$szoveg = ($data['description']) ?: NULL;
+		$belyegkep = ($data['belyegkep']) ?: NULL;
+		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
+		$sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
+
+		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Galéria címét</strong>!"); }
+
+		if (!$eleres) {
+			$eleres = $this->checkEleres( $cim );
+		}
+
+    $upd = array(
+      'author' => $uid,
+      'title' => $cim,
+      'slug' => $eleres,
+      'description' => $szoveg,
+      'belyeg_kep' => $belyegkep,
+      'uploaded' => NOW,
+      'updated_at' => NOW,
+      'lathato' => $lathato,
+      'sorrend' => $sorrend,
+      'filepath' => NULL
+    );
+
+		$this->db->insert(
+			self::DBTABLE,
+      $upd
+		);
+
+		$id = $this->db->lastInsertId();
+
+    // Category insert
+    if ( isset($data['cats']) && !empty($data['cats']) )
+    {
+      foreach ((array)$data['cats'] as $cid)
+      {
+        if ((int)$cid == 0) {
+          continue;
+        }
+
+        $this->db->insert(
+    			self::DBITEMXREF,
+          array(
+            'galeria_id' => $id,
+            'cat_id' => (int)$cid
+          )
+    		);
+      }
+    }
+
+    // Upload images
+    $filepaths = array();
+    $filepaths = (!$filepaths) ? NULL : serialize($filepaths);
+
+    $this->db->update(
+      self::DBTABLE,
+      array(
+        'filepath' => $filepaths
+      ),
+      sprintf("ID = %d", $id)
+    );
+
+		return $id;
+	}
+
+  public function editSimpleGallery( $id, $data )
+  {
+    $cim = ($data['cim']) ?: false;
+    $eleres = ($data['eleres']) ?: false;
+    $szoveg = ($data['description']) ?: NULL;
+    $default_cat = ($data['default_cat']) ?: NULL;
+    $belyegkep = ($data['belyegkep']) ?: NULL;
+    $lathato= ($data['lathato'] == 'on') ? 1 : 0;
+    $sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
+
+    if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Galéria címét</strong>!"); }
+
+    if (!$eleres) {
+      $eleres = $this->checkEleres( $cim );
+    }
+
+    $upd = array(
+      'title' => $cim,
+      'slug' => $eleres,
+      'description' => $szoveg,
+      'belyeg_kep' => $belyegkep,
+      'updated_at' => NOW,
+      'lathato' => $lathato,
+      'sorrend' => $sorrend,
+      'default_cat' => $default_cat
+    );
+
+    $this->db->update(
+      self::DBTABLE,
+      $upd,
+      sprintf("ID = %d", (int)$id)
+    );
+
+    // Category insert
+    if ( isset($data['cats']) && !empty($data['cats']) )
+    {
+      // reset
+      $this->db->squery("DELETE FROM ".self::DBITEMXREF." WHERE galeria_id = :gid", array('gid' => $id));
+
+      foreach ((array)$data['cats'] as $cid)
+      {
+        if ((int)$cid == 0) {
+          continue;
+        }
+        $this->db->insert(
+          self::DBITEMXREF,
+          array(
+            'galeria_id' => $id,
+            'cat_id' => (int)$cid
+          )
+        );
+      }
+    }
+
+    // Upload images
+    $filepaths = array();
+    $filepaths = (!$filepaths) ? NULL : serialize($filepaths);
+
+    $this->db->update(
+      self::DBTABLE,
+      array(
+        'filepath' => $filepaths
+      ),
+      sprintf("ID = %d", $id)
+    );
+
+    return $id;
+  }
+
+  private function checkEleres( $text )
+	{
+		$text = \PortalManager\Formater::makeSafeUrl($text,'');
+
+    $q = "SELECT slug
+			FROM ".self::DBTABLE."
+			WHERE	slug = :text or
+						slug like :textone or
+						slug like :texttwo
+			ORDER BY slug DESC
+			LIMIT 0,1";
+		$qry = $this->db->squery($q, array('text' => $text, 'textone' => $text.'-_', 'texttwo' => $text.'-__' ));
+		$last_text = $qry->fetch(\PDO::FETCH_COLUMN);
+
+		if( $qry->rowCount() > 0 ) {
+			$last_int = (int)end(explode("-",$last_text));
+
+			if( $last_int != 0 ){
+				$last_text = str_replace('-'.$last_int, '-'.($last_int+1) , $last_text);
+			} else {
+				$last_text .= '-1';
+			}
+		} else {
+			$last_text = $text;
+		}
+
+		return $last_text;
+	}
+
+  public function getSimpleGaleria( $id )
+  {
+    $list = array();
+    $qarg = array();
+
+    $groupqry = "SELECT
+      g.*
+    FROM ".self::DBTABLE." as g
+    WHERE 1=1 ";
+
+    $groupqry .= " and g.ID = :id ";
+    $qarg['id'] = $id;
+
+    $groupqry = $this->db->squery( $groupqry, $qarg );
+
+    if ( $groupqry->rowCount() == 0 ) {
+      return $list;
+    }
+
+    $list = $groupqry->fetch(\PDO::FETCH_ASSOC);
+
+    $list['images'] = unserialize($list['filepath']);
+    unset($list['filepath']);
+    $list['in_cats'] = $this->simpleGalleryItemCats( $id, $list['default_cat'] );
+
+    return $list;
+  }
+
+  public function simpleGalleryList( $arg = array() )
+  {
+    $list = array();
+    $qarg = array();
+
+    $groupqry = "SELECT
+      g.*
+    FROM ".self::DBTABLE." as g
+    WHERE 1=1 ";
+
+    if (isset($arg['search']) && !empty($arg['search'])) {
+      $groupqry .= " and g.title LIKE :src";
+      $qarg['src'] = '%'.$arg['search'].'%';
+    }
+
+    if (isset($arg['in_cat']) && !empty($arg['in_cat'])) {
+      $groupqry .= " and :in_cat IN (SELECT cat_id FROM ".self::DBITEMXREF." WHERE galeria_id = g.ID) ";
+      $qarg['in_cat'] = $arg['in_cat'];
+    }
+
+    $groupqry .= " ORDER BY g.sorrend ASC, g.uploaded DESC ";
+
+    $groupqry = $this->db->squery( $groupqry, $qarg );
+
+    if ( $groupqry->rowCount() == 0 ) {
+      return $list;
+    }
+
+    foreach ( $groupqry->fetchAll(\PDO::FETCH_ASSOC) as $d )
+    {
+      $d['images'] = unserialize($d['filepath']);
+      unset($d['filepath']);
+      $d['in_cats'] = $this->simpleGalleryItemCats( $d['ID'], $d['default_cat'] );
+      $list[] = $d;
+    }
+
+    return $list;
+  }
+
+  public function simpleGalleryItemCats( $id, $default_cat = '' )
+  {
+    $list = array();
+    $qarg = array();
+
+    $groupqry = "SELECT
+      x.cat_id,
+      c.neve
+    FROM ".self::DBITEMXREF." as x
+    LEFT OUTER JOIN cikk_kategoriak as c ON c.ID = x.cat_id
+    WHERE 1=1 and x.galeria_id = :gid";
+    $qarg['gid'] = $id;
+
+    $groupqry = $this->db->squery( $groupqry, $qarg );
+
+    if ( $groupqry->rowCount() == 0 ) {
+      return $list;
+    }
+
+    foreach ( $groupqry->fetchAll(\PDO::FETCH_ASSOC) as $d )
+    {
+      $list[$d['cat_id']] = array(
+        'id' => (int)$d['cat_id'],
+        'neve' => $d['neve'],
+        'default' => ($default_cat == $d['cat_id']) ? true: false
+      );
+    }
+
+    return $list;
+  }
+
   public function __destruct()
   {
     $this->db = null;
