@@ -58,7 +58,7 @@ $scats['ids'] = $catids;
                     <label for="cim">Cím*</label>
                       <input type="text"class="form-control" name="cim" id="cim" value="<?=($this->news ? $this->news['title'] : '')?>">
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-5">
                       <label for="eleres">Elérési kulcs: <?=\PortalManager\Formater::tooltip('Hagyja üresen, hogy a rendszer automatikusan generáljon elérési kulcsot. <br><br>Kérjük ne használjon ékezeteket, speciális karaktereket és üres szóközöket.<br> Példa a helyes használathoz: ez_az_elso_bejegyzesem');?></label>
                       <div class="input-group">
                         <span class="input-group-addon">
@@ -68,27 +68,18 @@ $scats['ids'] = $catids;
                       </div>
                   </div>
                   <div class="col-md-1">
-                      <label for="sorrend">Sorrend:</label>
-                      <input type="number" class="form-control" value="<?=($this->news)?$this->news['sorrend']:'100'?>" id="sorrend" name="sorrend" />
-                  </div>
-                  <div class="col-md-1">
                       <label for="lathato">Látható:</label>
                       <input type="checkbox" class="form-control" <?=($this->news && $this->news['lathato'] == '1' ? 'checked="checked"' : '')?> id="lathato" name="lathato" />
                   </div>
                 </div>
                 <br>
                 <div class="row">
-                   <div class="col-md-2">
-                      <label for="belyegkep">Bélyegkép <?=\PortalManager\Formater::tooltip('Ajánlott kép paraméterek:<br>Dimenzió: 1400 x * pixel <br>Fájlméret: max. 1 MB <br><br>A túl nagy fájlméretű képek lassítják a betöltés idejét és a facebook sem tudja időben letölteni, így megosztáskor kép nélkül jelenhet meg a megosztott bejegyzés az idővonalon.');?></label>
-                      <div style="display:block;">
-                          <input type="text" id="belyegkep" name="belyegkep" value="<?=($this->news) ? $this->news['belyeg_kep'] : ''?>" style="display:none;">
-                          <a title="Kép kiválasztása" href="<?=FILE_BROWSER_IMAGE?>&field_id=belyegkep" data-fancybox-type="iframe" class="btn btn-sm btn-default iframe-btn" type="button"><i class="fa fa-search"></i></a>
-                          <span id="url_belyegkep" class="img-selected-thumbnail"><a href="<?=($this->news) ? $this->news['belyeg_kep'] : ''?>" class="zoom"><img src="<?=($this->news) ? $this->news['belyeg_kep'] : ''?>" title="Kiválasztott menükép" alt=""></a></span>
-                          <i class="fa fa-times" title="Kép eltávolítása" id="remove_belyegkep" style="color:red; <?=($this->news && $this->news['belyeg_kep'] ? '' :'display:none;')?>"></i>
-                      </div>
+                  <div class="col-md-2">
+                      <label for="sorrend">Sorrend:</label>
+                      <input type="number" class="form-control" value="<?=($this->news)?$this->news['sorrend']:'100'?>" id="sorrend" name="sorrend" />
                   </div>
 									<?php if ($this->gets[2] == 'szerkeszt'): ?>
-									<div class="col-md-5">
+									<div class="col-md-10">
 										<label for="">Elsődleges kategória</label>
 										<select class="form-control" name="default_cat">
 											<option value="" selected="selected">- Nincs kiválasztva -</option>
@@ -108,6 +99,47 @@ $scats['ids'] = $catids;
                     <label for="szoveg">Galéria leírás</label>
                     <div style="background:#fff;"><textarea name="description" id="description" class="form-control"><?=($this->news ? $this->news['description'] : '')?></textarea></div>
                   </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-md-12">
+                    <label for="ujkepek">Új képek feltöltése a galériába</label>
+                    <input id="ujkepek" type="file" name="images[]" value="" multiple="multiple">
+                  </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="">Galéria képei</label>
+									<?php if ($this->news['images']): ?>
+										<div class="image-set sortable">
+											<?php $ix = 0; foreach ((array)$this->news['images'] as $img): $ix++; ?>
+												<div class="image">
+													<div class="wrapper">
+														<div class="img">
+															<input type="hidden" name="images[<?=$ix?>][0]" value="">
+															<input type="hidden" name="images[<?=$ix?>][1]" value="">
+															<input type="hidden" name="images[<?=$ix?>][2]" value="<?=$img[2]?>">
+															<img src="/src/uploads/<?=$img[2]?>" alt="">
+														</div>
+														<div class="hndler">
+															<div class="">
+																<input type="checkbox" id="im<?=md5($img[2])?>" name="image_delete[<?=$ix?>]" value="<?=$img[2]?>"> <label for="im<?=md5($img[2])?>">törlés</label>
+															</div>
+															<div class="">
+																<input type="radio"  id="imr<?=md5($img[2])?>" <?=($img[2] == $this->news['belyeg_kep'])?'checked="checked"':''?> name="image_belyegkep" value="<?=$img[2]?>"> <label for="imr<?=md5($img[2])?>">bélyegkép</label>
+															</div>
+														</div>
+													</div>
+												</div>
+											<?php endforeach; ?>
+										</div>
+									<?php else: ?>
+										<div class="no-data">
+											Nincsenek feltöltve képek ebbe a galériába!
+										</div>
+									<?php endif; ?>
+                </div>
               </div>
               <br />
               <div class="row floating-buttons">
@@ -138,6 +170,8 @@ $scats['ids'] = $catids;
           $('.type_'+stype).show();
           $('.submit-row').show();
       });
+
+			$('.sortable').sortable({});
 
       $('#remove_url_img').click( function (){
           $('#url_img').find('img').attr('src','').hide();

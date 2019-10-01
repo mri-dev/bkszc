@@ -361,6 +361,7 @@ class Gallery implements InstallModules
     $belyegkep = ($data['belyegkep']) ?: NULL;
     $lathato= ($data['lathato'] == 'on') ? 1 : 0;
     $sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
+    $image_set = array();
 
     if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Galéria címét</strong>!"); }
 
@@ -368,7 +369,71 @@ class Gallery implements InstallModules
       $eleres = $this->checkEleres( $cim );
     }
 
+    // Képek törlése
+    if (!empty($data['image_delete'])) {
+      foreach ( (array)$data['image_delete'] as $di => $path ) {
+        @unlink('src/uploads/'.$path);
+        unset($data['images'][$di]);
+      }
+    }
+
+    // Képek rendezése
+    if ( !empty($data['images']) )
+    {
+      foreach ((array)$data['images'] as $i) {
+        $image_set[] = array(
+          $i[0],
+          $i[1],
+          $i[2]
+        );
+      }
+    }
+
+    // Feltöltése
+    if (isset($_FILES['images']) && !empty($_FILES['images']['name'][0]))
+    {
+      $dir = 'g'.$id;
+      $idir = 'src/uploads/galeriak/'.$dir;
+
+      // Mappa létrehozás / Permission
+      if( !file_exists($idir) ){
+        mkdir( $idir, 0777, true );
+      }
+
+      $mt = explode(" ",str_replace(".","",microtime()));
+      $imgName = \PortalManager\Formater::makeSafeUrl( $eleres.'__'.date('YmdHis').$mt[0] );
+      $img  = \Images::upload(array(
+        'src' => 'images',
+        'upDir' => $idir,
+        'noRoot' => true,
+        'fileName' => $imgName,
+        'maxFileSize' => 10240
+      ));
+      foreach ( (array)$img['allUploadedFiles'] as $i ) {
+        if ($i) {
+          $i = str_replace(array('src/uploads/'), array(''), $i);
+          $image_set[] = array(
+            null,
+            null,
+            $i
+          );
+        }
+      }
+
+      if ( !$belyegkep && $image_set[0] != '' ) {
+        $belyegkep = $image_set[0][2];
+      }
+    }
+
+    if (!empty($image_set)) {
+      $image_set = serialize((array)$image_set);
+    } else {
+      $image_set = NULL;
+    }
+
+
     $upd = array(
+      'filepath' => $image_set,
       'title' => $cim,
       'slug' => $eleres,
       'description' => $szoveg,
@@ -405,18 +470,6 @@ class Gallery implements InstallModules
         );
       }
     }
-
-    // Upload images
-    $filepaths = array();
-    $filepaths = (!$filepaths) ? NULL : serialize($filepaths);
-
-    $this->db->update(
-      self::DBTABLE,
-      array(
-        'filepath' => $filepaths
-      ),
-      sprintf("ID = %d", $id)
-    );
 
     return $id;
   }
