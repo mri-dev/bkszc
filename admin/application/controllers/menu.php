@@ -91,11 +91,6 @@ class menu extends Controller{
 				'admin' => 1
 			)) );
 
-			// Kategória fa betöltés
-			$cat_tree 	= $categories->getTree();
-			// Kategoriák
-			$this->out( 'categories', $cat_tree );
-
 			// Cikk kategória
 			$categories = new Categories(  array( 'db' => $this->db )  );
 			$categories->setTable( 'cikk_kategoriak' );

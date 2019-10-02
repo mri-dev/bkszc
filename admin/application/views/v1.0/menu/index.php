@@ -111,14 +111,14 @@
                 <div class="col-md-12">
                     <label for="cat_select">Kapcsolódó kategória kiválasztása*</label>
                     <select name="cat_elem_id" id="cat_select" class="form-control">
-                        <option value="" selected="selected">&mdash; kérjük válasszon &mdash;</option>
-                        <option value="" disabled="disabled"></option>
-                        <?
-                            while( $this->categories->walk() ):
-                            $cat = $this->categories->the_cat();
-                        ?>
-                        <option value="<?=$cat['ID']?>" <?=($this->menu && $this->menu->getElemId() == $cat['ID'] ? 'selected="selected"':'')?>><? for($s=$cat['deep']; $s>0; $s--){echo '&mdash;';}?><?=$cat['neve']?></option>
-                        <? endwhile; ?>
+											<option value="" selected="selected">&mdash; kérjük válasszon &mdash;</option>
+											<option value="" disabled="disabled"></option>
+											<?
+													while( $this->cikk_categories->walk() ):
+													$cat = $this->cikk_categories->the_cat();
+											?>
+											<option value="<?=$cat['ID']?>" <?=($this->menu && $this->menu->getElemId() == $cat['ID'] ? 'selected="selected"':'')?>><? for($s=$cat['deep']; $s>0; $s--){echo '&mdash;';}?><?=$cat['neve']?></option>
+											<? endwhile; ?>
                     </select>
                     <div class="info">
                         <a href="/kategoriak" target="_blank"><i class="fa fa-gear"></i> <em>kategóriák kezelése</em></a>

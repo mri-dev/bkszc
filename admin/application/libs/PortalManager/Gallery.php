@@ -250,17 +250,21 @@ class Gallery implements InstallModules
     return $list;
   }
 
-  public function getLastGalleries()
+  public function getLastGalleries( $arg = array() )
   {
     $list = array();
 
     $groupqry = "SELECT
       g.*
     FROM ".self::DBTABLE." as g
-    WHERE 1=1
-    ORDER BY g.uploaded DESC
-    LIMIT 0, 10
-    ";
+    WHERE 1=1";
+
+    if (isset($arg['lathato'])) {
+      $groupqry .= " and g.lathato = ".(int)$arg['lathato'];
+    }
+
+    $groupqry .= " ORDER BY g.uploaded DESC";
+    $groupqry .= " LIMIT 0, 10";
 
     $groupqry = $this->db->squery( $groupqry, array('slug' => $slug) );
 
@@ -288,9 +292,9 @@ class Gallery implements InstallModules
 		$cim = ($data['cim']) ?: false;
 		$eleres = ($data['eleres']) ?: false;
 		$szoveg = ($data['description']) ?: NULL;
-		$belyegkep = ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
 		$sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
+    $image_set = array();
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Galéria címét</strong>!"); }
 
@@ -308,7 +312,7 @@ class Gallery implements InstallModules
       'updated_at' => NOW,
       'lathato' => $lathato,
       'sorrend' => $sorrend,
-      'filepath' => NULL
+      'filepath' => NULL,
     );
 
 		$this->db->insert(
@@ -317,6 +321,60 @@ class Gallery implements InstallModules
 		);
 
 		$id = $this->db->lastInsertId();
+
+
+    // Feltöltése
+    if (isset($_FILES['images']) && !empty($_FILES['images']['name'][0]))
+    {
+      $dir = 'g'.$id;
+      $idir = 'src/uploads/galeriak/'.$dir;
+
+      // Mappa létrehozás / Permission
+      if( !file_exists($idir) ){
+        mkdir( $idir, 0777, true );
+      }
+
+      $mt = explode(" ",str_replace(".","",microtime()));
+      $imgName = \PortalManager\Formater::makeSafeUrl( $eleres.'__'.date('YmdHis').$mt[0] );
+      $img  = \Images::upload(array(
+        'src' => 'images',
+        'upDir' => $idir,
+        'noRoot' => true,
+        'fileName' => $imgName,
+        'maxFileSize' => 10240
+      ));
+      foreach ( (array)$img['allUploadedFiles'] as $i ) {
+        if ($i) {
+          $i = str_replace(array('src/uploads/'), array(''), $i);
+          $image_set[] = array(
+            null,
+            null,
+            $i
+          );
+        }
+      }
+
+      if ( !$belyegkep && $image_set[0] != '' ) {
+        $belyegkep = $image_set[0][2];
+      }
+    }
+
+    if (!empty($image_set)) {
+      $image_set = serialize((array)$image_set);
+    } else {
+      $image_set = NULL;
+    }
+
+    $upd = array(
+      'filepath' => $image_set,
+      'belyeg_kep' => $belyegkep,
+    );
+
+    $this->db->update(
+      self::DBTABLE,
+      $upd,
+      sprintf("ID = %d", (int)$id)
+    );
 
     // Category insert
     if ( isset($data['cats']) && !empty($data['cats']) )
@@ -337,18 +395,6 @@ class Gallery implements InstallModules
       }
     }
 
-    // Upload images
-    $filepaths = array();
-    $filepaths = (!$filepaths) ? NULL : serialize($filepaths);
-
-    $this->db->update(
-      self::DBTABLE,
-      array(
-        'filepath' => $filepaths
-      ),
-      sprintf("ID = %d", $id)
-    );
-
 		return $id;
 	}
 
@@ -358,7 +404,6 @@ class Gallery implements InstallModules
     $eleres = ($data['eleres']) ?: false;
     $szoveg = ($data['description']) ?: NULL;
     $default_cat = ($data['default_cat']) ?: NULL;
-    $belyegkep = ($data['belyegkep']) ?: NULL;
     $lathato= ($data['lathato'] == 'on') ? 1 : 0;
     $sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
     $image_set = array();
@@ -367,6 +412,11 @@ class Gallery implements InstallModules
 
     if (!$eleres) {
       $eleres = $this->checkEleres( $cim );
+    }
+
+    // Bélyegkép
+    if (isset($data['image_belyegkep']) && !empty($data['image_belyegkep'])) {
+      $belyegkep = $data['image_belyegkep'];
     }
 
     // Képek törlése
@@ -472,6 +522,26 @@ class Gallery implements InstallModules
     }
 
     return $id;
+  }
+
+  public function deleteSimpleGallery( $id )
+  {
+    $data = $this->getSimpleGaleria( $id );
+
+    // Képek törlése
+    if (!empty($data['images'])) {
+      foreach ( (array)$data['images'] as $di => $path ) {
+        @unlink('src/uploads/'.$path[2]);
+      }
+    }
+
+    // Mappa törlése
+    if (is_dir('src/uploads/galeriak/g'.$id)) {
+      @rmdir('src/uploads/galeriak/g'.$id);
+    }
+
+    $this->db->squery("DELETE FROM ".self::DBTABLE." WHERE ID = :id", array('id' => $id));
+    $this->db->squery("DELETE FROM ".self::DBITEMXREF." WHERE galeria_id = :id", array('id' => $id));
   }
 
   private function checkEleres( $text )

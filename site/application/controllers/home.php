@@ -88,7 +88,9 @@ class home extends Controller{
 
 			// Galériák - friss
 			$galleries = new Gallery(array('db' => $this->db));
-			$newgalleries = $galleries->getLastGalleries();
+			$newgalleries = $galleries->getLastGalleries(array(
+				'lathato' => 1
+			));
 			$this->out( 'newgalleries', $newgalleries );
 
 			$this->out( 'head_img', IMGDOMAIN.$this->view->settings['homepage_coverimg'] );

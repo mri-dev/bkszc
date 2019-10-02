@@ -18,7 +18,7 @@ class Menus
 	private $allowed_menu_type = array(
 		'url' 							=> 'URL',
 		//'kategoria_link' => 'Kategória link',
-		//'kategoria_alkategoria_lista' 	=> 'Kategória alkategória lista',
+		'kategoria_alkategoria_lista' 	=> 'Kategória alkategória listái',
 		'cikk_kategoria_link' => 'Cikk kategória link',
 		'oldal_link' => 'Oldal link',
 		'template' => 'Előformázott tartalom'
@@ -362,26 +362,25 @@ class Menus
 	{
 		switch ( $type ) {
 			case 'kategoria_alkategoria_lista':
+
 				$kat = $this->db->query(sprintf("
-					SELECT 				k.neve,
-										k2.neve as szulo_neve
-					FROM 				shop_termek_kategoriak as k
-					LEFT OUTER JOIN 	shop_termek_kategoriak as k2 ON k2.ID = k.szulo_id
-					WHERE 				k.ID = %d",$item['elem_id']))->fetch(\PDO::FETCH_ASSOC);
+					SELECT
+						k.neve,
+						k.slug as cat_slug
+					FROM cikk_kategoriak as k
+					WHERE	k.ID = %d", $item['elem_id']))->fetch(\PDO::FETCH_ASSOC);
 
 				if( $this->final ) {
 					$item['nev'] = ($item['nev'] ?: $kat['neve']);
 
 					$link = DOMAIN.'termekek/'.\PortalManager\Formater::makeSafeUrl($kat['neve'],'_-'.$item['elem_id']);
-					$item['link'] 	= $link;
 
-					$lista = ( new Categories( array( 'db' => $this->db ) ))->getChildCategories( $item['elem_id'], false );
-					$item['lista'] 	= $lista;
+					$item['link'] 	= $link;;
 				} else {
-					$item['nev'] = ($item['nev'] ?: ($kat['szulo_neve'] ?$kat['szulo_neve'].' / ':'').$kat['neve']).' <span class="menu-type-prefix">(Kiválasztott kategória: <a title="kategória szerkesztése" href=\'/kategoriak/szerkeszt/'.$item['elem_id'].'\'>'.($kat['szulo_neve'] ? $kat['szulo_neve'].' / ' : '').$kat['neve'].'</a>)</span>';
+					$item['nev'] = ($item['nev'] ?: ($kat['szulo_neve'] ? $kat['szulo_neve'] .' / ' : '').$kat['neve']).' - Automatikus lista <span class="menu-type-prefix">(Kiválasztott kategória: <a title="kategória szerkesztése" href=\'/kategoriak/szerkeszt/'.$item['elem_id'].'\'>'.($kat['szulo_neve'] ? $kat['szulo_neve'].' / ' : '').$kat['neve'].'</a>)</span>';
 				}
 
-				break;
+			break;
 			case 'kategoria_link':
 				$kat = $this->db->query(sprintf("
 					SELECT 				k.neve,

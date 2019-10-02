@@ -115,14 +115,14 @@ class galeria extends Controller{
 				case 'torles':
 					if(Post::on('delId')){
 						try{
-							$news->delete($this->view->gets[3]);
+							$news->deleteSimpleGallery( $this->view->gets[3] );
 							Helper::reload('/galeria/');
 						}catch(Exception $e){
 							$this->view->err 	= true;
 							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
 						}
 					}
-					$this->out( 'news', $news->get( $this->view->gets[3]) );
+					$this->out( 'news', $news->getSimpleGaleria( $this->view->gets[3]) );
 				break;
 			}
 		}

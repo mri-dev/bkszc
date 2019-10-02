@@ -136,11 +136,15 @@
     								<div class="inside">
                       <ul>
                       <? foreach($menu['child'] as $child): ?>
+                      <?php if($child['tipus'] == 'kategoria_alkategoria_lista'): ?>
+                        <li>kategoria_alkategoria_lista</li>
+                      <?php else: ?>
                       <li class="<?=$child['css_class']?>">
                         <? if($child['link']): ?><a href="<?=$child['link']?>"><? endif; ?>
                         <span style="<?=$child['css_styles']?>"><?=$child['nev']?></span>
                         <? if($child['link']): ?></a><? endif; ?>
                       </li>
+                      <?php endif; ?>
                       <? endforeach; ?>
                       </ul>
     								</div>

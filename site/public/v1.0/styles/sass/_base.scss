@@ -1731,7 +1731,39 @@ article.newest{
     }
   }
 }
+.singlepage{
+	.main-content{
+		padding: 25px 0 0 0;
+		.page-view{
+			font-size: 1rem;
+			line-height: 1.4;
+			h1{
+				margin: 0 0 0.9rem 0;
+			}
+			h2{
+				margin: 0 0 0.8rem 0;
+			}
+			h3{
+				margin: 0 0 0.7rem 0;
+			}
+			p + p{
+				margin: 20px 0 10px;
+			}
 
+			ol{
+				list-style: decimal;
+				margin: 0 0 15px 25px;
+			}
+			ul {
+				list-style: disc;
+				margin: 0 0 15px 25px;
+			}
+			ul > li {
+				margin: 0 0 8px 0;
+			}
+		}
+	}
+}
 .actual-news-block{
 	border: 1px solid #d9dada;
 	.slick-prev{

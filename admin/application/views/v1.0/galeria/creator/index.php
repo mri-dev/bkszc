@@ -1,17 +1,17 @@
 <div style="float:right;">
 	<a href="/cikkek/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> kategóriák</a>
-	<a href="/galéria/" class="btn btn-default"><i class="fa fa-th"></i> galériák</a>
+	<a href="/galeria/" class="btn btn-default"><i class="fa fa-th"></i> galériák</a>
 </div>
 <h1>Galéria</h1>
 <?=$this->msg?>
 <? if($this->gets[2] == 'torles'): ?>
 <form action="" method="post">
-<input type="hidden" name="delId" value="<?=$this->gets[2]?>" />
+<input type="hidden" name="delId" value="<?=$this->gets[3]?>" />
 <div class="row np">
 	<div class="col-md-12">
     	<div class="con con-del">
             <h2>Galéria törlése</h2>
-            Biztos, hogy törli a kiválasztott galériát?
+            Biztos, hogy törli a(z) <strong><?=$this->news['title']?></strong> galériát? A művelet nem visszavonható és véglegesen törli a képeket és adatokat.
             <div class="row np">
                 <div class="col-md-12 right">
                     <a href="/<?=$this->gets[0]?>/" class="btn btn-danger"><i class="fa fa-times"></i> NEM</a>

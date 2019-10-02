@@ -108,12 +108,15 @@ class cikkek extends Controller{
 				$headimgtitle = (!$is_archiv) ? 'Bejegyzéseink': 'Archívum';
 				if (isset($_GET['date'])) {
 					$headimgtitle .= ' - '.utf8_encode(strftime ('%Y. %B', strtotime($_GET['date'])));
-					$title = $headimgtitle;
+					$title = $headimgtitle . ' | Bejegyzéseink';
 				}
 
 				$this->out( 'head_img_title', $headimgtitle);
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			} else {
+
+				$title = $cat_name.' | Bejegyzéseink';
+				$description = $cat_name.' friss bejegyzései. Kövesd oldalunkat és tájékozódj az újdonságokról!';
 				$this->out( 'head_img_title', (!$is_archiv) ? $cat_name : 'Archívum:'.$this->view->newscatslist[$cat_slug]['neve']  );
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			}
