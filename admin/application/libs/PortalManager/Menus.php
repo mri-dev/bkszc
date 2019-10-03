@@ -254,9 +254,9 @@ class Menus
 
 		// Legfelső színtű menü
 		$qry = "
-			SELECT 			*
-			FROM 			menu
-			WHERE 			ID IS NOT NULL ";
+			SELECT *
+			FROM menu
+			WHERE ID IS NOT NULL ";
 
 		if ( !$top_menu_id ) {
 			$qry .= " and szulo_id IS NULL ";
@@ -358,6 +358,32 @@ class Menus
 		);
 	}
 
+	public function prepareKategoriaAlkategoriaLiElements( $kat_id )
+	{
+		$cats = new Categories(array('db' => $this->db));
+		$cats->setTable( 'cikk_kategoriak' );
+		$cats->setLinkPrefix( 'cikkek/kategoriak/' );
+		$list = $cats->getChildCategories( $kat_id );
+
+		$li = '';
+		foreach ( (array)$list as $l ) {
+			$li .= '<li class="'.(($l['child'] && !empty($l['child']))?'has-child':'').'">';
+			$li .= '<a href="'.$l['link'].'">'.$l['neve'].'</a>';
+			if ($l['child'] && !empty($l['child'])) {
+					$li .= '<div class="sub nav-sub-view"><div class="inside"><ul>';
+					foreach ( (array)$l['child'] as $c ) {
+						$li .= '<li>';
+						$li .= '<a href="'.$c['link'].'">'.$c['neve'].'</a>';
+						$li .= '</li>';
+					}
+					$li .= '</ul></div></div>';
+			}
+			$li .= '</li>';
+		}
+
+		return $li;
+	}
+
 	private function itemTypeAction( $type, $item )
 	{
 		switch ( $type ) {
@@ -372,6 +398,7 @@ class Menus
 
 				if( $this->final ) {
 					$item['nev'] = ($item['nev'] ?: $kat['neve']);
+					$item['kategoria_alkategoria_lista_li'] = $this->prepareKategoriaAlkategoriaLiElements($item['elem_id']);
 
 					$link = DOMAIN.'termekek/'.\PortalManager\Formater::makeSafeUrl($kat['neve'],'_-'.$item['elem_id']);
 

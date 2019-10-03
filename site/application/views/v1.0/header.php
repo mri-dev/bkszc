@@ -130,14 +130,14 @@
   					<li>
   						<a href="<?=($menu['link']?:'')?>">
   							<? if($menu['kep']): ?><img src="<?=\PortalManager\Formater::sourceImg($child['kep'])?>"><? endif; ?>
-  							<?=$menu['nev']?> <? if($menu['child']): ?><i class="fa fa-angle-down"></i><? endif; ?></a>
+  							<?=$menu['nev']?><? if($menu['child']&& false): ?><i class="fa fa-angle-down"></i><? endif; ?></a>
     						<? if($menu['child']): ?>
     						<div class="sub nav-sub-view">
     								<div class="inside">
                       <ul>
-                      <? foreach($menu['child'] as $child): ?>
+                      <? foreach($menu['child'] as $child):  ?>
                       <?php if($child['tipus'] == 'kategoria_alkategoria_lista'): ?>
-                        <li>kategoria_alkategoria_lista</li>
+                        <?php echo $child['kategoria_alkategoria_lista_li']; ?>
                       <?php else: ?>
                       <li class="<?=$child['css_class']?>">
                         <? if($child['link']): ?><a href="<?=$child['link']?>"><? endif; ?>

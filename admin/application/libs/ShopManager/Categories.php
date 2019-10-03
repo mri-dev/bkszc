@@ -18,6 +18,7 @@ class Categories
 	private $walk_step = 0;
 	private $parent_data = false;
 	public $table = 'shop_termek_kategoriak';
+	public $link_prefix = '/termekek/';
 	public $authorid = 0;
 	public $onlyauthor = false;
 	public $ws = false;
@@ -41,6 +42,13 @@ class Categories
 	public function setTable( $table )
 	{
 		$this->table = $table;
+
+		return $this;
+	}
+
+	public function setLinkPrefix( $prefix )
+	{
+		$this->link_prefix = $prefix;
 
 		return $this;
 	}
@@ -206,7 +214,7 @@ class Categories
 		foreach ( $top_cat_data as $top_cat ) {
 			$this->tree_items++;
 
-			$top_cat['link'] = DOMAIN.'termekek/'.\PortalManager\Formater::makeSafeUrl($top_cat['neve'],'_-'.$top_cat['ID']);
+			$top_cat['link'] = DOMAIN.$this->link_prefix.\PortalManager\Formater::makeSafeUrl($top_cat['neve'],'_-'.$top_cat['ID']);
 
 			$this->tree_steped_item[] = $top_cat;
 
@@ -298,7 +306,8 @@ class Categories
 		if( $child_cat_qry->rowCount() == 0 ) return false;
 		foreach ( $child_cat_data as $child_cat ) {
 			$this->tree_items++;
-			$child_cat['link'] 	= DOMAIN.'termekek/'.\PortalManager\Formater::makeSafeUrl($child_cat['neve'],'_-'.$child_cat['ID']);
+			//$child_cat['link'] 	= DOMAIN.$this->link_prefix.\PortalManager\Formater::makeSafeUrl($child_cat['neve'],'_-'.$child_cat['ID']);
+			$child_cat['link'] 	= DOMAIN.$this->link_prefix.$child_cat['slug'];
 			$child_cat['kep'] 	= ($child_cat['kep'] == '') ? '/src/images/no-image.png' : $child_cat['kep'];
 			$this->tree_steped_item[] = $child_cat;
 

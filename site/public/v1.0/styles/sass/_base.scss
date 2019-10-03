@@ -417,9 +417,30 @@ header {
 				align-items: center;
 				height: 50px;
 
+				li{
+					position: relative;
+					&.has-child{
+						&:after{
+							position: absolute;
+							content:"\f105";
+							top: 50%;
+							right: 8px;
+					    color: black;
+					    font-size: 18px;
+							transform:translateY(-50%);
+							font-family: 'FontAwesome';
+							pointer-events: none;
+						}
+					}
+				}
+
 				& > li {
 					height: 50px;
 					position: relative;
+					& > .sub {
+						border-top: 4px solid $color-blue-light !important;
+						margin-top: -4px;
+					}
 					 & > a{
 						 text-transform: uppercase;
 						 font-size: 0.95em;
@@ -489,13 +510,13 @@ header {
 						}
 					}
 
-					& > .sub{
+					.sub{
 						display: none;
 						left: 0;
 						position: absolute;
 						background: rgba(250, 250, 250, 0.85);
 						min-width: 230px;
-						box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.61);
+						box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.60);
 						border: 0.5px solid $color-grey;
 						border-top: none;
 						z-index: 1000;
@@ -504,31 +525,58 @@ header {
 							padding: 0;
 
 							ul li {
+								position: relative;
 								a{
 									display: block;
 									padding: 8px 15px;
 									color: $color-grey-dark;
 									text-decoration: none;
-									font-size: 0.9em;
+								  font-size: 1rem;
+								  line-height: 1.3;
+									padding-right: 28px;
 									&:hover{
-										background: darken($color-grey, 20%);
-										color: white;
+										background: white;
+										color: black;
+										box-shadow: inset -25px 0 0 $color-blue-light;
+									}
+								}
+
+								.sub {
+									position: absolute;
+									z-index: 1001;
+									left: 100%;
+									top: 0;
+								}
+
+								&.has-child:hover{
+									&:after{
+										color: white !important;
+									}
+								}
+								&:not(.has-child):hover{
+									&:after{
+										position: absolute;
+										content:"\f105";
+										top: 50%;
+										right: 8px;
+								    font-size: 18px;
+										transform:translateY(-50%);
+										font-family: 'FontAwesome';
+										pointer-events: none;
+										color: white !important;
 									}
 								}
 							}
 						}
 					}
-
-					&:hover{
-						& > .sub{
-							display: block;
-						}
-					}
-
 					&:last-child {
 						border-right: none !important;
 					}
 				}
+			}
+
+			li:hover > .sub {
+				display: block !important;
 			}
 		}
 
@@ -711,6 +759,7 @@ header {
 			height: 50px;
 			width: 50px;
 			position: relative;
+			cursor: pointer;
 			i{
 				color: white;
 				position: absolute;
