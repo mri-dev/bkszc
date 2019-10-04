@@ -3,6 +3,7 @@ use PortalManager\Pagination;
 use PortalManager\News;
 use ShopManager\Categories;
 use ShopManager\Category;
+use PortalManager\Gallery;
 
 class kereses extends Controller{
 		function __construct(){
@@ -27,6 +28,7 @@ class kereses extends Controller{
 			// KERESÉS
 			////////////////////////////////////////
 			$lisgroup = (!empty($_GET['group'])) ? $_GET['group'] : 'article';
+
 			// Cikk keresés
 			if ($lisgroup == 'article')
 			{
@@ -39,10 +41,52 @@ class kereses extends Controller{
 					'search' => $search,
 					'page' => (isset($_GET['page'])) ? (int)str_replace('P','', $_GET['page']) : 1
 				);
+				if (isset($_GET['orderby']) && !empty($_GET['orderby'])) {
+					if ($_GET['orderby'] == 'date') {
+						$arg['order']['by'] = 'h.idopont';
+						$arg['order']['how'] = $_GET['order'];
+					}
+					if ($_GET['orderby'] == 'name') {
+						$arg['order']['by'] = 'h.cim';
+						$arg['order']['how'] = $_GET['order'];
+					}
+				}
 				$list = $news->getTree( $arg );
 				$page_current = $news->getCurrentPage();
 				$page_max = $news->getMaxPage();
 				$bodyclass .= ' articles';
+			}
+
+			// Galéria keresés
+			if ($lisgroup == 'gallery')
+			{
+				$news = new Gallery( array( 'db' => $this->db ) );
+				$search = array();
+				$search['text'] = $_GET['src'];
+				$search['method'] = (!isset($_GET['src_type'])) ? 'ft' : $_GET['src_type'];
+				print_r($_GET['cats']);
+				$arg = array(
+					'limit' => 10,
+					'search' => $search,
+					'page' => (isset($_GET['page'])) ? (int)str_replace('P','', $_GET['page']) : 1
+				);
+				if (isset($_GET['cats']) && !empty($_GET['cats'])) {
+					$arg['in_cat'] = (array)$_GET['cats'];
+				}
+				if (isset($_GET['orderby']) && !empty($_GET['orderby'])) {
+					if ($_GET['orderby'] == 'date') {
+						$arg['order']['by'] = 'g.uploaded';
+						$arg['order']['o'] = $_GET['order'];
+					}
+					if ($_GET['orderby'] == 'name') {
+						$arg['order']['by'] = 'g.title';
+						$arg['order']['o'] = $_GET['order'];
+					}
+				}
+				$list = $news->simpleGalleryList( $arg );
+				$page_current = $news->page_current;
+				$page_max = $news->page_max;
+				$bodyclass .= ' galleries';
 			}
 
 			////////////////////////////////////////

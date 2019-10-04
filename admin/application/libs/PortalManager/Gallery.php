@@ -12,6 +12,9 @@ class Gallery implements InstallModules
 
   private $db = null;
   public $settings = array();
+  public $item_limit_per_page = 10;
+  public $page_current = 1;
+  public $page_max = 1;
 
   function __construct( $arg = array() )
   {
@@ -606,24 +609,97 @@ class Gallery implements InstallModules
     $list = array();
     $qarg = array();
 
-    $groupqry = "SELECT
+    $groupqry = "SELECT SQL_CALC_FOUND_ROWS
       g.*
     FROM ".self::DBTABLE." as g
     WHERE 1=1 ";
 
+    /*
     if (isset($arg['search']) && !empty($arg['search'])) {
       $groupqry .= " and g.title LIKE :src";
       $qarg['src'] = '%'.$arg['search'].'%';
     }
+    */
+
+    // Keresés
+    if ( isset($arg['search']) && !empty($arg['search']) )
+    {
+      $src = '';
+
+      if ( $arg['search']['text'] == '' ) {
+        $src .= ' and 2=1';
+      } else {
+        switch ($arg['search']['method'])
+        {
+          // bármilyen szóra
+          case 'ee':
+            $xtext = explode(" ", trim($arg['search']['text']));
+            $src .= ' and (';
+            foreach ((array)$xtext as $xt) {
+              $src .= "(g.title LIKE '%".trim($xt)."%' or g.description LIKE '%".trim($xt)."%') or ";
+            }
+            $src = rtrim($src, ' or ');
+            $src .= ')';
+          break;
+          case 'ae':
+            $xtext = explode(" ", trim($arg['search']['text']));
+            $src .= ' and (';
+            foreach ((array)$xtext as $xt) {
+              $src .= "(g.title LIKE '%".trim($xt)."%' or g.description LIKE '%".trim($xt)."%') and ";
+            }
+            $src = rtrim($src, ' and ');
+            $src .= ')';
+          break;
+          // Alap és teljes szöveg
+          default: case 'ft':
+            $src .= " and (g.title LIKE '%".$arg['search']['text']."%' or g.description LIKE '%".$arg['search']['text']."%')";
+          break;
+        }
+      }
+
+      $groupqry .= $src;
+		}
 
     if (isset($arg['in_cat']) && !empty($arg['in_cat'])) {
-      $groupqry .= " and :in_cat IN (SELECT cat_id FROM ".self::DBITEMXREF." WHERE galeria_id = g.ID) ";
-      $qarg['in_cat'] = $arg['in_cat'];
+      if (is_array($arg['in_cat'])) {
+        $catqry = ' and (';
+        $cidii = 0;
+        foreach ((array)$arg['in_cat'] as $cid ) {
+          if($cid == '') continue;
+          $cidii++;
+          $catqry .= (int)$cid." IN (SELECT cat_id FROM ".self::DBITEMXREF." WHERE galeria_id = g.ID) or ";
+        }
+        if ($cidii == 0) {
+          $catqry .= '2=1';
+        } else {
+          $catqry = rtrim($catqry, ' or ');
+        }
+        $catqry .= ')';
+        $groupqry .= $catqry;
+      } else {
+        $groupqry .= " and :in_cat IN (SELECT cat_id FROM ".self::DBITEMXREF." WHERE galeria_id = g.ID) ";
+        $qarg['in_cat'] = $arg['in_cat'];
+      }
     }
 
-    $groupqry .= " ORDER BY g.sorrend ASC, g.uploaded DESC ";
+    if (isset($arg['order']) && !empty($arg['order'])) {
+      $oo = (in_array($arg['order']['o'], array('ASC','DESC'))) ? $arg['order']['o'] : 'DESC';
+      $oo = (in_array($arg['order']['by'], array('date','name'))) ? $arg['order']['by'] : 'g.uploaded';
+      $groupqry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['o'];
+    } else {
+      $groupqry .= " ORDER BY g.sorrend ASC, g.uploaded DESC ";
+    }
+
+    // LIMIT
+    $current_page = ($arg['page'] ?: 1);
+    $start_item = $current_page * $this->item_limit_per_page - $this->item_limit_per_page;
+    $groupqry .= " LIMIT ".$start_item.",".$this->item_limit_per_page.";";
 
     $groupqry = $this->db->squery( $groupqry, $qarg );
+
+    $this->sitem_numbers = $this->db->query("SELECT FOUND_ROWS();")->fetch(\PDO::FETCH_COLUMN);
+    $this->page_max = ceil($this->sitem_numbers / $this->item_limit_per_page);
+    $this->page_current = $current_page;
 
     if ( $groupqry->rowCount() == 0 ) {
       return $list;
@@ -647,7 +723,8 @@ class Gallery implements InstallModules
 
     $groupqry = "SELECT
       x.cat_id,
-      c.neve
+      c.neve,
+      c.bgcolor
     FROM ".self::DBITEMXREF." as x
     LEFT OUTER JOIN cikk_kategoriak as c ON c.ID = x.cat_id
     WHERE 1=1 and x.galeria_id = :gid";
@@ -664,6 +741,7 @@ class Gallery implements InstallModules
       $list[$d['cat_id']] = array(
         'id' => (int)$d['cat_id'],
         'neve' => $d['neve'],
+        'bgcolor' => $d['bgcolor'],
         'default' => ($default_cat == $d['cat_id']) ? true: false
       );
     }

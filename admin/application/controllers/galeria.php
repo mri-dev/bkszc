@@ -47,7 +47,7 @@ class galeria extends Controller{
         $arg['in_cat'] = (int)$_COOKIE['filter_kategoria'];
       }
       if (isset($_COOKIE['filter_nev'])) {
-        $arg['search'] = $_COOKIE['filter_nev'];
+        //$arg['search'] = $_COOKIE['filter_nev'];
       }
 
       $galleries = $this->Galleries->simpleGalleryList( $arg );

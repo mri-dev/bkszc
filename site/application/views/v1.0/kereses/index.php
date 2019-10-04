@@ -40,9 +40,9 @@
             <div class="w">
               <label for="src_group">Témakör / Csoport</label>
               <select id="src_group" class="form-control" name="group">
-                <option value="article">Cikkek / Bejegyzések</option>
-                <option value="gallery">Galériák</option>
-                <option value="programs">Események</option>
+                <option value="article" <?=(!isset($_GET['group']) || $_GET['group'] == 'article')?'selected="selected"':''?>>Cikkek / Bejegyzések</option>
+                <option value="gallery" <?=($_GET['group'] == 'gallery')?'selected="selected"':''?>>Galériák</option>
+                <option value="programs" <?=($_GET['group'] == 'programs')?'selected="selected"':''?>>Események</option>
               </select>
             </div>
             <div class="w">
@@ -63,7 +63,19 @@
     </form>
   </div>
   <div class="results">
-    <h2>Keresés eredménye a következőre: <strong>„<?=$_GET['src']?>”</strong></h2>
+    <h2>Keresés eredménye <?php
+      switch ($this->listgroup) {
+        case 'article':
+          echo 'a bejegyzések között';
+        break;
+        case 'gallery':
+          echo 'a galériák között';
+        break;
+        case 'programs':
+          echo 'az események között';
+        break;
+      }
+    ?>: <strong>„<?=$_GET['src']?>”</strong></h2>
     <?php echo $this->render('kereses/'.$this->listgroup); ?>
   </div>
 </div>
