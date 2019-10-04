@@ -3,6 +3,7 @@ use PortalManager\Admin;
 use PortalManager\Gallery;
 use ShopManager\Categories;
 use ShopManager\Category;
+use PortalManager\Pagination;
 
 class galeria extends Controller{
 		function __construct(){
@@ -42,16 +43,33 @@ class galeria extends Controller{
       $categories = new Categories( array( 'db' => $this->db ) );
       $categories->setTable( 'cikk_kategoriak' );
 
-      $arg = array();
+      $arg = array(
+				'page' => (isset($this->gets[1])) ? (int)str_replace('P','', $this->gets[1]) : 1
+			);
+			$arg['limit'] = 25;
       if (isset($_COOKIE['filter_kategoria'])) {
         $arg['in_cat'] = (int)$_COOKIE['filter_kategoria'];
       }
       if (isset($_COOKIE['filter_nev'])) {
-        //$arg['search'] = $_COOKIE['filter_nev'];
+        $arg['search'] = array(
+					'text' => $_COOKIE['filter_nev'],
+					'src_type' => 'ee'
+				);
       }
 
       $galleries = $this->Galleries->simpleGalleryList( $arg );
+			$page_current = $this->Galleries->page_current;
+			$page_max = $this->Galleries->page_max;
+
       $this->out( 'galleries', $galleries);
+			$this->out( 'navigator', (new Pagination(array(
+				'class' 	=> 'pagination pagination-sm center',
+				'current' 	=> $page_current,
+				'max' 		=> $page_max,
+				'root' => '/galeria',
+				'after' => false,
+				'item_limit'=> 12
+			)))->render() );
 
       $cat_tree 	= $categories->getTree();
       // Kategoriák

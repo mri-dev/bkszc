@@ -64,7 +64,6 @@ class kereses extends Controller{
 				$search = array();
 				$search['text'] = $_GET['src'];
 				$search['method'] = (!isset($_GET['src_type'])) ? 'ft' : $_GET['src_type'];
-				print_r($_GET['cats']);
 				$arg = array(
 					'limit' => 10,
 					'search' => $search,

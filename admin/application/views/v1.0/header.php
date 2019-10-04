@@ -175,7 +175,7 @@
                 <?php if ($this->adm->user['user_group'] == 'admin' || $this->adm->hasPermission($this->adm->user['permissions'], array('users'))): ?>
                   <li class="<?=($this->gets[0] == 'felhasznalok')?'on':''?>"><a href="/felhasznalok" title="Felhasználók"><span class="ni">2</span><i class="fa fa-group"></i> Felhasználók</a></li>
                 <?php endif; ?>
-                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('belsouzenetek'))): ?>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('belsouzenetek')) && false): ?>
                   <li class="<?=($this->gets[0] == 'uzenetek')?'on':''?>"><a href="/uzenetek" title="Üzenetek"><span class="ni">8</span><i class="fa fa-envelope-o"></i> Üzenetek</a></li>
                 <?php endif; ?>
                 <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('menu'))): ?>
@@ -184,7 +184,7 @@
                 <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('oldalak'))): ?>
                   <li class="<?=($this->gets[0] == 'oldalak')?'on':''?>"><a href="/oldalak" title="Oldalak"><span class="ni">5</span><i class="fa fa-file-o"></i> Oldalak</a></li>
                 <?php endif; ?>
-                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('emails'))): ?>
+                <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('emails')) && false): ?>
                   <li class="<?=($this->gets[0] == 'emails')?'on':''?>"><a href="/emails" title="Email sablonok"><span class="ni">8</span><i class="fa fa-envelope"></i> Email sablonok</a></li>
                 <?php endif; ?>
                 <?php if ($this->adm->hasPermission($this->adm->user['permissions'], array('galeria'))): ?>

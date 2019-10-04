@@ -609,6 +609,10 @@ class Gallery implements InstallModules
     $list = array();
     $qarg = array();
 
+    if (!empty($arg['limit'])) {
+      $this->item_limit_per_page = (int)$arg['limit'];
+    }
+
     $groupqry = "SELECT SQL_CALC_FOUND_ROWS
       g.*
     FROM ".self::DBTABLE." as g
