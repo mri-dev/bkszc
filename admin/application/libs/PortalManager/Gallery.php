@@ -15,6 +15,7 @@ class Gallery implements InstallModules
   public $item_limit_per_page = 10;
   public $page_current = 1;
   public $page_max = 1;
+  public $sitem_numbers = 0;
 
   function __construct( $arg = array() )
   {
@@ -665,7 +666,7 @@ class Gallery implements InstallModules
 		}
 
     if (isset($arg['in_cat']) && !empty($arg['in_cat'])) {
-      if (is_array($arg['in_cat'])) {
+      if (is_array($arg['in_cat']) && $arg['in_cat']['0'] != '') {
         $catqry = ' and (';
         $cidii = 0;
         foreach ((array)$arg['in_cat'] as $cid ) {
@@ -680,7 +681,7 @@ class Gallery implements InstallModules
         }
         $catqry .= ')';
         $groupqry .= $catqry;
-      } else {
+      } else if($arg['in_cat']['0'] != ''){
         $groupqry .= " and :in_cat IN (SELECT cat_id FROM ".self::DBITEMXREF." WHERE galeria_id = g.ID) ";
         $qarg['in_cat'] = $arg['in_cat'];
       }

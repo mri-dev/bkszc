@@ -22,7 +22,7 @@ class Programs
 	private $walk_step = 0;
 	private $selected_news_id = false;
 	private $item_limit_per_page = 50;
-	private $sitem_numbers = 0;
+	public $sitem_numbers = 0;
 
 	function __construct( $news_id = false, $arg = array() )
 	{
@@ -241,8 +241,65 @@ class Programs
       $qry .= " and substr(h.idopont,6,2) = '".$arg['in_month']."'";
     }
 
-		if (isset($arg['in_cat']) && !empty($arg['in_cat']) && $arg['in_cat'] != 0) {
-			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM ".self::DBXREF." WHERE cikk_id = h.ID)";
+    if (isset($arg['in_cat']) && !empty($arg['in_cat'])) {
+      if (is_array($arg['in_cat'])) {
+        $catqry = ' and (';
+        $cidii = 0;
+        foreach ((array)$arg['in_cat'] as $cid ) {
+          if($cid == '') continue;
+          $cidii++;
+          $catqry .= (int)$cid." IN (SELECT cat_id FROM ".self::DBXREF." WHERE ctype = 'program' and cikk_id = h.ID) or ";
+        }
+        if ($cidii == 0) {
+          $catqry .= '2=1';
+        } else {
+          $catqry = rtrim($catqry, ' or ');
+        }
+        $catqry .= ')';
+        $qry .= $catqry;
+      } else {
+        $qry .= " and :in_cat IN (SELECT cat_id FROM ".self::DBXREF." WHERE ctype = 'program' and cikk_id = h.ID) ";
+        $qarg['in_cat'] = $arg['in_cat'];
+      }
+    }
+
+    // Keresés
+    if ( isset($arg['search']) && !empty($arg['search']) )
+    {
+      $src = '';
+
+      if ( $arg['search']['text'] == '' ) {
+        $src .= ' and 2=1';
+      } else {
+        switch ($arg['search']['method'])
+        {
+          // bármilyen szóra
+          case 'ee':
+            $xtext = explode(" ", trim($arg['search']['text']));
+            $src .= ' and (';
+            foreach ((array)$xtext as $xt) {
+              $src .= "(h.cim LIKE '%".trim($xt)."%' or h.szoveg LIKE '%".trim($xt)."%' or h.bevezeto LIKE '%".trim($xt)."%') or ";
+            }
+            $src = rtrim($src, ' or ');
+            $src .= ')';
+          break;
+          case 'ae':
+            $xtext = explode(" ", trim($arg['search']['text']));
+            $src .= ' and (';
+            foreach ((array)$xtext as $xt) {
+              $src .= "(h.cim LIKE '%".trim($xt)."%' or h.szoveg LIKE '%".trim($xt)."%' or h.bevezeto LIKE '%".trim($xt)."%') and ";
+            }
+            $src = rtrim($src, ' and ');
+            $src .= ')';
+          break;
+          // Alap és teljes szöveg
+          default: case 'ft':
+            $src .= " and (h.cim LIKE '%".$arg['search']['text']."%' or h.szoveg LIKE '%".$arg['search']['text']."%' or h.bevezeto LIKE '%".$arg['search']['text']."%')";
+          break;
+        }
+      }
+
+      $qry .= $src;
 		}
 
     if ( isset($arg['date']) ) {

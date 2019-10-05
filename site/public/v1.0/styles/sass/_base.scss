@@ -1441,9 +1441,29 @@ article.newest{
 				right: 0;
 				top: -4px;
 				font-size: 1.1rem;
-				padding: 10px;
+				padding: 0;
 				background: #666666;
 				color: white;
+
+				.in-date{
+					float: left;
+					background: #666666;
+					display: -webkit-box;
+				  display: -ms-flexbox;
+				  display: flex;
+					flex-wrap: nowrap;
+					span.hour {
+						background: $color-green;
+					}
+					span.hour_end {
+						background: $color-red;
+					}
+					& > span {
+						display: block;
+						padding: 8px;
+						color: white;
+					}
+				}
 			}
 		}
 		.position{
@@ -2625,6 +2645,11 @@ body.searchresult{
 				text-transform: none;
 			}
 		}
+		h2 + .pager-info{
+			margin: 20px 0 25px 0;
+	    font-size: 1.1rem;
+	    color: #7a7a7a;
+		}
 		.result-list{
 			margin: 15px 0;
 			article{
@@ -2695,6 +2720,29 @@ body.searchresult{
 			article + article {
 				border-top: 4px solid #f0f0f0;
 			}
+		}
+	}
+}
+
+.search .group-events{
+	.in-date{
+		float: left;
+		margin: 0 5px 0 0;
+		background: #666666;
+		display: -webkit-box;
+	  display: -ms-flexbox;
+	  display: flex;
+		flex-wrap: nowrap;
+		span.hour {
+			background: $color-green;
+		}
+		span.hour_end {
+			background: $color-red;
+		}
+		& > span {
+			display: block;
+			padding: 4px;
+			color: white;
 		}
 	}
 }

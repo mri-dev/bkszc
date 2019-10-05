@@ -69,8 +69,17 @@
       <article class="read">
         <div class="wrapper">
           <div class="title">
+            <?php
+            $date_start = $this->news->getIdopont('Y.m.d.');
+            $date_end = ($this->news->getEndIdopont()) ? $this->news->getEndIdopont('Y.m.d.') : false;
+            $start_end_date_same = ($date_end && $date_end === $date_start) ? true : false;
+            ?>
             <h1><?php echo $this->news->getTitle(); ?></h1>
-            <div class="date"><i class="fa fa-clock-o style-blue"></i> <?php echo $this->news->getIdopont('Y. m. d.'); ?></div>
+            <div class="date">
+              <span class="in-date"><span title="Esemény kezdete"><i class="fa fa-clock-o"></i> <?php echo $date_start; $hour = $this->news->getIdopont('H:i'); ?></span> <?php if($hour != '00:00'): ?><span class="hour" title="Esemény kezdete"><?=$hour?></span>
+                <?php if($date_end && !$start_end_date_same): ?> <span title="Esemény vége">&mdash; <?=$date_end?></span><? if($this->news->getEndIdopont('H:i') != '00:00'):?><span class="hour_end" title="Esemény vége"><?=$this->news->getEndIdopont('H:i')?></span><? endif;?><? endif;?>
+              <?=($date_end && $start_end_date_same)?'<span title="Esemény vége" class="hour_end">'.$this->news->getEndIdopont('H:i').'</span>':''?><? endif; ?></span>
+            </div>
             <?php $helyszin = $this->news->getHelyszin();  ?>
             <?php if (!empty($helyszin)): ?>
             <div class="position">

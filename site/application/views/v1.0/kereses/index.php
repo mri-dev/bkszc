@@ -76,6 +76,9 @@
         break;
       }
     ?>: <strong>„<?=$_GET['src']?>”</strong></h2>
+    <div class="pager-info">
+      <? if($this->page_max > 0): ?><?=$this->page_max?> / <?=$this->page_current?>. oldal &mdash; <? endif; ?><strong><?=$this->total_result?> db keresési eredmény.</strong>
+    </div>
     <?php echo $this->render('kereses/'.$this->listgroup); ?>
   </div>
 </div>

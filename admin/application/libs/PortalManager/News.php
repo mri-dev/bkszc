@@ -24,7 +24,7 @@ class News
 	private $walk_step = 0;
 	private $selected_news_id = false;
 	private $item_limit_per_page = 50;
-	private $sitem_numbers = 0;
+	public $sitem_numbers = 0;
   public $tematic_cikk_slugs = array('boltok', 'intezmenyek', 'vendeglatas', 'turizmus', 'szolgaltatasok', 'latnivalok', 'tura-utvonal');
 
 	function __construct( $news_id = false, $arg = array() )
