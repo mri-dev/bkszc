@@ -380,37 +380,6 @@
                     </div>
                 </div>
             </div>
-            <br>
-            <a name="apilog"></a>
-            <div class="con">
-                <h3>Webshop API tranzakció log</h3>
-                <? if($_GET['showApiLog'] == '1'): ?>
-                <div class="api-log-cont overflowed">
-                    <table class="table table-bordered termeklista">
-                        <thead>
-                            <tr>
-                                <th width="150">Időpont</th>
-                                <th>Parancs</th>
-                                <th>JSON parancs</th>
-                                <th>API válasz</th>
-                            </tr>
-                        </thead>
-                         <tbody>
-                        <? foreach ( $this->api_log[data] as $d ) { ?>
-                            <tr>
-                                <td class="center"><?=\PortalManager\Formater::dateFormat($d['idopont'], $this->settings['date_format'])?></td>
-                                <td class="center"><?=$d[command]?></td>
-                                <td><div class="jsoncommand"><span class="st"><?=wordwrap($d['parancs_json'], 150, '<br>', true)?></span><span class="nl"><?=nl2br($d['parancs_json'])?></span></div></td>
-                                <td><div class="jsoncommand"><span class="st"><?=wordwrap($d['valasz_json'], 150, '<br>', true)?></span><span class="nl"><?=nl2br($d['valasz_json'])?></span></div></td>
-                            </tr>
-                        <? } ?>
-                        </tbody>
-                    </table>
-                </div>
-                <? else: ?>
-                <a href="/beallitasok/?showApiLog=1#apilog"><strong>API log megtekintése</strong></a>
-                <? endif; ?>
-            </div>
         </form>
     </div>
 </div>
