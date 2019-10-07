@@ -59,7 +59,6 @@ class Controller {
           $this->view->adm->logged = $this->AdminUser->isLogged();
         }
 
-
         $this->User = new Users(array(
           'db' => $this->db,
           'view' => $this->view,

@@ -3,6 +3,11 @@ $(function(){
 	fixSlideWidth();
 	getLocation();
 
+	$('*[jOpen]').openPage({
+		overlayed 	: true,
+		path 		: '<?=AJAX_BOX?>'
+	});
+
 	$.cookieAccepter('/p/adatvedelmi-tajekoztato/');
 
 	var transports_c 			= $('.transports');
@@ -311,7 +316,7 @@ $(function(){
 								});
 								$('body').addClass('mobiltoggled');
 							}
-							
+
 							$('.mb-tgl-close').removeClass('opened');
 							t.addClass('opened');
 						}
@@ -750,4 +755,19 @@ function showPosition(position) {
 	        $.cookie( 'geo_countrycode', result.countryCode );
 	    });
 	}
+}
+
+function searchItem(e){
+	var srcString = e.find('input[type=text]').val();
+	$.post('<?=AJAX_POST?>',{
+		type: 'log',
+		mode: 'searching',
+		val: srcString
+	},function(re){
+		document.location.href='/kereses/'+srcString;
+	},"html");
+}
+function prepareHelpdeskHeaderSearch( form ) {
+	var src= $(form).find('input').val();
+	document.location.href='/tudastar#?tags='+src;
 }

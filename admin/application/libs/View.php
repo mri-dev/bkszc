@@ -101,13 +101,22 @@
 			return '<meta name="'.$name.'" content="'.$content.'" />'."\n\r";
 		}
 
+		public function switchJSAsync( $key )
+		{
+			if ($key === false) {
+				$this->jsassync = false;
+			} else {
+				$this->jsassync = $key;
+			}
+		}
+
 		function addJS($file, $type = false, $source = true, $off_dev_timestamp = false){
 			if($source){
 				$wt = (!$type) ? JS.$file.'.js' : $file ;
-				return '<script type="text/javascript" src="'.$wt.''.( (DEVMODE === true && !$off_dev_timestamp ) ? '?t='.uniqid():'' ).'"></script>'."\n\r";
+				return '<script '.(($this->jsassync && $this->jsassync !== false)?$this->jsassync:'').' type="text/javascript" src="'.$wt.''.( (DEVMODE === true && !$off_dev_timestamp ) ? '?t='.uniqid():'' ).'"></script>'."\n\r";
 			}else{
 				$wt = (!$type) ? SJS.$file.'.js' : $file ;
-				return '<script type="text/javascript" src="'.$wt.''.( (DEVMODE === true && !$off_dev_timestamp ) ? '?t='.uniqid():'' ).'"></script>'."\n\r";
+				return '<script '.(($this->jsassync && $this->jsassync !== false)?$this->jsassync:'').' type="text/javascript" src="'.$wt.''.( (DEVMODE === true && !$off_dev_timestamp ) ? '?t='.uniqid():'' ).'"></script>'."\n\r";
 			}
 		}
 

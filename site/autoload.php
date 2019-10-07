@@ -23,12 +23,11 @@ spl_autoload_register( function ($class) {
     $class = str_replace('\\', '/', $class);
 
     if ( file_exists(LIBS.$class.'.php')) {
-      require LIBS.$class.'.php';
-      return;
-    } 
+      if (!class_exists($class)) {
+        require LIBS.$class.'.php';
+      }
+    }
   }
-
-
   // get the relative class name
   $relative_class = substr($class, $len);
   // replace the namespace prefix with the base directory, replace namespace
@@ -38,9 +37,7 @@ spl_autoload_register( function ($class) {
   // if the file exists, require it
 
   $file = substr( $file, 0 );
-  if (file_exists($file)) {    
+  if (file_exists($file)) {
     require $file;
   }
-
 });
-
