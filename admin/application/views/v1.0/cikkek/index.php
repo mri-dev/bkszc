@@ -39,7 +39,7 @@
 								<select class="form-control"  name="kategoria">
 				        	<option value="" selected="selected"># Mind</option>
 		            	<?	while( $this->categories->walk() ): $cat = $this->categories->the_cat(); ?>
-		                <option value="<?=$cat['ID']?>" <?=($cat['ID'] == $_COOKIE['filter_kategoria'])?'selected':''?>><?=$cat['neve']?></option>
+		                <option value="<?=$cat['ID']?>" <?=($cat['ID'] == $_COOKIE['filter_kategoria'])?'selected':''?>><?=str_repeat('&mdash;',$cat['deep']).' '.$cat['neve']?></option>
 									<? endwhile; ?>
 		            </select>
               </div>
@@ -62,7 +62,11 @@
             <div class="row deep<?=$news['deep']?> markarow  <?=($this->news && $this->gets[1] == 'szerkeszt' && $this->news->getId() == $news['ID'] ? 'on-edit' : '')?> <?=($this->news && $this->gets[1] == 'torles' && $this->news->getId() == $news['ID'] ? 'on-del' : '')?>">
             	<div class="col-md-5">
                   <div class="img-thb">
-                      <a href="<?=$news['belyeg_kep']?>" class="zoom"><img src="<?=$news['belyeg_kep']?>" alt=""></a>
+										<?php if ( $news['belyeg_kep'] != '' ): ?>
+											<a href="<?=ADMROOT.UPLOADS.$news['belyeg_kep']?>" class="zoom"><img src="<?=ADMROOT.UPLOADS.$news['belyeg_kep']?>" alt=""></a>
+										<?php else: ?>
+											<a href="<?=ADMROOT.'src/images/no-image.jpg'?>" class="zoom"><img src="<?=ADMROOT.'src/images/no-image.jpg'?>" alt="Nincs kép"></a>
+										<?php endif; ?>
                   </div>
                 	<strong><?=$news[cim]?></strong>
                   <div class="subline"><a target="_blank" class="url" href="<?=HOMEDOMAIN?><?=$url?>" class="news-url"><i title="<?=HOMEDOMAIN?>" class="fa fa-home"></i> <?=$url?></a></div>
@@ -96,7 +100,7 @@
            	</div>
             <? endwhile; else:?>
             	<div class="noItem">
-                	Nincs létrehozott hír!
+                	Nincs megjeleníthető tartalom!
                 </div>
             <? endif; ?>
         </div>

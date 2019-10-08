@@ -29,16 +29,21 @@
   <div class="row-neg">
     <div class="row">
       <div class="col-md-3">
-				<div class="con cat-tree-list">
-          <h2>Kategóriába csatolás</h2>
-          <?php if ( $this->categories ): ?>
-            <?php while( $this->categories->walk() ):
-            $cat = $this->categories->the_cat(); ?>
-            <div class="deep<?php echo $cat['deep']; ?>">
-              <input type="checkbox" class="cont-binder" data-cont-value="<?=$cat['slug']?>" id="cats<?=$cat['ID']?>" name="cats[]" value="<?=$cat['ID']?>" <?=(($this->news && in_array($cat['ID'], $scats['ids'])) || in_array($cat['ID'], $_POST['cats']) )?'checked="checked"':''?>> <label for="cats<?=$cat['ID']?>"><?=$cat['neve']?></label>
-            </div>
-            <?php endwhile; ?>
-          <?php endif; ?>
+				<div class="con np">
+					<div class="head">
+						<h2>Kategóriába csatolás</h2>
+						<input type="text" filter-input=".cat-tree-list > div" class="form-control" placeholder="Szűrő...">
+					</div>
+					<div class="cat-tree-list">
+	          <?php if ( $this->categories ): ?>
+	            <?php while( $this->categories->walk() ):
+	            $cat = $this->categories->the_cat(); ?>
+	            <div class="deep<?php echo $cat['deep']; ?>" filter-input-text="<?=$cat['neve']?>">
+	              <input type="checkbox" class="cont-binder" data-cont-value="<?=$cat['slug']?>" id="cats<?=$cat['ID']?>" name="cats[]" value="<?=$cat['ID']?>" <?=(($this->news && in_array($cat['ID'], $scats['ids'])) || in_array($cat['ID'], $_POST['cats']) )?'checked="checked"':''?>> <label for="cats<?=$cat['ID']?>" title="<?=$cat['parent_row_title']?>"><?=$cat['neve']?></label>
+	            </div>
+	            <?php endwhile; ?>
+	          <?php endif; ?>
+					</div>
         </div>
       </div>
     	<div class="col-md-9">

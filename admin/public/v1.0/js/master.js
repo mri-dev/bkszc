@@ -5,6 +5,27 @@ $(function(){
 		$('.'+key).slideToggle(200);
 	});
 
+	$('*[filter-input]').each(function(i,e){
+		var etarget = $(e).attr('filter-input');
+		var eles = $(etarget+'[filter-input-text]');
+
+		$(e).bind('keyup', function(ev){
+			ev.preventDefault();
+			ev.stopPropagation();
+			var stext = $(this).val();
+			var find = RegExp(stext,'gi');
+			eles.each(function(fi,fe){
+				var ft = $(fe).attr('filter-input-text');
+				var match = find.test(ft);
+				if (match) {
+					$(fe).show();
+				} else {
+					$(fe).hide();
+				}
+			});
+		});
+	});
+
 	getNotifications();
 	startReceiveNotification( 10000 );
 

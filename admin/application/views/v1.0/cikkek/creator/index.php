@@ -29,16 +29,22 @@
   <div class="row-neg">
     <div class="row">
       <div class="col-md-3">
-        <div class="con cat-tree-list">
-          <h2>Kategóriába csatolás</h2>
-          <?php if ( $this->categories ): ?>
-            <?php while( $this->categories->walk() ):
-            $cat = $this->categories->the_cat(); ?>
-            <div class="deep<?php echo $cat['deep']; ?>">
-              <input type="checkbox" class="cont-binder" data-cont-value="<?=$cat['slug']?>" id="cats<?=$cat['ID']?>" name="cats[]" value="<?=$cat['ID']?>" <?=(($this->news && in_array($cat['ID'], $scats['ids'])) || in_array($cat['ID'], $_POST['cats']) )?'checked="checked"':''?>> <label for="cats<?=$cat['ID']?>"><?=$cat['neve']?></label>
-            </div>
-            <?php endwhile; ?>
-          <?php endif; ?>
+
+        <div class="con np">
+					<div class="head">
+						<h2>Kategóriába csatolás</h2>
+						<input type="text" filter-input=".cat-tree-list > div" class="form-control" placeholder="Szűrő...">
+					</div>
+					<div class="cat-tree-list">
+	          <?php if ( $this->categories ): ?>
+	            <?php while( $this->categories->walk() ):
+	            $cat = $this->categories->the_cat(); ?>
+	            <div class="deep<?php echo $cat['deep']; ?>" filter-input-text="<?=$cat['neve']?>">
+	              <input type="checkbox" class="cont-binder" data-cont-value="<?=$cat['slug']?>" id="cats<?=$cat['ID']?>" name="cats[]" value="<?=$cat['ID']?>" <?=(($this->news && in_array($cat['ID'], $scats['ids'])) || in_array($cat['ID'], $_POST['cats']) )?'checked="checked"':''?>> <label for="cats<?=$cat['ID']?>" title="<?=$cat['parent_row_title']?>"><?=$cat['neve']?></label>
+	            </div>
+	            <?php endwhile; ?>
+	          <?php endif; ?>
+					</div>
         </div>
 
 				<div class="con cont-option" data-cont-option="intezmenyek,boltok,vendeglatas">
@@ -131,15 +137,23 @@
                    <div class="col-md-2">
                       <label for="belyegkep">Bélyegkép <?=\PortalManager\Formater::tooltip('Ajánlott kép paraméterek:<br>Dimenzió: 1400 x * pixel <br>Fájlméret: max. 1 MB <br><br>A túl nagy fájlméretű képek lassítják a betöltés idejét és a facebook sem tudja időben letölteni, így megosztáskor kép nélkül jelenhet meg a megosztott bejegyzés az idővonalon.');?></label>
                       <div style="display:block;">
-                          <input type="text" id="belyegkep" name="belyegkep" value="<?=($this->news) ? $this->news->getImage() : ''?>" style="display:none;">
                           <a title="Kép kiválasztása" href="<?=FILE_BROWSER_IMAGE?>&field_id=belyegkep" data-fancybox-type="iframe" class="btn btn-sm btn-default iframe-btn" type="button"><i class="fa fa-search"></i></a>
-                          <span id="url_belyegkep" class="img-selected-thumbnail"><a href="<?=($this->news) ? $this->news->getImage() : ''?>" class="zoom"><img src="<?=($this->news) ? $this->news->getImage() : ''?>" title="Kiválasztott menükép" alt=""></a></span>
+                          <span id="url_belyegkep" class="img-selected-thumbnail"><a title="<?=($this->news && $this->news->getImage())?UPLOADS.$this->news->getImage():''?>" href="<?=($this->news) ? ADMROOT.UPLOADS.$this->news->getImage() : ''?>" class="zoom"><img src="<?=($this->news) ? ADMROOT.UPLOADS.$this->news->getImage() : ''?>" title="Kiválasztott menükép" alt=""></a></span>
                           <i class="fa fa-times" title="Kép eltávolítása" id="remove_belyegkep" style="color:red; <?=($this->news && $this->news->getImage() ? '' :'display:none;')?>"></i>
                       </div>
                   </div>
                   <div class="col-md-10">
-                      <label for="bevezeto">Bevezető szöveg (a listázásban jelenik meg)</label>
-                      <div style="background:#fff;"><textarea name="bevezeto" id="bevezeto" class="form-control no-editor"><?=($this->news ? $this->news->getDescription() : '')?></textarea></div>
+                      <label for="bevezeto">Bevezető szöveg - abstract (a listázásban jelenik meg)</label>
+                      <div style="background:#fff;"><textarea style="min-height: 80px;" name="bevezeto" id="bevezeto" class="form-control no-editor"><?=($this->news ? $this->news->getDescription() : '')?></textarea></div>
+											<br>
+											<label for="belyegkep">Bélyegkép URL</label>
+											<div class="input-group">
+                        <span class="input-group-addon">
+                          <i class="fa fa-home" title="<?=ADMROOT.UPLOADS?>"></i>
+                        </span>
+                        <input type="text" class="form-control" id="belyegkep" name="belyegkep" value="<?=($this->news) ? $this->news->getImage() : ''?>" style="display:block;">
+                      </div>
+
                   </div>
               </div>
               <br />
@@ -237,8 +251,8 @@
           $('.submit-row').show();
       });
 
-      $('#remove_url_img').click( function (){
-          $('#url_img').find('img').attr('src','').hide();
+      $('#remove_belyegkep').click( function (){
+          $('#url_belyegkep').find('img').attr('src','').hide();
           $('#belyegkep').val('');
           $(this).hide();
       });
@@ -302,6 +316,7 @@
 
     function responsive_filemanager_callback(field_id){
         var imgurl = $('#'+field_id).val();
+				 $('#'+field_id).val(imgurl.replace('/src/uploads/', ''));
         $('#url_'+field_id).find('img').attr('src',imgurl).show();
         $('#remove_'+field_id).show();
     }

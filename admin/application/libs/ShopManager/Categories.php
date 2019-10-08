@@ -215,6 +215,7 @@ class Categories
 			$this->tree_items++;
 
 			$top_cat['link'] = DOMAIN.$this->link_prefix.\PortalManager\Formater::makeSafeUrl($top_cat['neve'],'_-'.$top_cat['ID']);
+			$top_cat['parent_row_title'] = $this->buildParentRowTitles($top_cat['ID']);
 
 			$this->tree_steped_item[] = $top_cat;
 
@@ -309,6 +310,7 @@ class Categories
 			//$child_cat['link'] 	= DOMAIN.$this->link_prefix.\PortalManager\Formater::makeSafeUrl($child_cat['neve'],'_-'.$child_cat['ID']);
 			$child_cat['link'] 	= DOMAIN.$this->link_prefix.$child_cat['slug'];
 			$child_cat['kep'] 	= ($child_cat['kep'] == '') ? '/src/images/no-image.png' : $child_cat['kep'];
+			$child_cat['parent_row_title'] = $this->buildParentRowTitles($child_cat['ID']);
 			$this->tree_steped_item[] = $child_cat;
 
 			$child_cat['child'] = $this->getChildCategories($child_cat['ID'], $arg);
@@ -317,6 +319,23 @@ class Categories
 
 		return $tree;
 
+	}
+
+	public function buildParentRowTitles( $id )
+	{
+		$title = '';
+
+		$parent = $this->getCategoryParentRow( $id, 'neve' );
+
+		if ($parent) {
+			$parent = array_reverse($parent);
+			foreach ((array)$parent as $p) {
+				$title .= $p.' / ';
+			}
+			$title = rtrim($title,' / ');
+		}
+
+		return $title;
 	}
 
 

@@ -28,7 +28,8 @@ class cikkek extends Controller{
 			}
 
 			// Szűrő mentése
-			if(Post::on('filterList')){
+			if(Post::on('filterList'))
+			{
 				$filtered = false;
 
 				if($_POST['nev'] != ''){
@@ -71,7 +72,10 @@ class cikkek extends Controller{
 				$arg['in_cat'] = (int)$_COOKIE['filter_kategoria'];
 			}
 			if (isset($_COOKIE['filter_nev'])) {
-				$arg['search'] = $_COOKIE['filter_nev'];
+				$arg['search'] = array(
+					'text' => $_COOKIE['filter_nev'],
+					'how' => 'ee'
+				);
 			}
 			$page_tree 	= $news->getTree( $arg );
 			// Hírek
