@@ -86,27 +86,34 @@
       <div class="flex">
         <div class="logo">
           <a href="<?=$this->settings['page_url']?>"><img src="<?=IMG?>gk_logo.svg" style="height:80px;" alt="<?=$this->settings['page_title']?>"></a>
-          <img class="bkszc" title="Budapesti Komplex Szakképzési Centrum" src="<?=IMG?>bkszc_logo.svg" style="height:30px;" alt="bkszc">
+          <img class="bkszc" title="Budapesti Komplex Szakképzési Centrum" src="<?=IMG?>bkszc_logo.svg" style="height:38px;" alt="bkszc">
         </div>
         <div class="actions">
           <div class="kreta">
-            <a href="https://bvszc-gundel.e-kreta.hu/" target="_blank" title="Kréta E-napló">
+            <a href="https://bkszc-gundel.e-kreta.hu" target="_blank" title="Kréta E-napló">
               <div class="ico">
                 <img src="<?=IMG?>icons/ico-kreta.svg" alt="Kréta E-napló">
               </div>
             </a>
           </div>
           <div class="office">
-            <a href="/kapcsolat" title="Belépés az Office levelezőrendszerbe">
+            <a href="http://outlook.com/gundeliskola.hu" target="_blank" title="Belépés az Office levelezőrendszerbe">
               <div class="ico">
                 <img src="<?=IMG?>icons/ico-office.svg" alt="Office">
               </div>
             </a>
           </div>
           <div class="facebook">
-            <a href="/kapcsolat" title="Facebook oldalunk">
+            <a href="<?=$this->settings['social_facebook_link']?>" target="_blank" title="Facebook oldalunk">
               <div class="ico">
                 <i class="fa fa-facebook"></i>
+              </div>
+            </a>
+          </div>
+          <div class="instagram">
+            <a href="<?=$this->settings['social_instagram_link']?>" target="_blank" title="Instagram oldalunk">
+              <div class="ico">
+                <i class="fa fa-instagram"></i>
               </div>
             </a>
           </div>

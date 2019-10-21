@@ -307,6 +307,13 @@
                         <input type="text" id="basics_social_facebook_link" name="social_facebook_link" class="form-control" value="<?=$this->settings['social_facebook_link']?>">
                     </div>
                 </div>
+								<br>
+                <div class="row np">
+                    <div class="col-md-12">
+                        <label for="basics_social_instagram_link"><i class="fa fa-instagram"></i> Social - Instagram fiók link</label>
+                        <input type="text" id="basics_social_instagram_link" name="social_instagram_link" class="form-control" value="<?=$this->settings['social_instagram_link']?>">
+                    </div>
+                </div>
                 <br>
                 <div class="row np">
                     <div class="col-md-12">
@@ -372,6 +379,26 @@
                     </div>
                 </div>
                 <br>
+                <div class="divider"></div>
+                <br>
+                <h3>Kiemelt partnerek logók</h3>
+                <br>
+								<?php for ($i=1; $i <= 4 ; $i++) { ?>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="basics_tamogato_logo_t<?=$i?>">Logó #<?=$i?></label>
+												<div class="input-group">
+                            <input type="text" id="tamogato_logo_t<?=$i?>" name="tamogato_logo_t<?=$i?>" class="form-control" value="<?=$this->settings['tamogato_logo_t'.$i]?>">
+                            <div class="input-group-addon"><a title="Logó kiválasztása a galériából" href="<?=FILE_BROWSER_IMAGE?>&field_id=tamogato_logo_t<?=$i?>" data-fancybox-type="iframe" class="iframe-btn" ><i class="fa fa-link"></i></a></div>
+                        </div>
+                    </div>
+										<div class="col-md-6" style="padding-left: 10px;">
+                        <label for="basics_tamogato_logo_turl<?=$i?>">Logó #<?=$i?> - URL</label>
+                        <input type="text" id="basics_tamogato_logo_turl<?=$i?>" name="tamogato_logo_turl<?=$i?>" class="form-control" value="<?=$this->settings['tamogato_logo_turl'.$i]?>">
+                    </div>
+                </div>
+                <br>
+								<?php } ?>
                 <div class="divider"></div>
                 <br>
                 <div class="row np">

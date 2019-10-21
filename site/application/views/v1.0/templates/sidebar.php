@@ -8,17 +8,21 @@
   <div class="sidebar-block partner-list">
     <h3>Támogatóink - Partnereink</h3>
     <div class="holder">
-      <?php if (false): ?>
+      <?php if (true): ?>
       <div class="logos">
-        <?php for ($i=0; $i < 4 ; $i++) { ?>
+        <?php for ($i=1; $i <=4 ; $i++) { $plogo = $this->settings['tamogato_logo_t'.$i]; if($plogo == '') continue; ?>
         <div class="logo">
           <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
-            <a href="#"><img src="http://cp.bkszc.ideasandbox.eu//src/uploads/boritokepek/home-borito.jpg" alt=""></a>
+            <?php if ($this->settings['tamogato_logo_turl'.$i] != ''): ?>
+              <a href="<?=$this->settings['tamogato_logo_turl'.$i]?>" target="_blank"><img src="<?=ADMROOT.$plogo?>" alt="Partner logo"></a>
+            <?php else: ?>
+              <img src="<?=ADMROOT.$plogo?>" alt="Partner logo">
+            <?php endif; ?>
           </div>
         </div>
         <?php } ?>
       </div>
-      <?php endif; ?>      
+      <?php endif; ?>
       <?php if ( $this->partnereink_news->tree_items > 0 ): ?>
       <div class="partner-links">
         <?php while ( $this->partnereink_news->walk() ) { $this->partnereink_news->the_news(); ?>
