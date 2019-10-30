@@ -61,13 +61,16 @@ class News
 		$cim 	= ($data['cim']) ?: false;
 		$eleres = ($data['eleres']) ?: false;
 		$szoveg = ($data['szoveg']) ?: NULL;
+    $kep 	= ($data['belyegkep']) ?: NULL;
 		$bevezeto = ($data['bevezeto']) ?: NULL;
+		$content_after_szoveg = ($data['content_after_szoveg']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
 		$archiv = ($data['archiv']) ? 1 : 0;
 		$sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
     $archivalva = NULL;
     $optional = $data['optional'];
     $optional_data = array();
+    $forrasinfo = ($data['forrasinfo']) ?: NULL;
 
 		if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Cikk címét</strong>!"); }
 
@@ -84,12 +87,40 @@ class News
       }
     }
 
+    // new downloads
+    if (isset($data['newdownloads']) && $data['newdownloads']['name'][0] != '')
+    {
+      $dli = -1;
+      foreach ( (array)$data['newdownloads'] as $dl )
+      {
+        $dli++;
+        $name = $data['newdownloads']['name'][$dli];
+        $file_tmp = $_FILES['downloads']['tmp_name']['file'][$dli];
+        $file_err = $_FILES['downloads']['error']['file'][$dli];
+        $file_name = uniqid().'_'.basename($_FILES['downloads']['name']['file'][$dli]);
+
+        if ( !empty($name) && !empty($file_tmp) && $file_err == \UPLOAD_ERR_OK ) {
+          if(move_uploaded_file( $file_tmp, 'src/uploaded_files/'.$file_name )){
+            usleep(500);
+            $data['downloads']['name'][] = $name;
+            $data['downloads']['file'][] = 'src/uploaded_files/'.$file_name;
+          }
+        }
+      }
+    }
+
+    $downloads_raw = $this->prepareRAWDownloads($data['downloads']);
+    $downloads = ($downloads_raw) ? serialize($downloads_raw) : NULL;
+
     $upd = array(
       'cim' => $cim,
       'hashkey' => md5(uniqid()),
+      'belyeg_kep' => $kep,
       'eleres' => $eleres,
-      'szoveg' => $szoveg,
-      'bevezeto' => $bevezeto,
+      'szoveg' => addslashes($szoveg),
+      'bevezeto' => addslashes($bevezeto),
+      'content_after_szoveg' => addslashes($content_after_szoveg),
+      'linkek' => $downloads,
       'idopont' => NOW,
       'letrehozva' => NOW,
       'lathato' => $lathato,
@@ -98,7 +129,8 @@ class News
       'optional_maps' => ($optional_data['maps'] != '') ? $optional_data['maps'] : NULL,
       'optional_logo' => ($optional_data['logo'] != '') ? $optional_data['logo'] : NULL,
       'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
-      'sorrend' => $sorrend
+      'sorrend' => $sorrend,
+      'forrasinfo' => $forrasinfo,
     );
 
 		$this->db->insert(
@@ -136,6 +168,7 @@ class News
 		$eleres = ($data['eleres']) ?: false;
 		$szoveg = ($data['szoveg']) ?: NULL;
 		$bevezeto = ($data['bevezeto']) ?: NULL;
+		$content_after_szoveg = ($data['content_after_szoveg']) ?: NULL;
 		$kep 	= ($data['belyegkep']) ?: NULL;
 		$lathato= ($data['lathato']) ? 1 : 0;
 		$archiv = ($data['archiv']) ? 1 : 0;
@@ -211,8 +244,9 @@ class News
       'cim' => $cim,
       'eleres' => $eleres,
       'belyeg_kep' => $kep,
-      'szoveg' => $szoveg,
-      'bevezeto' => $bevezeto,
+      'szoveg' => addslashes($szoveg),
+      'bevezeto' => addslashes($bevezeto),
+      'content_after_szoveg' => addslashes($content_after_szoveg),
       'idopont' => NOW,
       'lathato' => $lathato,
       'optional_contacts' => ($optional_data['contacts']) ? json_encode($optional_data['contacts'], \JSON_UNESCAPED_UNICODE) : NULL,
