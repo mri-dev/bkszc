@@ -197,7 +197,7 @@
               <li class="div"></li>
               <?php foreach ($this->modules as $module): ?>
                 <?php if (empty($module['jogkor']) || $this->adm->hasPermission($this->adm->user['permissions'], explode(',',$module['jogkor']))): ?>
-                  <li class="<?=($this->gets[0] == $module['menu_slug'])?'on':''?>"><a href="/<?=$module['menu_slug']?>" title="<?=$module['menu_title']?>"><span class="ni"><?=$module['ID']?></span><i class="fa fa-<?=$module['faico']?>"></i> <?=$module['menu_title']?></a></li>
+                  <li class="<?=(strpos(explode("?", $_SERVER['REQUEST_URI'], 2)[0], $module['menu_slug']) !== false )?'on':''?>"><a href="<?=$module['menu_slug']?>" title="<?=$module['menu_title']?>"><span class="ni"><?=$module['ID']?></span><i class="fa fa-<?=$module['faico']?>"></i> <?=$module['menu_title']?></a></li>
                 <?php endif; ?>
               <?php endforeach; ?>
               <?php endif; ?>
