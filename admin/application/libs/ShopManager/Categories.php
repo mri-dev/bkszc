@@ -206,6 +206,7 @@ class Categories
 		}
 
 		$qry .= " ORDER BY cat.sorrend ASC, cat.ID ASC;";
+		//echo $qry;
 		$top_cat_qry 	= $this->db->query($qry);
 		$top_cat_data 	= $top_cat_qry->fetchAll(\PDO::FETCH_ASSOC);
 

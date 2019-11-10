@@ -838,8 +838,8 @@ header {
         /* line 444, sass/_base.scss */
         header .bottom .nav > ul > li > a {
           text-transform: uppercase;
-          font-size: 0.95em;
-          padding: 0 10px;
+          font-size: 1.25em;
+          padding: 0 20px;
           text-decoration: none;
           display: block;
           height: 50px;
@@ -899,7 +899,7 @@ header {
           position: absolute;
           background: rgba(250, 250, 250, 0.85);
           min-width: 230px;
-          box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.61);
+          box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.6);
           border: 0.5px solid #d9dada;
           border-top: none;
           z-index: 1000; }
