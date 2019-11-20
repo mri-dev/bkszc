@@ -105,8 +105,14 @@ class Controller {
           // redirector
           if ( defined('PRODUCTIONSITE') )
           {
-            $redrirector = new Redirector('shop', ltrim($_SERVER['REQUEST_URI'], '/'), array('db' => $this->db));
+            $redrirector = new Redirector('web', ltrim($_SERVER['REQUEST_URI'], '/'), array('db' => $this->db));
             $redrirector->start();
+            $goto = $redrirector->redirect();
+            if ($goto) {
+              header("HTTP/1.1 301 Moved Permanently");
+              header("Location: ".$goto);
+              exit();
+            }
           }
 
           $templates = new Template( VIEW . 'templates/' );
