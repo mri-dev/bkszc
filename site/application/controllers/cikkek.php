@@ -86,6 +86,10 @@ class cikkek extends Controller{
 			// Kategória adatok
 			$catdata = $this->db->squery("SELECT ID, neve, szulo_id FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
 			$cat_id = (int)$catdata['ID'];
+			$cat_parent_row = $news->parentCategoryData($cat_id);
+			$cat_parent_row = array_reverse($cat_parent_row);
+			array_pop($cat_parent_row);
+			$this->out('cat_parent_row', $cat_parent_row);
 			$cat_name = $catdata['neve'];
 			$this->out( 'currentcat', array(
 				'name' => $catdata['neve'],

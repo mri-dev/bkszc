@@ -2,6 +2,7 @@
 namespace PortalManager;
 
 use PortalManager\Formater;
+use ShopManager\Categories;
 
 /**
 * class News
@@ -33,6 +34,7 @@ class News
 		if ( $news_id ) {
 			$this->selected_news_id = $news_id;
 		}
+    $this->categories = new Categories(array('db' => $this->db));
 	}
 
 	public function get( $news_id_or_slug )
@@ -347,6 +349,38 @@ class News
 		$this->db->query(sprintf("DELETE FROM hirek WHERE ID = %d", $del_id));
 	}
 
+  function parentCategoryData( $id )
+  {
+    $row = array();
+		$has_parent = true;
+		$limit = 10;
+
+		$sid = $id;
+
+		while( $has_parent && $limit > 0 ) {
+			$q 		= "SELECT ".( ($return_row) ? $return_row.', szulo_id, deep' : '*' )." FROM cikk_kategoriak WHERE ID = ".$sid.";";
+			$qry 	= $this->db->query($q);
+			$data 	= $qry->fetch(\PDO::FETCH_ASSOC);
+			$sid = $data['szulo_id'];
+
+			if( is_null( $data['szulo_id'] ) ) {
+				$has_parent = false;
+			}
+
+			if( (int)$data['deep'] >= $deep_allow_under ) {
+				if (!$return_row) {
+					$row[] = $data;
+				} else {
+					$row[] = $data[$return_row];
+				}
+			}
+
+			$limit--;
+		}
+
+		return $row;
+  }
+
 	/**
 	 * Hír fa kilistázása
 	 * @param int $top_page_id Felső Hír ID meghatározása, nem kötelező. Ha nincs megadva, akkor
@@ -400,7 +434,15 @@ class News
     }
 
 		if (isset($arg['in_cat']) && !empty($arg['in_cat']) && $arg['in_cat'] != 0) {
-			$qry .= " and ".$arg['in_cat']." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID)";
+      $cats = $this->categories->getCategoryChildIDS($arg['in_cat'], true);
+      if (is_array($cats)) {
+        $qry .= " and(";
+        foreach ($cats as $cid) {
+          $qry .= $cid." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID) or ";
+        }
+        $qry = rtrim($qry, " or ");
+        $qry .= ")";
+      }
 		}
 
     // Keresés

@@ -49,6 +49,9 @@ class Redirector
 
 	public function redirect()
 	{
+		if (!$this->has_red) {
+			return false;
+		}
 		if (strpos($this->target_url, 'http://') === 0) {
 			return $this->target_url;
 		}

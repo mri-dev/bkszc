@@ -196,6 +196,7 @@ class Categories
 		}
 
 		// ID SET
+
 		if( isset($arg['id_set']) && count($arg['id_set']) )
 		{
 			$qry .= " and cat.ID IN (".implode(",",$arg['id_set']).") ";
@@ -339,6 +340,35 @@ class Categories
 		return $title;
 	}
 
+	public function getCategoryChildIDS( $parent = 0 )
+	{
+		$ids = array();
+
+		if ($parent == 0) {
+			return 0;
+		}
+		$ids[] = $parent;
+
+
+		$qry = $this->db->squery("SELECT * FROM cikk_kategoriak WHERE szulo_id = :szid", array('szid' => $parent));
+
+		if ($qry->rowCount() == 0) {
+			return $ids;
+		}
+
+		while( $data = $qry->fetch(\PDO::FETCH_ASSOC) ){
+			$ids[] = $data['ID'];
+			$child = $this->getCategoryChildIDS( $data['ID'] );
+			if ($child) {
+				$ids = array_merge($ids, $child);
+			}
+		}
+
+		$ids = array_unique($ids);
+
+		return $ids;
+	}
+
 
 	/**
 	 * Kategória szülő listázása
@@ -356,11 +386,9 @@ class Categories
 		$sid = $id;
 
 		while( $has_parent && $limit > 0 ) {
-
 			$q 		= "SELECT ".( ($return_row) ? $return_row.', szulo_id, deep' : '*' )." FROM ".$this->table." WHERE ID = ".$sid.";";
 			$qry 	= $this->db->query($q);
 			$data 	= $qry->fetch(\PDO::FETCH_ASSOC);
-
 			$sid = $data['szulo_id'];
 
 			if( is_null( $data['szulo_id'] ) ) {

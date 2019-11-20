@@ -1,5 +1,18 @@
 <div class="articles-header">
 	<h1><?=$this->head_img_title?></h1>
+	<?php if ($this->cat_parent_row): ?>
+	<div class="navi">
+		<ul class="cat-nav">
+			<li><a href="/"><i class="fa fa-home"></i></a></li>
+			<?php if (!$is_tematic): ?>
+			<li><a href="/cikkek">Cikkek</a></li>
+			<?php endif; ?>
+			<?php foreach ( (array)$this->cat_parent_row as $cat ):?>
+			<li><a href="<?=($is_tematic)?'/':'/cikkek/kategoriak/'?><?=$cat['slug']?>"><?=$cat['neve']?></a></li>
+			<?php endforeach; ?>
+		</ul>
+	</div>
+	<?php endif; ?>
 </div>
 <div class="news-page<?=($this->is_archiv)?' archive-list':''?>">
 		<? if( $this->news ):
