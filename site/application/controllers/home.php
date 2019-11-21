@@ -24,7 +24,7 @@ class home extends Controller{
 				'page' 	=> 1,
 				'hide_archiv' => true,
 				'hide_offline' => true,
-				'in_cat' => 10,
+				'in_cat' => 5,
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'
@@ -50,7 +50,6 @@ class home extends Controller{
 				'page' 	=> 1,
 				'hide_archiv' => true,
 				'hide_offline' => true,
-				'in_cat' => 12,
 				'order' => array(
 					'by' => 'letrehozva',
 					'how' => 'DESC'
