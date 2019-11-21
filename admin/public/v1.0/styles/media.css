@@ -301,7 +301,7 @@ body.blured-bg #content .container-fluid{
 	padding:0;
 	position:absolute;
 	left:0;
-	z-index:100;
+    z-index: 10;
 }
 #content .slideMenu .menu{
 	margin-top:5px;

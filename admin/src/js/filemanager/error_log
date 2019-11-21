@@ -1,0 +1,5 @@
+[21-Nov-2019 22:24:03 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function mb_http_output() in /home/ideasandbox/bkszc/admin/src/js/filemanager/config/config.php:7
+Stack trace:
+#0 /home/ideasandbox/bkszc/admin/src/js/filemanager/dialog.php(4): include()
+#1 {main}
+  thrown in /home/ideasandbox/bkszc/admin/src/js/filemanager/config/config.php on line 7

@@ -144,7 +144,7 @@
                   </div>
                   <div class="col-md-10">
                       <label for="bevezeto">Bevezető szöveg - abstract (a listázásban jelenik meg)</label>
-                      <div style="background:#fff;"><textarea style="min-height: 80px;" name="bevezeto" id="bevezeto" class="form-control no-editor"><?=($this->news ? $this->news->getDescription() : '')?></textarea></div>
+                      <div style="background:#fff;" id="tinytoolbar"><textarea style="min-height: 80px;" name="bevezeto" id="bevezeto" class="form-control no-editor"><?=($this->news ? $this->news->getDescription() : '')?></textarea></div>
 											<br>
 											<div class="row" style="margin-left: -15px; margin-right: -15px;">
 												<div class="col-md-6">
