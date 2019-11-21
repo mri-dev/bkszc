@@ -20,7 +20,7 @@
             		Utoljára frissítve
               </div>
               <div class="col-md-1 center">
-                Létrehozva
+                Publikálva
               </div>
               <div class="col-md-1 center">
               	Sorrend

@@ -146,14 +146,37 @@
                       <label for="bevezeto">Bevezető szöveg - abstract (a listázásban jelenik meg)</label>
                       <div style="background:#fff;"><textarea style="min-height: 80px;" name="bevezeto" id="bevezeto" class="form-control no-editor"><?=($this->news ? $this->news->getDescription() : '')?></textarea></div>
 											<br>
-											<label for="belyegkep">Bélyegkép URL</label>
-											<div class="input-group">
-                        <span class="input-group-addon">
-                          <i class="fa fa-home" title="<?=ADMROOT.UPLOADS?>"></i>
-                        </span>
-                        <input type="text" class="form-control" id="belyegkep" name="belyegkep" value="<?=($this->news) ? $this->news->getImage() : ''?>" style="display:block;">
-                      </div>
+											<div class="row" style="margin-left: -15px; margin-right: -15px;">
+												<div class="col-md-6">
+													<label for="belyegkep">Bélyegkép URL</label>
+													<div class="input-group">
+		                        <span class="input-group-addon">
+		                          <i class="fa fa-home" title="<?=ADMROOT.UPLOADS?>"></i>
+		                        </span>
+		                        <input type="text" class="form-control" id="belyegkep" name="belyegkep" value="<?=($this->news) ? $this->news->getImage() : ''?>" style="display:block;">
+		                      </div>
+												</div>
+												<div class="col-md-6">
+													<label for="datepub">Publikáció dátuma</label>
+													<div class="row" style="margin-left: -15px; margin-right: -15px;">
+														<div class="col-md-3">
+															<input type="number" class="form-control" placeholder="Év" name="datepub_year" value="<?=($this->news)?$this->news->getValue('datepub_year'):date('Y')?>">
+														</div>
+														<div class="col-md-3">
+															<input type="number" class="form-control" placeholder="Hó" min="1" max="12" name="datepub_month" value="<?=($this->news)?$this->news->getValue('datepub_month'):date('m')?>">
+														</div>
+														<div class="col-md-3">
+															<input type="number" class="form-control" placeholder="Nap" min="1" max="31" name="datepub_day" value="<?=($this->news)?$this->news->getValue('datepub_day'):date('m')?>">
+														</div>
+														<div class="col-md-3">
+															<input type="time" class="form-control" placeholder="Idő"  name="datepub_time" value="<?=($this->news)?$this->news->getValue('datepub_time'):'00:00'?>">
+														</div>
+													</div>
+													<br>
+													<small>Utoljára frissítve: <strong><?=($this->news)?$this->news->getValue('idopont'):'Még nem történt frissítés.'?></strong></small>
 
+												</div>
+											</div>
                   </div>
               </div>
               <br />

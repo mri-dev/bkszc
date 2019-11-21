@@ -291,7 +291,7 @@ header {
 			.bkszc{
 				position: absolute;
 		    top: 30px;
-		    left: calc(100% + 20px);
+		    left: calc(100% + 60px);
 			}
 		}
 
@@ -516,7 +516,7 @@ header {
 						position: absolute;
 						background: rgba(250, 250, 250, 0.85);
 						min-width: 230px;
-						box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.6);
+						box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.61);
 						border: 0.5px solid $color-grey;
 						border-top: none;
 						z-index: 1000;
@@ -1078,6 +1078,14 @@ body.homepage .sidebar-holder{
 			}
 		}
 		.content{
+			.links{
+				li {
+					line-height: 1.4;
+				}
+				a{
+					font-size: 1.05rem;
+				}
+			}
 			ul {
 				margin: 5px 0 5px 20px;
 				color: #0b648b;
@@ -1988,13 +1996,14 @@ article.newest{
 
 		& > div {
 			flex-basis: calc(100% / 2);
-			background: #e6e6e6;
+	    background: #e6e6e6;
 	    padding: 10px;
 	    color: #4e4e4e;
-	    font-size: 0.7rem;
+	    font-size: 0.85rem;
+	    letter-spacing: -0.5px;
 	    text-align: center;
 	    border: 0.5px solid #d9d9d9;
-			transition: all .7s;
+	    transition: all .7s;
 
 			&:hover, &.wbg{
 				background: #33c7eb;
@@ -2105,6 +2114,7 @@ article.newest{
 
     .md-date-range-picker__calendar__grid{
       font-weight: 300;
+			font-size: 1.3rem;
       color: #ffffff !important;
     }
   }
@@ -2163,12 +2173,13 @@ article.newest{
 		.actual-month{
 			a{
 				background: #4f4f4f;
-		    text-align: center;
+				text-align: center;
 		    display: block;
 		    color: white;
 		    padding: 15px 10px;
 		    font-weight: bold;
 		    text-decoration: none;
+		    font-size: 1rem;
 			}
 		}
 		& > .wrapper{
@@ -2179,16 +2190,21 @@ article.newest{
 					& > .wrapper{
 						.eventdata{
 							.dateplace{
-								background: #606060;
-						    color: white;
-						    padding: 10px;
+								background: #7b7b7b;
+								color: white;
+								padding: 10px 12px;
+								font-size: 1rem;
+								i {
+									margin-right: 5px;
+								}
 							}
 							.title{
 								padding: 10px;
 
 								h4{
 									font-weight: bold;
-									margin: 0 0 4px 0;
+							    margin: 0 0 8px 0;
+							    font-size: 1.1rem;
 								}
 
 								.desc{
@@ -2399,7 +2415,7 @@ footer{
 		.bkszc{
 			position: absolute;
 			top: 30px;
-			left: calc(100% + 20px);
+			left: calc(100% + 60px);
 		}
 	}
 	.info{
@@ -2757,6 +2773,21 @@ body.searchresult{
 			display: block;
 			padding: 4px;
 			color: white;
+		}
+	}
+}
+.programnaptar-holder{
+	.md-button.md-icon-button{
+    height: 50px !important;
+    line-height: 50px !important;
+    padding: 0px !important;
+    width: 50px !important;
+    border-radius: 50% !important;
+		md-icon{
+			height: 50px !important;
+			width: 50px !important;
+			min-height: 50px !important;
+			min-width: 50px !important;
 		}
 	}
 }

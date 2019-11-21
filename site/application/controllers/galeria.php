@@ -37,7 +37,7 @@ class galeria extends Controller{
 			$arg = array(
 				'page' => 1,
 				'limit' => 999,
-				'in_cat' => 7
+				'in_cat' => \PARTNER_CAT_ID
 			);
 			$this->out( 'partnereink_news', $news->getTree( $arg ) );
 

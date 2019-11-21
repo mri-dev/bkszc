@@ -55,6 +55,8 @@ class News
 
 		$this->current_get_item = $qry->fetch(\PDO::FETCH_ASSOC);
 
+    $this->preparePublicDates($this->current_get_item);
+
 		return $this;
 	}
 
@@ -262,6 +264,21 @@ class News
       'sorrend' => $sorrend
     );
 
+    // publikáció ideje
+    $datepub_year = ($data['datepub_year']) ?: false;
+    $datepub_month = ($data['datepub_month']) ?: false;
+    $datepub_day = ($data['datepub_day']) ?: false;
+    $datepub_time = ($data['datepub_time']) ?: false;
+
+    if ($datepub_year && $datepub_month && $datepub_day) {
+       $letrehozva = $datepub_year.'-'.$datepub_month.'-'.$datepub_day;
+       if ($datepub_time) {
+         $letrehozva .= ' '.$datepub_time;
+       }
+       $upd['letrehozva'] = $letrehozva;
+    }
+
+
 		$this->db->update(
 			"hirek",
 			$upd,
@@ -270,6 +287,18 @@ class News
 
 		$this->resaveCategories( $this->selected_news_id, $data['cats'] );
 	}
+
+  private function preparePublicDates( &$data )
+  {
+    $date = $data['letrehozva'];
+
+    $data['datepub_year'] = date('Y', strtotime($date));
+    $data['datepub_month'] = date('m', strtotime($date));
+    $data['datepub_day'] = date('d', strtotime($date));
+    $data['datepub_time'] = date('H:i', strtotime($date));
+
+    return $data;
+  }
 
   private function prepareRAWDownloads( $postarr )
   {
@@ -492,7 +521,7 @@ class News
         $qry .= " ORDER BY ".$arg['order']['by']." ".$arg['order']['how'];
       }
 		} else {
-			$qry .= " ORDER BY h.sorrend ASC, h.idopont DESC ";
+			$qry .= " ORDER BY h.sorrend ASC, h.letrehozva DESC ";
 		}
 
 		// LIMIT

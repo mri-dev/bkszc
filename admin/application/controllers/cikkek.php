@@ -59,9 +59,12 @@ class cikkek extends Controller{
 			$news = new News( $this->view->gets[2],  array( 'db' => $this->db )  );
 
 			// Hír fa betöltés
+			$current_page = (int)preg_replace("/[^0-9]/", "", $this->view->gets[1]);
+			$current_page = ($current_page == 0) ? 1 : $current_page;
+			
 			$arg = array(
 				'limit' => 25,
-				'page' 	=> Helper::currentPageNum()
+				'page' 	=>$current_page
 			);
 			if (isset($_COOKIE['showarchive'])) {
 				$arg['only_archiv'] = true;

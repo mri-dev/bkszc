@@ -6,14 +6,9 @@ use PortalManager\Menus;
 use PortalManager\Template;
 use PortalManager\Users;
 use PortalManager\Redirector;
-use PortalManager\Banners;
-use ShopManager\Shop;
 use ShopManager\Categories;
 use PortalManager\News;
-use PortalManager\Portal;
 use Applications\Captcha;
-use FileManager\FileLister;
-use ProductManager\Products;
 use PortalManager\Installer;
 
 class Controller {
@@ -66,23 +61,6 @@ class Controller {
         ));
         $this->out( 'USERS', $this->User);
 
-
-        /*
-        $this->shop = new Shop(array(
-          'db' => $this->db,
-          'view' => $this->view,
-          'user' => $this->User->get()
-        ));*/
-
-        //$this->Portal = new Portal( array( 'db' => $this->db, 'view' => $this->view )  );
-        /* * /
-        $this->captcha = (new Captcha)
-        ->init(
-            $this->view->settings['recaptcha_public_key'],
-            $this->view->settings['recaptcha_private_key']
-        );
-        /**/
-
         $this->out( 'db',   $this->db );
         $this->out( 'user', $this->User->get( self::$user_opt ) );
 
@@ -93,14 +71,6 @@ class Controller {
           {
             $this->out( 'modules', $this->installer->listModules(array('only_active' => true)) );
           }
-
-          // Bannerek
-          /*
-          if ( defined('PRODUCTIONSITE') )
-          {
-            $this->BANNERS = new Banners(array( 'db' => $this->db ));
-            $this->out('BANNERS', $this->BANNERS);
-          }*/
 
           // redirector
           if ( defined('PRODUCTIONSITE') )
@@ -146,16 +116,6 @@ class Controller {
           $this->out( 'menu_mobil',  $tree );
 
           unset($tree);
-
-          // Kapcsolat menü üzenet
-          if ( Post::on('contact_form') ) {
-                try {
-                  $this->Portal->sendContactMsg();
-                  Helper::reload('?msgkey=page_msg&page_msg=Üzenetét sikeresen elküldte. Hamarosan válaszolni fogunk rá!');
-                } catch (Exception $e) {
-                  $this->out( 'page_msg', Helper::makeAlertMsg('pError', $e->getMessage()) );
-                }
-          }
 
           if ( $_GET['msgkey'] ) {
               $this->out( $_GET['msgkey'], Helper::makeAlertMsg('pSuccess', $_GET[$_GET['msgkey']]) );
