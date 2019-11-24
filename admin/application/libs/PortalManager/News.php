@@ -444,6 +444,10 @@ class News
       $qry .= " and h.lathato = 1";
     }
 
+    if( isset($arg['lathato']) ) {
+      $qry .= " and h.lathato = ".(int)$arg['lathato'];
+    }
+
     if( isset($arg['on_date']) && !empty($arg['on_date']) ) {
       $qry .= " and h.letrehozva LIKE '".addslashes($arg['on_date'])."%'";
     }

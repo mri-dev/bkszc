@@ -10,22 +10,22 @@
 <div class="row np">
 	<div class="col-md-12">
     	<div class="con con-del">
-            <h2>Cikk törlése</h2>
-            Biztos, hogy törli a kiválasztott cikket?
-            <div class="row np">
-                <div class="col-md-12 right">
-                    <a href="/<?=$this->gets[0]?>/" class="btn btn-danger"><i class="fa fa-times"></i> NEM</a>
-                    <button class="btn btn-success">IGEN <i class="fa fa-check"></i> </button>
-                </div>
-            </div>
-        </div>
+	        <h2>Cikk törlése</h2>
+	        Biztos, hogy törli a kiválasztott cikket?
+	        <div class="row np">
+	            <div class="col-md-12 right">
+	                <a href="/<?=$this->gets[0]?>/" class="btn btn-danger"><i class="fa fa-times"></i> NEM</a>
+	                <button class="btn btn-success">IGEN <i class="fa fa-check"></i> </button>
+	            </div>
+	        </div>
+	    </div>
     </div>
 </div>
 </form>
 <? endif; ?>
 <? if($this->gets[2] != 'torles'): ?>
 <?php $scats = ($this->news) ? $this->news->getCategories() : array(); ?>
-<form action="" method="post" enctype="multipart/form-data">
+<form action="/cikkek/creator/<?=$this->gets[2]?>/<?=$this->gets[3]?>" method="post" enctype="multipart/form-data">
   <div class="row-neg">
     <div class="row">
       <div class="col-md-3">
@@ -249,7 +249,7 @@
                 <div class="col-md-12 right">
                   <? if($this->gets[2] == 'szerkeszt'): ?>
                     <input type="hidden" name="id" value="<?=$this->gets[2]?>" />
-                    <a href="/<?=$this->gets[0]?>"><button type="button" class="btn btn-danger btn-3x"><i class="fa fa-arrow-circle-left"></i> bezár</button></a>
+                    <a href="<?=($this->backurl)?$this->backurl:'/'.$this->gets[0]?>"><button type="button" class="btn btn-danger btn-3x"><i class="fa fa-arrow-circle-left"></i> bezár</button></a>
                     <button name="save" class="btn btn-success">Változások mentése <i class="fa fa-check-square"></i></button>
                     <? else: ?>
                     <button name="add" class="btn btn-primary">Hozzáadás <i class="fa fa-check-square"></i></button>

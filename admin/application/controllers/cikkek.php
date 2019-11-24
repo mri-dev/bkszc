@@ -12,7 +12,6 @@ class cikkek extends Controller{
 			$this->view->adm = $this->AdminUser;
 			$this->view->adm->logged = $this->AdminUser->isLogged();
 
-
 			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'cikkek', true);
 
 			// Archive toggle
@@ -39,6 +38,13 @@ class cikkek extends Controller{
 					setcookie('filter_nev','',time()-100,'/'.$this->view->gets[0]);
 				}
 
+				if($_POST['lathato'] != ''){
+					setcookie('filter_lathato',$_POST['lathato'],time()+60*24,'/'.$this->view->gets[0]);
+					$filtered = true;
+				}else{
+					setcookie('filter_lathato','',time()-100,'/'.$this->view->gets[0]);
+				}
+
 				if($_POST['kategoria'] != ''){
 					setcookie('filter_kategoria',$_POST['kategoria'],time()+60*24,'/'.$this->view->gets[0]);
 					$filtered = true;
@@ -61,7 +67,7 @@ class cikkek extends Controller{
 			// Hír fa betöltés
 			$current_page = (int)preg_replace("/[^0-9]/", "", $this->view->gets[1]);
 			$current_page = ($current_page == 0) ? 1 : $current_page;
-			
+
 			$arg = array(
 				'limit' => 25,
 				'page' 	=>$current_page
@@ -74,12 +80,17 @@ class cikkek extends Controller{
 			if (isset($_COOKIE['filter_kategoria'])) {
 				$arg['in_cat'] = (int)$_COOKIE['filter_kategoria'];
 			}
+
+			if (isset($_COOKIE['filter_lathato'])) {
+				$arg['lathato'] = (int)$_COOKIE['filter_lathato'];
+			}
 			if (isset($_COOKIE['filter_nev'])) {
 				$arg['search'] = array(
 					'text' => $_COOKIE['filter_nev'],
 					'how' => 'ee'
 				);
 			}
+
 			$page_tree 	= $news->getTree( $arg );
 			// Hírek
 			$this->out( 'news_list', $page_tree );
@@ -88,7 +99,7 @@ class cikkek extends Controller{
 				'current' 	=> $news->getCurrentPage(),
 				'max' 		=> $news->getMaxPage(),
 				'root' 		=> '/'.__CLASS__,
-				'item_limit'=> 28
+				'item_limit'=> 12
 			)))->render() );
 
 			// LOAD
@@ -115,8 +126,7 @@ class cikkek extends Controller{
 
 		public function creator()
 		{
-
-			$news = new News( $this->view->gets[3],  array( 'db' => $this->db )  );
+			$news = new News( $this->view->gets[3],  array( 'db' => $this->db ) );
 
 			if (isset($_GET['rmsg'])) {
 				$xrmsg = explode('::', $_GET['rmsg']);
@@ -135,6 +145,12 @@ class cikkek extends Controller{
 
 			switch($this->view->gets[2]){
 				case 'szerkeszt':
+					$refurl = $_SERVER['HTTP_REFERER'];
+
+					if (!empty($refurl) && $_GET['b'] == '1') {
+						$_SESSION['cikkek_ref_url'] = $refurl;
+					}
+
 					if(Post::on('save')){
 						/* * /
 						echo '<pre>';
@@ -145,7 +161,7 @@ class cikkek extends Controller{
 						/* */
 						try{
 							$news->save($_POST);
-							Helper::reload();
+							Helper::reload('/cikkek/creator/szerkeszt/'.$this->gets[3]);
 						}catch(Exception $e){
 							$this->view->err 	= true;
 							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
@@ -154,9 +170,16 @@ class cikkek extends Controller{
 					$this->out( 'news', $news->get( $this->view->gets[3]) );
 				break;
 				case 'torles':
+					$refurl = $_SERVER['HTTP_REFERER'];
+
+					if (!empty($refurl) && $_GET['b'] == '1') {
+						$_SESSION['cikkek_ref_url'] = $refurl;
+					}
+
 					if(Post::on('delId')){
 						try{
 							$news->delete($this->view->gets[3]);
+							$back = $_SESSION['cikkek_ref_url'];
 							Helper::reload('/cikkek/');
 						}catch(Exception $e){
 							$this->view->err 	= true;
@@ -165,6 +188,10 @@ class cikkek extends Controller{
 					}
 					$this->out( 'news', $news->get( $this->view->gets[3]) );
 				break;
+			}
+
+			if (isset($_SESSION['cikkek_ref_url'])) {
+				$this->out('backurl', $_SESSION['cikkek_ref_url']);
 			}
 		}
 
@@ -233,6 +260,7 @@ class cikkek extends Controller{
 		function clearfilters(){
 			setcookie('filter_nev','',time()-100,'/'.$this->view->gets[0]);
 			setcookie('filter_kategoria','',time()-100,'/'.$this->view->gets[0]);
+			setcookie('filter_lathato','',time()-100,'/'.$this->view->gets[0]);
 			setcookie('filtered','',time()-100,'/'.$this->view->gets[0]);
 			Helper::reload('/cikkek/');
 		}

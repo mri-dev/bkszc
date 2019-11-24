@@ -6,6 +6,8 @@
 </form>
 <h1><?=(isset($_COOKIE['showarchive']))?'Archivált cikkek':'Cikkek'?> <?php if ($_COOKIE[filtered] == '1'): ?><span style="color: red;">Szűrt lista</span><? endif; ?></h1>
 <? if( true ): ?>
+<?=$this->navigator?>
+<br>
 <div class="row">
 	<div class="col-md-12">
     	<div class="con con-row-list">
@@ -36,14 +38,21 @@
               	<input type="text" class="form-control" name="nev" value="<?=$_COOKIE['filter_nev']?>" placeholder="Keresés...">
               </div>
 							<div class="col-md-2 center">
-								<select class="form-control"  name="kategoria">
+								<select class="form-control" name="kategoria">
 				        	<option value="" selected="selected"># Mind</option>
 		            	<?	while( $this->categories->walk() ): $cat = $this->categories->the_cat(); ?>
 		                <option value="<?=$cat['ID']?>" <?=($cat['ID'] == $_COOKIE['filter_kategoria'])?'selected':''?>><?=str_repeat('&mdash;',$cat['deep']).' '.$cat['neve']?></option>
 									<? endwhile; ?>
 		            </select>
               </div>
-              <div class="col-md-4 center"></div>
+              <div class="col-md-3 center"></div>
+              <div class="col-md-1 center">
+								<select class="form-control"  name="lathato">
+				        	<option value="" selected="selected"># Mind</option>
+		            	<option value="1" <?=(1 == $_COOKIE['filter_lathato'])?'selected="selected"':''?>>Látható</option>
+		            	<option value="0" <?=(0 == $_COOKIE['filter_lathato'] && !is_null($_COOKIE['filter_lathato']))?'selected="selected"':''?>>Rejtve</option>
+		            </select>
+							</div>
               <div class="col-md-1 right">
 								<?php if ($_COOKIE[filtered] == '1'): ?>
 								<a href="/cikkek/clearfilters" class="btn btn-danger" title="Szűrőfeltételek törlése"><i class="fa fa-times"></i></a>
@@ -94,8 +103,8 @@
                 	<? if($news[lathato] == '1'): ?><i style="color:green;" class="fa fa-check"></i><? else: ?><i style="color:red;" class="fa fa-times"></i><? endif; ?>
                 </div>
                 <div class="col-md-1 actions" align="right">
-                    <a href="/<?=$this->gets[0]?>/creator/szerkeszt/<?=$news[ID]?>" title="Szerkesztés"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                    <a href="/<?=$this->gets[0]?>/creator/torles/<?=$news[ID]?>" title="Törlés"><i class="fa fa-times"></i></a>
+                    <a href="/<?=$this->gets[0]?>/creator/szerkeszt/<?=$news[ID]?>?b=1" title="Szerkesztés"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
+                    <a href="/<?=$this->gets[0]?>/creator/torles/<?=$news[ID]?>?b=1" title="Törlés"><i class="fa fa-times"></i></a>
                 </div>
            	</div>
             <? endwhile; else:?>

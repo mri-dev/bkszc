@@ -286,7 +286,10 @@ body.blured-bg #content .container-fluid{
 	padding:15px;
 	position:relative;
 	padding-left:75px;
-	z-index:10;
+	z-index:2;
+}
+body.mce-fullscreen #content .ct{
+  z-index: 10 !important;
 }
 #content .ct > .innerContent{
   padding: 0 0 60px 0;
