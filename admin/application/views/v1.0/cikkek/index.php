@@ -8,6 +8,27 @@
 <? if( true ): ?>
 <?=$this->navigator?>
 <br>
+<form id="filters" action="" method="post">
+	<input type="hidden" name="filters" value="1">
+	<div class="filter-inputs">
+		<div class="orders">
+			<div class="input-group">
+				<div class="input-group-addon">Rendezés</div>
+				<select class="form-control" name="order" onchange="$('#filters').submit();">
+					<option value="" <?=(!isset($_COOKIE['filter_order']))?'selected="selected"':''?>>Legújabbak elől</option>
+					<option value="cim-ASC" <?=($_COOKIE['filter_order'] == 'cim-ASC')?'selected="selected"':''?>>Cím szerint - A->Z</option>
+					<option value="cim-DESC" <?=($_COOKIE['filter_order'] == 'cim-DESC')?'selected="selected"':''?>>Cím szerint - Z->A</option>
+					<option value="letrehozva-DESC" <?=($_COOKIE['filter_order'] == 'letrehozva-DESC')?'selected="selected"':''?>>Publikálás szerint - Újak elől</option>
+					<option value="letrehozva-ASC" <?=($_COOKIE['filter_order'] == 'letrehozva-ASC')?'selected="selected"':''?>>Publikálás szerint -Régiek elől</option>
+					<option value="idopont-DESC" <?=($_COOKIE['filter_order'] == 'idopont-DESC')?'selected="selected"':''?>>Utoljára módosítva - Legutóbb</option>
+					<option value="idopont-ASC" <?=($_COOKIE['filter_order'] == 'idopont-ASC')?'selected="selected"':''?>>Utoljára módosítva - Legrégebben</option>
+					<option value="lathato-DESC" <?=($_COOKIE['filter_order'] == 'lathato-DESC')?'selected="selected"':''?>>Láthatóság szerint - Láthatóak elől</option>
+					<option value="lathato-ASC" <?=($_COOKIE['filter_order'] == 'lathato-ASC')?'selected="selected"':''?>>Láthatóság szerint - Rejtettek elől</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</form>
 <div class="row">
 	<div class="col-md-12">
     	<div class="con con-row-list">

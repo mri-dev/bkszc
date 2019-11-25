@@ -15,18 +15,28 @@ class cikkek extends Controller{
 			$perm = $this->User->hasPermission($this->view->adm->user, array('admin'), 'cikkek', true);
 
 			// Archive toggle
-			if (Post::on('setArchive')) {
+			if (Post::on('setArchive'))
+			{
 			 $switch = (int)$_POST['setArchive'];
 			 if ($switch == 1) {
 				 	setcookie('showarchive',1,time()+60*24,'/'.$this->view->gets[0]);
 				} else{
 					setcookie('showarchive',null,time()-3600,'/'.$this->view->gets[0]);
 				}
-
 				Helper::reload('/cikkek/1');
 			}
 
 			// Szűrő mentése
+			if(Post::on('filters'))
+			{
+				if($_POST['order'] != ''){
+					setcookie('filter_order',$_POST['order'],time()+60*24,'/'.$this->view->gets[0]);
+				}else{
+					setcookie('filter_order','',time()-100,'/'.$this->view->gets[0]);
+				}
+				Helper::reload('/cikkek/1');
+			}
+
 			if(Post::on('filterList'))
 			{
 				$filtered = false;
@@ -50,6 +60,13 @@ class cikkek extends Controller{
 					$filtered = true;
 				}else{
 					setcookie('filter_kategoria','',time()-100,'/'.$this->view->gets[0]);
+				}
+
+				if($_POST['order'] != ''){
+					setcookie('filter_order',$_POST['order'],time()+60*24,'/'.$this->view->gets[0]);
+					$filtered = true;
+				}else{
+					setcookie('filter_order','',time()-100,'/'.$this->view->gets[0]);
 				}
 
 				if($filtered){
@@ -88,6 +105,14 @@ class cikkek extends Controller{
 				$arg['search'] = array(
 					'text' => $_COOKIE['filter_nev'],
 					'how' => 'ee'
+				);
+			}
+
+			if (isset($_COOKIE['filter_order'])) {
+				$ord = explode('-',$_COOKIE['filter_order']);
+				$arg['order'] = array(
+					'by' => 'h.'.$ord[0],
+					'how' => $ord[1]
 				);
 			}
 
@@ -180,7 +205,7 @@ class cikkek extends Controller{
 						try{
 							$news->delete($this->view->gets[3]);
 							$back = $_SESSION['cikkek_ref_url'];
-							Helper::reload('/cikkek/');
+							Helper::reload();
 						}catch(Exception $e){
 							$this->view->err 	= true;
 							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
