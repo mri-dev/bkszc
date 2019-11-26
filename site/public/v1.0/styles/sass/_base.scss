@@ -932,7 +932,7 @@ header {
 .sidebar-holder .sidebar-block:last-child{
 	margin-bottom: 15px;
 }
-body.homepage .sidebar-holder{
+body.homepage .sidebar-holder:not(.nomargintop){
 	margin-top: -74px;
 	z-index: 10;
 }
@@ -1774,7 +1774,9 @@ article.newest{
   }
 }
 
-.partner-list{
+
+.partner-list,
+.alapitvany-list{
   .logos{
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1825,6 +1827,17 @@ article.newest{
     }
   }
 }
+.alapitvany-list{
+	.header{
+		h3{
+			background: $color-blue-light;
+			color: white;
+			text-align: center;
+			padding: 5px;
+		}
+	}
+}
+
 .singlepage{
 	.main-content{
 		padding: 25px 0 0 0;
@@ -1860,6 +1873,7 @@ article.newest{
 }
 .actual-news-block{
 	border: 1px solid #d9dada;
+	margin: 0 0 36px 0;
 	.slick-prev{
 		left: 0;
 		&:before{
@@ -1891,6 +1905,32 @@ article.newest{
 		color: black;
 		font-size: 42px;
 		font-family: 'FontAwesome';
+	}
+
+	.slick-dots{
+		bottom: -30px;
+		text-align: center;
+		z-index: 1;
+	}
+
+	.slick-dots li{
+		margin: 0 1px;
+	}
+
+	.slick-dots li button{
+		color: black;
+		font-size: 0.8rem;
+		background: white;
+		border: 0.5px solid #d3d3d3;
+		font-weight: bold;
+	}
+	.slick-dots li button:before,
+	.slick-dots li.slick-active button:before{
+		display: none !important;
+	}
+	.slick-dots li.slick-active button{
+		color: white;
+		background: $color-blue-light;
 	}
 
   & > .holder{
@@ -2753,6 +2793,61 @@ body.searchresult{
 			article + article {
 				border-top: 4px solid #f0f0f0;
 			}
+		}
+	}
+}
+
+.event-countdown{
+	background: #acacac;
+	min-height: 320px;
+	height: 320px;
+	margin: 20px 0;
+	& > .wrapper{
+		height: 100%;
+		position: relative;
+		& > .pw {
+			height: 100%;
+			position: relative;
+		}
+	}
+
+	.in-content{
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		left: 0;
+		transform:translateY(-50%);
+		text-align: center;
+		.timeback{
+			padding: 10px 0;
+			font-size: 4vw;
+			color: white;
+			font-weight: bold;
+
+			& > div {
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				flex-wrap: nowrap;
+				align-items: center;
+				justify-content: center;
+				& > span {
+					display: block;
+					padding: 8px;
+				}
+			}
+
+			span:not(.sep) {
+				background: black;
+				text-align: center;
+			}
+		}
+		.text{
+			text-transform: uppercase;
+			font-weight: bold;
+			font-size: 2vw;
+			color: white;
+			text-shadow: 0 2px 6px black;
 		}
 	}
 }

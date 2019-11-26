@@ -5,9 +5,11 @@
 		<?php elseif($this->gets[0] == 'esemenyek'): ?>
 			<? $this->render('templates/sidebar_esemenyek'); ?>
 		<?php else: ?>
-			<? $this->render('templates/sidebar'); ?>
+			<? //$this->render('templates/sidebar'); ?>
 		<?php endif; ?>
-		</div> <!-- .pw -->
+	  <?php if (!$this->homepage): ?>
+	  </div> <!-- .pw -->
+	  <?php endif; ?>
 	</div> <!-- .content-wrapper -->
 
 	<footer>

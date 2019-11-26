@@ -196,4 +196,6 @@
   <?php endif; ?>
 </header>
 <div class="page-wrapper">
-  <div class="pw">
+  <?php if (!$this->homepage): ?>
+  <div class="pw">  
+  <?php endif; ?>

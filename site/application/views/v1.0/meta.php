@@ -52,6 +52,7 @@
 <?=$this->addJS('app',false,false)?>
 <?=$this->addJS('upload',false,false, true)?>
 <?=$this->addJS('angular-cookies',false, false, true)?>
+<?=$this->addJS('countdown',false,false)?>
 
 <script defer type="text/javascript" src="/src/vendors/autocomplete/scripts/jquery.mockjax.js"></script>
 <script defer type="text/javascript" src="/src/vendors/autocomplete/dist/jquery.autocomplete.min.js"></script>
