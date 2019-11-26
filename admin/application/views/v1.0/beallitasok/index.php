@@ -300,6 +300,47 @@
                 <br>
                 <div class="divider"></div>
                 <br>
+								<h3>Visszaszámláló funkció</h3>
+                <br>
+                <div class="row np">
+									<div class="col-md-2" style="padding-right:5px;">
+										<label for="countdown_event">Engedélyezve</label>
+										<select name="countdown_event" id="countdown_event" class="form-control">
+												<option value="1" selected="selected">Igen</option>
+												<option value="0" <?=($this->settings['countdown_event'] == 0 ? 'selected="selected"' : '')?>>Nem</option>
+										</select>
+								 	</div>
+                  <div class="col-md-5">
+                      <label for="homepage_coverimg">Háttérkép</label>
+                      <div class="input-group">
+                          <input type="text" id="countdown_background" name="countdown_background" class="form-control" value="<?=$this->settings['countdown_background']?>">
+                          <div class="input-group-addon"><a title="Kép kiválasztása a galériából" href="<?=FILE_BROWSER_IMAGE?>&field_id=countdown_background" data-fancybox-type="iframe" class="iframe-btn" ><i class="fa fa-link"></i></a></div>
+                      </div>
+                      <div style="margin-top: 5px;
+										    background: #aaaaaa;
+										    padding: 5px;
+										    float: left;">
+                          <img src="<?=$this->settings['countdown_background']?>" id="countdown_background" alt="" style="max-width:100%;">
+                      </div>
+                  </div>
+                </div><br>
+								<div class="row">
+									<div class="col-md-3" style="padding-right:5px;">
+											<label for="countdown_event_date">Esemény dátuma</label>
+											<input type="date" id="countdown_event_date" name="countdown_event_date" class="form-control" value="<?=$this->settings['countdown_event_date']?>">
+									</div>
+									<div class="col-md-5" style="padding-right:5px;">
+											<label for="countdown_text_before">Megjelenő szöveg - dátum előtt</label>
+											<input type="text" id="countdown_text_before" name="countdown_text_before" class="form-control" value="<?=$this->settings['countdown_text_before']?>">
+									</div>
+									<div class="col-md-4">
+											<label for="countdown_text_after">Megjelenő szöveg - dátum után</label>
+											<input type="text" id="countdown_text_after" name="countdown_text_after" class="form-control" value="<?=$this->settings['countdown_text_after']?>">
+									</div>
+								</div>
+                <br>
+                <div class="divider"></div>
+                <br>
                 <h3>Social</h3>
                 <div class="row np">
                     <div class="col-md-12">

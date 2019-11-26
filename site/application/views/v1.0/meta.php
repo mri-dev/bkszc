@@ -39,6 +39,7 @@
 <?php $this->switchJSAsync('defer'); ?>
 <script defer src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 <script defer src='//www.google.com/recaptcha/api.js?hl=hu'></script>
+<script defer src='//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
 
 <!-- Angular Material Library -->
 <script defer src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
@@ -53,6 +54,8 @@
 <?=$this->addJS('upload',false,false, true)?>
 <?=$this->addJS('angular-cookies',false, false, true)?>
 <?=$this->addJS('countdown',false,false)?>
+<?=$this->addJS('counter',false,false)?>
+<?php $this->switchJSAsync(''); ?>
 
 <script defer type="text/javascript" src="/src/vendors/autocomplete/scripts/jquery.mockjax.js"></script>
 <script defer type="text/javascript" src="/src/vendors/autocomplete/dist/jquery.autocomplete.min.js"></script>

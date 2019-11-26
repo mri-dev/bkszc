@@ -2917,18 +2917,21 @@ body.searchresult .results {
 /* line 2800, sass/_base.scss */
 .event-countdown {
   background: #acacac;
-  min-height: 320px;
-  height: 320px;
-  margin: 20px 0; }
-  /* line 2805, sass/_base.scss */
+  min-height: 380px;
+  height: 380px;
+  margin: 20px 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; }
+  /* line 2810, sass/_base.scss */
   .event-countdown > .wrapper {
     height: 100%;
     position: relative; }
-    /* line 2808, sass/_base.scss */
+    /* line 2813, sass/_base.scss */
     .event-countdown > .wrapper > .pw {
       height: 100%;
       position: relative; }
-  /* line 2814, sass/_base.scss */
+  /* line 2818, sass/_base.scss */
   .event-countdown .in-content {
     position: absolute;
     width: 100%;
@@ -2936,33 +2939,14 @@ body.searchresult .results {
     left: 0;
     transform: translateY(-50%);
     text-align: center; }
-    /* line 2821, sass/_base.scss */
+    /* line 2825, sass/_base.scss */
     .event-countdown .in-content .timeback {
-      padding: 10px 0;
-      font-size: 4vw;
-      color: white;
-      font-weight: bold; }
-      /* line 2827, sass/_base.scss */
-      .event-countdown .in-content .timeback > div {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        justify-content: center;
-        background: black;
-        margin: 0 auto;
-        width: 40%;
-        padding: 20px 0; }
-        /* line 2838, sass/_base.scss */
-        .event-countdown .in-content .timeback > div > span {
-          display: block;
-          padding: 8px; }
-      /* line 2844, sass/_base.scss */
-      .event-countdown .in-content .timeback span:not(.sep) {
-        background: #888888;
-        text-align: center; }
-    /* line 2849, sass/_base.scss */
+      padding: 12px 0 20px 0;
+      background: rgba(0, 0, 0, 0.87);
+      border-radius: 10px;
+      width: 750px;
+      margin: 10px auto; }
+    /* line 2832, sass/_base.scss */
     .event-countdown .in-content .text {
       text-transform: uppercase;
       font-weight: bold;
@@ -2970,7 +2954,144 @@ body.searchresult .results {
       color: white;
       text-shadow: 0 2px 6px black; }
 
-/* line 2860, sass/_base.scss */
+/* line 2843, sass/_base.scss */
+.countdown {
+  width: 100%;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center; }
+  /* line 2853, sass/_base.scss */
+  .countdown .bloc-time {
+    margin-right: 25px;
+    text-align: center; }
+    /* line 2857, sass/_base.scss */
+    .countdown .bloc-time:last-child {
+      margin-right: 0; }
+  /* line 2862, sass/_base.scss */
+  .countdown .count-title {
+    display: block;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #868686;
+    text-shadow: 0 2px 6px black; }
+  /* line 2870, sass/_base.scss */
+  .countdown .figure {
+    position: relative;
+    float: left;
+    height: 100px;
+    width: 75px;
+    margin-right: 10px;
+    background-color: #333232;
+    border-radius: 8px;
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.2), inset 2px 4px 0 0 rgba(255, 255, 255, 0.08); }
+    /* line 2881, sass/_base.scss */
+    .countdown .figure:last-child {
+      margin-right: 0; }
+    /* line 2885, sass/_base.scss */
+    .countdown .figure > span {
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin: auto;
+      font-weight: 700;
+      font: normal 6em/100px sans-serif;
+      color: #ffffff; }
+    /* line 2896, sass/_base.scss */
+    .countdown .figure .top:after, .countdown .figure .bottom-back:after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+    /* line 2908, sass/_base.scss */
+    .countdown .figure .top {
+      z-index: 3;
+      background-color: #242424;
+      transform-origin: 50% 100%;
+      -webkit-transform-origin: 50% 100%;
+      -moz-border-radius-topleft: 10px;
+      -webkit-border-top-left-radius: 10px;
+      border-top-left-radius: 10px;
+      -moz-border-radius-topright: 10px;
+      -webkit-border-top-right-radius: 10px;
+      border-top-right-radius: 10px;
+      -moz-transform: perspective(200px);
+      -ms-transform: perspective(200px);
+      -webkit-transform: perspective(200px);
+      transform: perspective(200px); }
+    /* line 2929, sass/_base.scss */
+    .countdown .figure .bottom {
+      z-index: 1; }
+      /* line 2932, sass/_base.scss */
+      .countdown .figure .bottom:before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background-color: rgba(0, 0, 0, 0.02); }
+    /* line 2944, sass/_base.scss */
+    .countdown .figure .bottom-back {
+      z-index: 2;
+      top: 0;
+      height: 50%;
+      overflow: hidden;
+      background-color: #242424;
+      -moz-border-radius-topleft: 10px;
+      -webkit-border-top-left-radius: 10px;
+      border-top-left-radius: 10px;
+      -moz-border-radius-topright: 10px;
+      -webkit-border-top-right-radius: 10px;
+      border-top-right-radius: 10px; }
+      /* line 2958, sass/_base.scss */
+      .countdown .figure .bottom-back span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin: auto; }
+    /* line 2967, sass/_base.scss */
+    .countdown .figure .top, .countdown .figure .top-back {
+      height: 50%;
+      overflow: hidden;
+      -moz-backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden; }
+    /* line 2976, sass/_base.scss */
+    .countdown .figure .top-back {
+      z-index: 4;
+      bottom: 0;
+      background-color: #343434;
+      -webkit-transform-origin: 50% 0;
+      transform-origin: 50% 0;
+      -moz-transform: perspective(200px) rotateX(180deg);
+      -ms-transform: perspective(200px) rotateX(180deg);
+      -webkit-transform: perspective(200px) rotateX(180deg);
+      transform: perspective(200px) rotateX(180deg);
+      -moz-border-radius-bottomleft: 10px;
+      -webkit-border-bottom-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      -moz-border-radius-bottomright: 10px;
+      -webkit-border-bottom-right-radius: 10px;
+      border-bottom-right-radius: 10px; }
+      /* line 2996, sass/_base.scss */
+      .countdown .figure .top-back span {
+        position: absolute;
+        top: -100%;
+        left: 0;
+        right: 0;
+        margin: auto; }
+
+/* line 3008, sass/_base.scss */
 .search .group-events .in-date {
   float: left;
   margin: 0 5px 0 0;
@@ -2979,26 +3100,26 @@ body.searchresult .results {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: nowrap; }
-  /* line 2868, sass/_base.scss */
+  /* line 3016, sass/_base.scss */
   .search .group-events .in-date span.hour {
     background: #97ac23; }
-  /* line 2871, sass/_base.scss */
+  /* line 3019, sass/_base.scss */
   .search .group-events .in-date span.hour_end {
     background: #e31e24; }
-  /* line 2874, sass/_base.scss */
+  /* line 3022, sass/_base.scss */
   .search .group-events .in-date > span {
     display: block;
     padding: 4px;
     color: white; }
 
-/* line 2882, sass/_base.scss */
+/* line 3030, sass/_base.scss */
 .programnaptar-holder .md-button.md-icon-button {
   height: 50px !important;
   line-height: 50px !important;
   padding: 0px !important;
   width: 50px !important;
   border-radius: 50% !important; }
-  /* line 2888, sass/_base.scss */
+  /* line 3036, sass/_base.scss */
   .programnaptar-holder .md-button.md-icon-button md-icon {
     height: 50px !important;
     width: 50px !important;
