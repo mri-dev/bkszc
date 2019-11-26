@@ -2949,16 +2949,20 @@ body.searchresult .results {
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
-        justify-content: center; }
-        /* line 2834, sass/_base.scss */
+        justify-content: center;
+        background: black;
+        margin: 0 auto;
+        width: 40%;
+        padding: 20px 0; }
+        /* line 2838, sass/_base.scss */
         .event-countdown .in-content .timeback > div > span {
           display: block;
           padding: 8px; }
-      /* line 2840, sass/_base.scss */
+      /* line 2844, sass/_base.scss */
       .event-countdown .in-content .timeback span:not(.sep) {
-        background: black;
+        background: #888888;
         text-align: center; }
-    /* line 2845, sass/_base.scss */
+    /* line 2849, sass/_base.scss */
     .event-countdown .in-content .text {
       text-transform: uppercase;
       font-weight: bold;
@@ -2966,7 +2970,7 @@ body.searchresult .results {
       color: white;
       text-shadow: 0 2px 6px black; }
 
-/* line 2856, sass/_base.scss */
+/* line 2860, sass/_base.scss */
 .search .group-events .in-date {
   float: left;
   margin: 0 5px 0 0;
@@ -2975,26 +2979,26 @@ body.searchresult .results {
   display: -ms-flexbox;
   display: flex;
   flex-wrap: nowrap; }
-  /* line 2864, sass/_base.scss */
+  /* line 2868, sass/_base.scss */
   .search .group-events .in-date span.hour {
     background: #97ac23; }
-  /* line 2867, sass/_base.scss */
+  /* line 2871, sass/_base.scss */
   .search .group-events .in-date span.hour_end {
     background: #e31e24; }
-  /* line 2870, sass/_base.scss */
+  /* line 2874, sass/_base.scss */
   .search .group-events .in-date > span {
     display: block;
     padding: 4px;
     color: white; }
 
-/* line 2878, sass/_base.scss */
+/* line 2882, sass/_base.scss */
 .programnaptar-holder .md-button.md-icon-button {
   height: 50px !important;
   line-height: 50px !important;
   padding: 0px !important;
   width: 50px !important;
   border-radius: 50% !important; }
-  /* line 2884, sass/_base.scss */
+  /* line 2888, sass/_base.scss */
   .programnaptar-holder .md-button.md-icon-button md-icon {
     height: 50px !important;
     width: 50px !important;

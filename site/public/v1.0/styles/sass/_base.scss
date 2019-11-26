@@ -2831,6 +2831,10 @@ body.searchresult{
 				flex-wrap: nowrap;
 				align-items: center;
 				justify-content: center;
+				background: black;
+		    margin: 0 auto;
+		    width: 40%;
+				padding: 20px 0;
 				& > span {
 					display: block;
 					padding: 8px;
@@ -2838,7 +2842,7 @@ body.searchresult{
 			}
 
 			span:not(.sep) {
-				background: black;
+				background: #888888;
 				text-align: center;
 			}
 		}
