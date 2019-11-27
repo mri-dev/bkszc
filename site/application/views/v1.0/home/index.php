@@ -134,13 +134,14 @@
   <div class="sidebar-holder nomargintop">
     <div class="sidebar-block alapitvany-list">
       <div class="header">
-        <h3>Alapítványi hírek</h3>
+        <h3><a href="/cikkek/kategoriak/alapitvanyi-hirek">Alapítványi hírek</a></h3>
+        <img src="<?=IMG?>alapitvanyi-hirek.png" alt="Alapítványi hírek">
       </div>
-      <?php if ( $this->partnereink_news->tree_items > 0 ): ?>
+      <?php if ( $this->alapitvany_news->tree_items > 0 ): ?>
       <div class="partner-links">
-        <?php while ( $this->partnereink_news->walk() ) { $this->partnereink_news->the_news(); ?>
+        <?php while ( $this->alapitvany_news->walk() ) { $this->alapitvany_news->the_news(); ?>
         <div class="link">
-          <a href="<?=$this->partnereink_news->getUrl()?>">> &nbsp; <?=$this->partnereink_news->getTitle()?></a>
+          <a href="<?=$this->alapitvany_news->getUrl()?>">> &nbsp; <?=$this->alapitvany_news->getTitle()?></a>
         </div>
         <?php } ?>
       </div>

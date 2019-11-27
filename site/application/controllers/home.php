@@ -67,15 +67,16 @@ class home extends Controller{
 			unset($news);
 			unset($hirek);
 
-			// Partnerek
-			// id: 7
+
+			// Alapítványi hírek
+			// id: 113
 			$news = new News( false, array( 'db' => $this->db ) );
 			$arg = array(
 				'page' => 1,
 				'limit' => 999,
-				'in_cat' => \PARTNER_CAT_ID
+				'in_cat' => 113
 			);
-			$this->out( 'partnereink_news', $news->getTree( $arg ) );
+			$this->out( 'alapitvany_news', $news->getTree( $arg ) );
 
 			// Program
 			$programs = new Programs( false, array( 'db' => $this->db ) );
