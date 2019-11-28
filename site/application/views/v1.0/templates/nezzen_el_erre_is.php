@@ -21,14 +21,16 @@
         </a>
       </div>
     </div>
-    <div class="block">
-      <div class="in">
-        <a href="#">
-          <div class="ico"><img src="<?=IMG?>icons/ico-epulet.svg" alt="Emléktárgyak"></div>
-          <div class="text">Emléktárgyak</div>
-        </a>
+    <?php if (false): ?>
+      <div class="block">
+        <div class="in">
+          <a href="#">
+            <div class="ico"><img src="<?=IMG?>icons/ico-epulet.svg" alt="Emléktárgyak"></div>
+            <div class="text">Emléktárgyak</div>
+          </a>
+        </div>
       </div>
-    </div>
+    <?php endif; ?>
     <div class="block">
       <div class="in">
         <a href="<?=$this->settings['social_instagram_link']?>" target="_blank">

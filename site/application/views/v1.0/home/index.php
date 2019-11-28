@@ -76,8 +76,12 @@
       <h3>Támogatóink - Partnereink</h3>
       <div class="holder">
         <?php if (true): ?>
-        <div class="logos">
-          <?php for ($i=1; $i <=4 ; $i++) { $plogo = $this->settings['tamogato_logo_t'.$i]; if($plogo == '') continue; ?>
+          <?php
+            $logocount = 0; for ($i=1; $i<=$this->settings['tamogato_logo_nums']; $i++) { $plogo = $this->settings['tamogato_logo_t'.$i]; if($plogo == '') continue; $logocount++; }
+          ?>
+        <div class="logos<?=($logocount>8)?' slided':''?>">
+          <?php if ($logocount>8): ?><div class="logo-block"><?php endif; ?>
+          <?php for ($i=1; $i<=$this->settings['tamogato_logo_nums']; $i++) { $plogo = $this->settings['tamogato_logo_t'.$i]; if($plogo == '') continue; ?>
           <div class="logo">
             <div class="wrapper autocorrett-height-by-width" data-image-ratio="1:1">
               <?php if ($this->settings['tamogato_logo_turl'.$i] != ''): ?>
@@ -87,17 +91,27 @@
               <?php endif; ?>
             </div>
           </div>
+          <?php if ( ($i)%8 == 0 ): ?></div><? if($i < $logocount): ?><div class="logo-block"><?php endif; ?> <?php endif; ?>
           <?php } ?>
+          <?php if ($logocount>8): ?></div><?php endif; ?>
         </div>
         <?php endif; ?>
-        <?php if ( $this->partnereink_news->tree_items > 0 ): ?>
-        <div class="partner-links">
-          <?php while ( $this->partnereink_news->walk() ) { $this->partnereink_news->the_news(); ?>
-          <div class="link">
-            <a href="<?=$this->partnereink_news->getUrl()?>">> &nbsp; <?=$this->partnereink_news->getTitle()?></a>
-          </div>
-          <?php } ?>
-        </div>
+        <?php if ($logocount > 8): ?>
+
+          <script type="text/javascript">
+            $(function(){
+              $('.logos.slided').slick({
+                infinite: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                dots: false,
+                arrow: true,
+                autoplay: true,
+                delay: 5000,
+                speed: 1000
+              });
+            })
+          </script>
         <?php endif; ?>
       </div>
     </div>
@@ -106,50 +120,52 @@
 
 <? $this->render('templates/eventcountdown'); ?>
 
-<div class="pw">
-  <div class="content-holder">
-    <div class="content-wrapper">
-      <div class="article-block galery-block">
-        <div class="head">
-          <h3><img src="<?=IMG?>icons/ico-galery-img-circle.svg" alt="Galéria" class="ico">Galéria</h3>
-          <div class="links"><a href="/galeria">Összes galéria</a></div>
+<div class="page-wrapper">
+  <div class="pw">
+    <div class="content-holder">
+      <div class="content-wrapper">
+        <div class="article-block galery-block">
+          <div class="head">
+            <h3><img src="<?=IMG?>icons/ico-galery-img-circle.svg" alt="Galéria" class="ico">Galéria</h3>
+            <div class="links"><a href="/galeria">Összes galéria</a></div>
+          </div>
+          <div class="holder">
+            <? $this->render('templates/galeryblock'); ?>
+          </div>
+          <script type="text/javascript">
+            $(function(){
+              $('.galery-block > .holder').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                dots: false,
+                arrow: true
+              });
+            })
+          </script>
         </div>
-        <div class="holder">
-          <? $this->render('templates/galeryblock'); ?>
+      </div>
+    </div>
+    <div class="sidebar-holder nomargintop">
+      <div class="sidebar-block alapitvany-list">
+        <div class="header">
+          <h3><a href="/cikkek/kategoriak/alapitvanyi-hirek">Alapítványi hírek</a></h3>
+          <img src="<?=IMG?>alapitvanyi-hirek.png" alt="Alapítványi hírek">
         </div>
-        <script type="text/javascript">
-          $(function(){
-            $('.galery-block > .holder').slick({
-              infinite: true,
-              slidesToShow: 3,
-              slidesToScroll: 1,
-              dots: false,
-              arrow: true
-            });
-          })
-        </script>
+        <?php if ( $this->alapitvany_news->tree_items > 0 ): ?>
+        <div class="partner-links">
+          <?php while ( $this->alapitvany_news->walk() ) { $this->alapitvany_news->the_news(); ?>
+          <div class="link">
+            <a href="<?=$this->alapitvany_news->getUrl()?>">> &nbsp; <?=$this->alapitvany_news->getTitle()?></a>
+          </div>
+          <?php } ?>
+        </div>
+        <?php endif; ?>
       </div>
     </div>
   </div>
-  <div class="sidebar-holder nomargintop">
-    <div class="sidebar-block alapitvany-list">
-      <div class="header">
-        <h3><a href="/cikkek/kategoriak/alapitvanyi-hirek">Alapítványi hírek</a></h3>
-        <img src="<?=IMG?>alapitvanyi-hirek.png" alt="Alapítványi hírek">
-      </div>
-      <?php if ( $this->alapitvany_news->tree_items > 0 ): ?>
-      <div class="partner-links">
-        <?php while ( $this->alapitvany_news->walk() ) { $this->alapitvany_news->the_news(); ?>
-        <div class="link">
-          <a href="<?=$this->alapitvany_news->getUrl()?>">> &nbsp; <?=$this->alapitvany_news->getTitle()?></a>
-        </div>
-        <?php } ?>
-      </div>
-      <?php endif; ?>
-    </div>
-  </div>
-</div>
 
-<div class="pw">
-  <? $this->render('templates/nezzen_el_erre_is'); ?>
+  <div class="pw">
+    <? $this->render('templates/nezzen_el_erre_is'); ?>
+  </div>  
 </div>

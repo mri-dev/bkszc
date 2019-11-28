@@ -39,7 +39,7 @@
 <?=$this->addJS('szallasok.ang',false,false)?>
 <?=$this->addJS('gallery.ang',false,false)?>
 <?=$this->addJS('banners.ang',false,false)?>
-<script type="text/javascript" src="<?=JS?>tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="<?=JS?>tinymce5/tinymce.min.js"></script>
 <script type="text/javascript" src="<?=JS?>fancybox/jquery.fancybox.js?v=2.1.4"></script>
 <script type="text/javascript" src="<?=JS?>fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
 <script type="text/javascript" src="<?=JS?>jquery.form.js"></script>

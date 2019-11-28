@@ -52,7 +52,7 @@ class cikkek extends Controller{
 		$this->out('archive_dates', $archive_dates);
 
 		if ( isset($_GET['cikk']) ) {
-			$this->out( 'bodyclass', 'article singlearticle' );
+			$this->out( 'bodyclass', 'article singlearticle article-slug-'.$_GET['cikk'] );
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
 			$this->out( 'is_tematic_cat', 1);
 			$news->log_view($this->view->news->getId());

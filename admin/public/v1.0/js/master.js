@@ -32,7 +32,7 @@ $(function(){
 	tinymce.init({
 	    selector: "textarea:not(.no-editor)",
 	    editor_deselector : 'no-editor',
-	    theme: "modern",
+	    theme: "silver",
 	    language: "hu_HU",
 	    content_css : "/public/v1.0/styles/DinFonts.css",
 	    allow_styles: 'family-font',
@@ -63,10 +63,13 @@ $(function(){
 	   ],
 	   toolbar1: "undo redo | bold italic underline | fontselect fontsizeselect forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
 	   toolbar2: "| responsivefilemanager | link unlink anchor | image media |  print preview code | fullscreen",
-	   image_advtab: true ,
-	   external_filemanager_path:"/filemanager/",
-	   filemanager_title:"Responsive Filemanager" ,
-	   external_plugins: { "filemanager" : "/filemanager/plugin.min.js"}
+		 image_advtab: true,
+			external_filemanager_path: "/src/js/tinymce5/plugins/filemanager/",
+			filemanager_title: "Fájlkezelő",
+			external_plugins: {
+				"responsivefilemanager": "/src/js/tinymce5/plugins/responsivefilemanager/plugin.min.js",
+				"filemanager": "/src/js/tinymce5/plugins/filemanager/plugin.min.js"
+			},
 	 });
 
 	$('.zoom').fancybox({
@@ -75,8 +78,6 @@ $(function(){
 	});
 
 	$('.iframe-btn').fancybox({
-		maxWidth	: 800,
-		maxHeight	: 600,
 		fitToView	: false,
 		width		: '70%',
 		height		: '70%',

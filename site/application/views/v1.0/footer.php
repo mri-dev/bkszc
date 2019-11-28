@@ -19,7 +19,6 @@
 					<div class="flex">
 						<div class="logo">
 							<a href="<?=$this->settings['page_url']?>"><img src="<?=IMG?>gk_logo.svg" style="height:80px;" alt="<?=$this->settings['page_title']?>"></a>
-		          <img class="bkszc" title="Budapesti Komplex Szakképzési Centrum" src="<?=IMG?>bkszc_logo.svg" style="height:36px;" alt="bkszc">
 						</div>
 						<div class="links">
 							<ul>

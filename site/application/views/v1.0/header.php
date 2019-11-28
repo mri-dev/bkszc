@@ -197,5 +197,5 @@
 </header>
 <div class="page-wrapper">
   <?php if (!$this->homepage): ?>
-  <div class="pw">  
+  <div class="pw">
   <?php endif; ?>

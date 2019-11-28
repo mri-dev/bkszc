@@ -423,8 +423,15 @@
                 <div class="divider"></div>
                 <br>
                 <h3>Kiemelt partnerek logók</h3>
+								<br>
+                <div class="row np">
+                    <div class="col-md-4">
+                        <label for="basics_tamogato_logo_nums">Logó inputok száma</label>
+                        <input type="number" id="basics_tamogato_logo_nums" name="tamogato_logo_nums" class="form-control" value="<?=$this->settings['tamogato_logo_nums']?>">
+                    </div>
+                </div>
                 <br>
-								<?php for ($i=1; $i <= 4 ; $i++) { ?>
+								<?php for ($i=1; $i <= (int)$this->settings['tamogato_logo_nums'] ; $i++) { ?>
                 <div class="row">
                     <div class="col-md-6">
                         <label for="basics_tamogato_logo_t<?=$i?>">Logó #<?=$i?></label>

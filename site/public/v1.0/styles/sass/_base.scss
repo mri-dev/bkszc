@@ -281,21 +281,22 @@ header {
 
 		& > .pw > .flex {
 			align-items: center;
-			justify-content: space-between;
 		}
 
 		.logo {
 			padding: 10px 0;
 			position: relative;
+			flex: 1;
 
 			.bkszc{
 				position: absolute;
 		    top: 30px;
-		    left: calc(100% + 60px);
+	 			right: 30px;
 			}
 		}
 
 		.actions {
+			flex-basis: 500px;
 			font-size: 0.9em;
 			display: -webkit-box;
 		  display: -ms-flexbox;
@@ -514,9 +515,9 @@ header {
 						display: none;
 						left: 0;
 						position: absolute;
-						background: rgba(250, 250, 250, 0.85);
+						background: white;
 						min-width: 230px;
-						box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.61);
+						box-shadow: 0 8px 25px -8px rgba(0, 0, 0, 0.62);
 						border: 0.5px solid $color-grey;
 						border-top: none;
 						z-index: 1000;
@@ -535,7 +536,7 @@ header {
 								  line-height: 1.3;
 									padding-right: 28px;
 									&:hover{
-										background: white;
+										background: #e7e7e7;
 										color: black;
 										box-shadow: inset -25px 0 0 $color-blue-light;
 									}
@@ -1777,16 +1778,16 @@ article.newest{
 
 .partner-list,
 .alapitvany-list{
-  .logos{
+  .logos:not(.slided){
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    margin: 0 -10px;
+    margin: 0;
     & > div {
       flex-basis:50%;
-      padding: 10px;
+      padding: 2px;
       & > .wrapper{
         border: 0.5px solid $color-grey;
         overflow: hidden;
@@ -1808,6 +1809,106 @@ article.newest{
       }
     }
   }
+
+	.logos.slided {
+		padding: 0 40px;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+		margin: 5px 0 0 0;
+
+		.slick-prev{
+			left: 0;
+			&:before{
+				content:"\f104";
+			}
+		}
+		.slick-next{
+			right: 0;
+			&:before{
+				content:"\f105";
+			}
+		}
+		.slick-prev, .slick-next{
+			background: #ededed;
+			height: 100%;
+			z-index: 100;
+	    width: 40px;
+			&:hover{
+				background: white;
+			}
+		}
+		.slick-next{
+			background: rgba(237, 237, 237, 0.81);
+			&:hover{
+				background: rgba(255, 255, 255, 0.5);
+			}
+		}
+		.slick-prev:before, .slick-next:before{
+			color: black;
+			font-size: 42px;
+			font-family: 'FontAwesome';
+		}
+
+		.slick-dots{
+			bottom: -30px;
+			text-align: center;
+			z-index: 1;
+		}
+
+		.slick-dots li{
+			margin: 0 1px;
+		}
+
+		.slick-dots li button{
+			color: black;
+			font-size: 0.8rem;
+			background: white;
+			border: 0.5px solid #d3d3d3;
+			font-weight: bold;
+		}
+		.slick-dots li button:before,
+		.slick-dots li.slick-active button:before{
+			display: none !important;
+		}
+		.slick-dots li.slick-active button{
+			color: white;
+			background: $color-blue-light;
+		}
+
+		.logo-block{
+			display: -webkit-box;
+	    display: -ms-flexbox;
+	    display: flex;
+	    flex-wrap: wrap;
+	    align-items: center;
+	    margin: 0;
+	    & > div {
+	      flex-basis:50%;
+	      padding: 2px;
+	      & > .wrapper{
+	        border: 0.5px solid $color-grey;
+	        overflow: hidden;
+	        position: relative;
+	        border-radius: 3px;
+
+	        img {
+	          z-index: 1;
+	          position: absolute;
+	          height: 110%;
+	          max-height: 110%;
+	          width: auto;
+	          max-width: initial;
+	          left: 50%;
+	          top: 50%;
+	          -webkit-transform:translate(-50%,-50%);
+	          transform:translate(-50%,-50%);
+	        }
+	      }
+	    }
+		}
+	}
+
   .partner-links{
     margin: 5px 0 0 5px;
     .link {
@@ -2458,12 +2559,6 @@ footer{
 	.logo {
 		padding: 10px 0;
 		position: relative;
-
-		.bkszc{
-			position: absolute;
-			top: 30px;
-			left: calc(100% + 60px);
-		}
 	}
 	.info{
 		background: #f5f5f5;
@@ -3110,6 +3205,32 @@ body.searchresult{
 			width: 50px !important;
 			min-height: 50px !important;
 			min-width: 50px !important;
+		}
+	}
+}
+
+body.article-slug-tanarok-elerhetosegei{
+	.news-content .content{
+		table{
+			width: 100%;
+
+			tr:first-child td{
+				background: $color-blue-light;
+					border: 1px solid #ffffff;
+				color: white;
+				text-align: center;
+			}
+
+			td{
+				border: 1px solid #d2d2d2;
+				padding: 5px;
+				text-align: center;
+			}
+
+			td:nth-child(2){
+				font-weight: bold;
+				text-align: left;
+			}
 		}
 	}
 }
