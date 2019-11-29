@@ -168,14 +168,14 @@ class cikkek extends Controller{
 				}
 			}
 
+			$refurl = $_SERVER['HTTP_REFERER'];
+
+			if (!empty($refurl) && $_GET['b'] == '1') {
+				$_SESSION['cikkek_ref_url'] = $refurl;
+			}
+
 			switch($this->view->gets[2]){
 				case 'szerkeszt':
-					$refurl = $_SERVER['HTTP_REFERER'];
-
-					if (!empty($refurl) && $_GET['b'] == '1') {
-						$_SESSION['cikkek_ref_url'] = $refurl;
-					}
-
 					if(Post::on('save')){
 						/* * /
 						echo '<pre>';
@@ -195,12 +195,6 @@ class cikkek extends Controller{
 					$this->out( 'news', $news->get( $this->view->gets[3]) );
 				break;
 				case 'torles':
-					$refurl = $_SERVER['HTTP_REFERER'];
-
-					if (!empty($refurl) && $_GET['b'] == '1') {
-						$_SESSION['cikkek_ref_url'] = $refurl;
-					}
-
 					if(Post::on('delId')){
 						try{
 							$news->delete($this->view->gets[3]);

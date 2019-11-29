@@ -251,7 +251,7 @@
                     <input type="hidden" name="id" value="<?=$this->gets[2]?>" />
                     <a href="<?=($this->backurl)?$this->backurl:'/'.$this->gets[0]?>"><button type="button" class="btn btn-danger btn-3x"><i class="fa fa-arrow-circle-left"></i> bezár</button></a>
                     <button name="save" class="btn btn-success">Változások mentése <i class="fa fa-check-square"></i></button>
-                    <? else: ?>
+									<? else: ?><a href="<?=($this->backurl)?$this->backurl:'/'.$this->gets[0]?>"><button type="button" class="btn btn-danger btn-3x"><i class="fa fa-arrow-circle-left"></i> mégse</button></a>
                     <button name="add" class="btn btn-primary">Hozzáadás <i class="fa fa-check-square"></i></button>
                   <? endif; ?>
                 </div>

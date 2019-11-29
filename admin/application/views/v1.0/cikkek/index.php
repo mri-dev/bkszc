@@ -1,13 +1,14 @@
 <form class="" action="" method="post">
 	<div style="float:right;">
 		<a href="/cikkek/kategoriak" class="btn btn-default"><i class="fa fa-bars"></i> cikk kategóriák</a>
-		<a href="/cikkek/creator" class="btn btn-primary"><i class="fa fa-plus"></i> új cikk</a>
+		<a href="/cikkek/creator?b=1" class="btn btn-primary"><i class="fa fa-plus"></i> új cikk</a>
 	</div>
 </form>
 <h1><?=(isset($_COOKIE['showarchive']))?'Archivált cikkek':'Cikkek'?> <?php if ($_COOKIE[filtered] == '1'): ?><span style="color: red;">Szűrt lista</span><? endif; ?></h1>
 <? if( true ): ?>
 <?=$this->navigator?>
 <br>
+<?php echo $this->msg; ?>
 <form id="filters" action="" method="post">
 	<input type="hidden" name="filters" value="1">
 	<div class="filter-inputs">
@@ -125,7 +126,7 @@
                 </div>
                 <div class="col-md-1 actions" align="right">
                     <a href="/<?=$this->gets[0]?>/creator/szerkeszt/<?=$news[ID]?>?b=1" title="Szerkesztés"><i class="fa fa-pencil"></i></a>&nbsp;&nbsp;
-                    <a href="/<?=$this->gets[0]?>/creator/torles/<?=$news[ID]?>?b=1" title="Törlés"><i class="fa fa-times"></i></a>
+                    <a href="javascript:void(0)" onclick="deleteArticle(<?=$news[ID]?>, '<?=$news[cim]?>');" title="Törlés"><i class="fa fa-times"></i></a>
                 </div>
            	</div>
             <? endwhile; else:?>
@@ -151,6 +152,21 @@
             $(this).hide();
         });
     })
+
+		function deleteArticle( id, title ) {
+			var c = confirm('Biztos, hogy végleg törli a(z) "'+title+'" bejegyzést?');
+			if (c) {
+				$.post("/ajax/post", {
+					type : 'deleteArticle',
+					id: id
+				}, function(d){
+					console.log(d);
+					if (!d.error) {
+						window.location.assign('?msgkey=msg&msg=Bejegyzés véglegesen törölve: <strong>' + title+'</strong>');
+					}
+				}, "json");
+			}
+		}
 
     function responsive_filemanager_callback(field_id){
         var imgurl = $('#'+field_id).val();

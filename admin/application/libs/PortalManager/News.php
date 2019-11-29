@@ -260,7 +260,7 @@ class News
       'optional_firstimage' => ($optional_data['firstimage'] != '') ? $optional_data['firstimage'] : NULL,
       'archiv' => $archiv,
       'linkek' => $downloads,
-      'forrasinfo' => $forrasinfo,
+      'forrasinfo' => addslashes($forrasinfo),
       'sorrend' => $sorrend
     );
 
