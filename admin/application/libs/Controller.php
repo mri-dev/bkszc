@@ -27,7 +27,7 @@ class Controller {
     function __construct($arg = array())
     {
         $this->start_time = microtime(true);
-        $this->is_admin = $arg[admin];
+        $this->is_admin = $arg['admin'];
         Session::init();
         Helper::setMashineID();
         $this->gets = Helper::GET();
@@ -147,7 +147,7 @@ class Controller {
         ) );
         $this->out( 'kozterulet_jellege', $this->kozterulet_jellege() );
 
-        if(!$arg[hidePatern]){ $this->hidePatern = false; }
+        if(!$arg['hidePatern']){ $this->hidePatern = false; }
 
         $this->view->valuta  = 'Ft';
     }
@@ -397,7 +397,7 @@ class Controller {
         $d = $this->db->query("SELECT bErtek FROM beallitasok WHERE bKulcs = '$key'");
         $dt = $d->fetch(PDO::FETCH_ASSOC);
 
-        return $dt[bErtek];
+        return $dt['bErtek'];
     }
 
     function getAllValtozo(){
@@ -406,13 +406,13 @@ class Controller {
         $dt = $d->fetchAll(PDO::FETCH_ASSOC);
 
         foreach($dt as $d){
-          $ertek = $d[bErtek];
+          $ertek = $d['bErtek'];
 
           if ($ertek != '' && is_object(json_decode($ertek))) {
             $ertek = json_decode($ertek, true);
           }
 
-          $v[$d[bKulcs]] = $ertek;
+          $v[$d['bKulcs']] = $ertek;
         }
 
         $protocol = ($_SERVER['HTTPS']) ? 'https://' : 'http://';
