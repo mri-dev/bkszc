@@ -35,7 +35,7 @@ class cikkek extends Controller{
 		if ( $news->has_news() ) {
 			while ( $news->walk() ) {
 				$hir = $news->the_news();
-				$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir[ID]);
+				$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir['ID']);
 			}
 		}
 		$this->out( 'aktual_news', $hirek );
@@ -60,7 +60,7 @@ class cikkek extends Controller{
 			$arg = array(
 				'limit' => 4,
 				'page' 	=> 1,
-				'in_cat' => (isset($_GET['cat']) && $_GET['cat'] != '' && $_GET['cat'] != 'olvas') ? $this->view->newscats[$_GET['cat']][ID] : false,
+				'in_cat' => (isset($_GET['cat']) && $_GET['cat'] != '' && $_GET['cat'] != 'olvas') ? $this->view->newscats[$_GET['cat']]['ID'] : false,
 				'order' => array(
 					'by' => 'rand()'
 				),

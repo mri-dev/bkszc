@@ -4,7 +4,7 @@
 	*/
 	session_cache_limiter('none');
 	//die('Az oldal átmenetileg nem elérhető!');
-	error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
+	error_reporting(E_ALL & ~(E_STRICT|E_NOTICE|E_WARNING));
 	ini_set('display_errors', 0);
 
 	require "settings/config.php";

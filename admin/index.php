@@ -2,10 +2,9 @@
 	/*
 	* Könyvtárak
 	*/
-	error_reporting(E_ALL & ~(E_STRICT|E_NOTICE));
-	
-	//die('Az oldal átmenetileg nem elérhető!');
-	
+	error_reporting(E_ALL & ~(E_STRICT|E_NOTICE|E_WARNING));
+		//die('Az oldal átmenetileg nem elérhető!');
+
 	ini_set('display_errors', 0);
 
 	require "settings/config.php";
@@ -15,7 +14,7 @@
 	}else require 'autoload.php';
 
 	$start = new Start();
-	
+
 	function __($text){
 		return $text;
 	}
