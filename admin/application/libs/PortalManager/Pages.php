@@ -24,7 +24,7 @@ class Pages
 
 	function __construct( $page_id = false, $arg = array() )
 	{
-		$this->db = $arg[db];
+		$this->db = $arg['db'];
 
 		if ( $page_id ) {
 			$this->selected_page_id = $page_id;

@@ -58,7 +58,7 @@ class Users
 	function __construct( $arg = array() ){
 		$this->db 		= $arg['db'];
 		$this->is_cp 	= $arg['admin'];
-		$this->settings = $arg[view]->settings;
+		$this->settings = $arg['view']->settings;
 
 		if( !$this->settings && isset( $arg['settings'] ) )
 		{
@@ -178,33 +178,33 @@ class Users
 		$referer_allow 	= false;
 		$getby = 'email';
 
-		$ret[options] = $arg;
+		$ret['options'] = $arg;
 
 		$user = ( !$arg['user'] ) 	? $this->user : $arg['user'];
 		$getby = ( !$arg['userby'] ) ? $getby 	: $arg['userby'];
 
 		if(!$user) return false;
 
-		$ret[data] 	= ($user) ? $this->getData($user, $getby) : false;
-		$ret[shop] = $ret['data']['shop'];
-		$ret[permissions] 	= $ret[data][permissions];
-		$ret[user_group] 	= $ret[data][user_group];
-		$ret[email] = $ret[data][email];
+		$ret['data'] 	= ($user) ? $this->getData($user, $getby) : false;
+		$ret['shop'] = $ret['data']['shop'];
+		$ret['permissions'] 	= $ret['data']['permissions'];
+		$ret['user_group'] 	= $ret['data']['user_group'];
+		$ret['email'] = $ret['data']['email'];
 
-		if( !$ret[data] ) {
+		if( !$ret['data'] ) {
 			unset($_SESSION['user_email']);
 			return false;
 		}
 
-		$ret[szallitasi_adat] = $this->getSzallitasiAdatok($ret['data']['ID']);
-		$ret[szamlazasi_adat] = $this->getSzamlazasiAdatok($ret['data']['ID']);
+		$ret['szallitasi_adat'] = $this->getSzallitasiAdatok($ret['data']['ID']);
+		$ret['szamlazasi_adat'] = $this->getSzamlazasiAdatok($ret['data']['ID']);
 
 		// Ha hiányzik az adat
-		if( (is_null($ret[szallitasi_adat]) || is_null($ret[szamlazasi_adat]) ) && !$this->is_cp) {
+		if( (is_null($ret['szallitasi_adat']) || is_null($ret['szamlazasi_adat']) ) && !$this->is_cp) {
 			if( $_GET['safe'] !='1' ) {
 				$miss = '';
-				if( is_null($ret[szallitasi_adat]) ) $miss .= 'szallitasi,';
-				if( is_null($ret[szamlazasi_adat]) ) $miss .= 'szamlazasi,';
+				if( is_null($ret['szallitasi_adat']) ) $miss .= 'szallitasi,';
+				if( is_null($ret['szamlazasi_adat']) ) $miss .= 'szamlazasi,';
 				$miss = rtrim($miss,',');
 				\Helper::reload( '/user/beallitasok?safe=1&missed_details='.$miss );
 			}
@@ -218,7 +218,7 @@ class Users
 			SUM((o.me * o.egysegAr)) as ar,
 			(SELECT kedvezmeny FROM orders WHERE ID = o.orderKey) as kedv
 		FROM `order_termekek` as o
-		WHERE	o.userID = ".$ret[data][ID]." and (SELECT allapot FROM orders WHERE ID = o.orderKey) = ".$this->settings['flagkey_orderstatus_done'];
+		WHERE	o.userID = ".$ret['data']['ID']." and (SELECT allapot FROM orders WHERE ID = o.orderKey) = ".$this->settings['flagkey_orderstatus_done'];
 
 		$ordpc = $this->db->query($q)->fetch(\PDO::FETCH_ASSOC);
 
@@ -230,8 +230,8 @@ class Users
 
 		$ret['kedvezmenyek'] 	= $kedvezmenyek;
 		$ret['torzsvasarloi_kedvezmeny'] = $torzsvasarloi_kedvezmeny;
-		$ret['torzsvasarloi_kedvezmeny_next_price_step'] = $kedv[next_price_step];
-		$ret['torzsvasarloi_kedvezmeny_price_steps'] = $kedv[price_steps];
+		$ret['torzsvasarloi_kedvezmeny_next_price_step'] = $kedv['next_price_step'];
+		$ret['torzsvasarloi_kedvezmeny_price_steps'] = $kedv['price_steps'];
 
 		$ret['kedvezmeny'] 	= $torzsvasarloi_kedvezmeny + $arena_water_card;
 
@@ -586,9 +586,9 @@ class Users
 
 		foreach($data as $d){
 
-			$from 	= (int)$d[ar_from];
-			$to 	= (int)$d[ar_to];
-			$k 		= (float)$d[kedvezmeny];
+			$from 	= (int)$d['ar_from'];
+			$to 	= (int)$d['ar_to'];
+			$k 		= (float)$d['kedvezmeny'];
 
 			if($to === 0) $to = 999999999;
 
@@ -614,9 +614,9 @@ class Users
 
 		$next_step_price = $price_steps[$step];
 
-		$back[szazalek] = $kedv;
-		$back[next_price_step] = $next_step_price;
-		$back[price_steps] = $price_steps;
+		$back['szazalek'] = $kedv;
+		$back['next_price_step'] = $next_step_price;
+		$back['price_steps'] = $price_steps;
 
 		return $back;
 	}
@@ -649,9 +649,9 @@ class Users
 		extract($this->db->q($sv,array('multi' => '1')));
 
 		foreach($data as $d){
-			$from 	= (int)$d[ar_from];
-			$to 	= (int)$d[ar_to];
-			$k 		= (float)$d[kedvezmeny];
+			$from 	= (int)$d['ar_from'];
+			$to 	= (int)$d['ar_to'];
+			$k 		= (float)$d['kedvezmeny'];
 
 			if($to === 0) $to = 999999999;
 
@@ -711,8 +711,8 @@ class Users
 	}
 
 	private function getUser(){
-		if($_SESSION[user_email]){
-			$this->user = $_SESSION[user_email]	;
+		if($_SESSION['user_email']){
+			$this->user = $_SESSION['user_email']	;
 		}
 	}
 
@@ -749,7 +749,7 @@ class Users
 
 	function changeSzallitasiAdat($userID, $post){
 		extract($post);
-		unset($post[saveSzallitasi]);
+		unset($post['saveSzallitasi']);
 
 		if($nev == '' || $city == '' || $irsz == '' || $uhsz == '' || $phone == '') throw new \Exception('Minden mező kitölétse kötelező!');
 
@@ -762,7 +762,7 @@ class Users
 
 	function changeSzamlazasiAdat($userID, $post){
 		extract($post);
-		unset($post[saveSzamlazasi]);
+		unset($post['saveSzamlazasi']);
 
 		if($nev == '' || $city == '' || $irsz == '' || $uhsz == '') throw new \Exception('Minden mező kitölétse kötelező!');
 
@@ -797,15 +797,15 @@ class Users
 		extract($this->db->q($q,$arg));
 
 		foreach($data as $d){
-			if( $d[kedvezmeny_szazalek] > 0) {
-				$d[totalPrice] = $d[totalPrice] / ( $d[kedvezmeny_szazalek] / 100 + 1 ) ;
-				\PortalManager\Formater::discountPrice( $d[totalPrice], $d[kedvezmeny_szazalek] );
+			if( $d['kedvezmeny_szazalek'] > 0) {
+				$d['totalPrice'] = $d['totalPrice'] / ( $d['kedvezmeny_szazalek'] / 100 + 1 ) ;
+				\PortalManager\Formater::discountPrice( $d['totalPrice'], $d['kedvezmeny_szazalek'] );
 			}
 
-			if($d[allapotNev] == 'Teljesítve'){
-				$back[done][] = $d;
+			if($d['allapotNev'] == 'Teljesítve'){
+				$back['done'][] = $d;
 			}else{
-				$back[progress][] = $d;
+				$back['progress'][] = $d;
 			}
 		}
 
@@ -931,14 +931,14 @@ class Users
 			array(
 				'utoljara_belepett' => NOW
 			),
-			"email = '".$data[email]."'"
+			"email = '".$data['email']."'"
 		);
 
-		$re[email] 	= $data[email];
-		$re[pw] 	= base64_encode( $data[pw] );
-		$re[remember] = ($data[remember_me] == 'on') ? true : false;
+		$re['email'] 	= $data['email'];
+		$re['pw'] 	= base64_encode( $data['pw'] );
+		$re['remember'] = ($data['remember_me'] == 'on') ? true : false;
 
-		\Session::set('user_email',$data[email]);
+		\Session::set('user_email',$data['email']);
 
 		return $re;
 	}
@@ -956,7 +956,7 @@ class Users
 
 		$d = $q->fetch(\PDO::FETCH_ASSOC);
 
-		if(!is_null($d[aktivalva]))  throw new \Exception('A fiók már aktiválva van!');
+		if(!is_null($d['aktivalva']))  throw new \Exception('A fiók már aktiválva van!');
 
 		$this->db->update(self::TABLE_NAME,
 			array(
@@ -1100,7 +1100,7 @@ class Users
 		}
 
 		// E-mail értesítés
-		if ( isset($data[flag][alert_user]) )
+		if ( isset($data['flag']['alert_user']) )
 		{
 			$mail = new Mailer( $this->settings['page_title'], SMTP_USER, $this->settings['mail_sender_mode'] );
 			$mail->add( $data['data']['felhasznalok']['email'] );
@@ -1166,9 +1166,9 @@ class Users
 			$this->db->insert(
 				self::TABLE_NAME,
 				array(
-					'email' => trim($data[email]),
-					'nev' => trim($data[nev]),
-					'jelszo' => \Hash::jelszo($data[pw2]),
+					'email' => trim($data['email']),
+					'nev' => trim($data['nev']),
+					'jelszo' => \Hash::jelszo($data['pw2']),
 					'user_group' => $user_group
 				)
 			);
@@ -1208,7 +1208,7 @@ class Users
 		//$this->subscribeToWebgalamb($user_group, $data);
 
 		// Aktiváló e-mail kiküldése
-		$this->sendActivationEmail( $data['email'], trim($data[pw2]) );
+		$this->sendActivationEmail( $data['email'], trim($data['pw2']) );
 
 		return $data;
 	}
@@ -1230,31 +1230,31 @@ class Users
 				$url 		= '';
 				$request 	= (new Request)->post( $url, array(
 					// E-mail cím
-					'subscr' 	=> trim($data[email]),
+					'subscr' 	=> trim($data['email']),
 					// Név
-					'f_1013' 	=> trim($data[nev]),
+					'f_1013' 	=> trim($data['nev']),
 					// Számlázási név
-					'f_1016' 	=> trim($szamlazasi_keys[nev]),
+					'f_1016' 	=> trim($szamlazasi_keys['nev']),
 					// Számlázási utca, házszám
-					'f_1017' 	=> trim($szamlazasi_keys[uhsz]),
+					'f_1017' 	=> trim($szamlazasi_keys['uhsz']),
 					// Számlázási Város
-					'f_1021' 	=> trim($szamlazasi_keys[city]),
+					'f_1021' 	=> trim($szamlazasi_keys['city']),
 					// Számlázási Irányítószám
-					'f_1018' 	=> trim($szamlazasi_keys[irsz]),
+					'f_1018' 	=> trim($szamlazasi_keys['irsz']),
 					// Számlázási Megye
-					'f_1019' 	=> trim($szamlazasi_keys[state]),
+					'f_1019' 	=> trim($szamlazasi_keys['state']),
 					// Szállítási név
-					'f_1020' 	=> trim($szallitasi_keys[nev]),
+					'f_1020' 	=> trim($szallitasi_keys['nev']),
 					// Szállítási utca, házszám
-					'f_1022' 	=> trim($szallitasi_keys[uhsz]),
+					'f_1022' 	=> trim($szallitasi_keys['uhsz']),
 					// Szállítási Város
-					'f_1023' 	=> trim($szallitasi_keys[city]),
+					'f_1023' 	=> trim($szallitasi_keys['city']),
 					// Szállítási Irányítószám
-					'f_1024' 	=> trim($szallitasi_keys[irsz]),
+					'f_1024' 	=> trim($szallitasi_keys['irsz']),
 					// Szállítási Megye
-					'f_1025' 	=> trim($szallitasi_keys[state]),
+					'f_1025' 	=> trim($szallitasi_keys['state']),
 					// (Szállítási) Telefonszám
-					'f_1027' 	=> trim($szallitasi_keys[phone]),
+					'f_1027' 	=> trim($szallitasi_keys['phone']),
 					'sub' 		=> 'Feliratkozás'
 				) )
 				->setDebug( false )
@@ -1266,9 +1266,9 @@ class Users
 				$url 		= '';
 				$request 	= (new Request)->post( $url, array(
 					// E-mail cím
-					'subscr' 	=> trim($data[email]),
+					'subscr' 	=> trim($data['email']),
 					// Név
-					'f_1030' 	=> trim($data[nev]),
+					'f_1030' 	=> trim($data['nev']),
 					// Cég Neve
 					'f_1033' 	=> trim($data['reseller']['company_name']),
 					// Cég Székhelye
@@ -1278,27 +1278,27 @@ class Users
 					// Cég Postacím
 					'f_1036' 	=> trim($data['reseller']['company_address']),
 					// Számlázási név
-					'f_1037' 	=> trim($szamlazasi_keys[nev]),
+					'f_1037' 	=> trim($szamlazasi_keys['nev']),
 					// Számlázási utca, házszám
-					'f_1038' 	=> trim($szamlazasi_keys[uhsz]),
+					'f_1038' 	=> trim($szamlazasi_keys['uhsz']),
 					// Számlázási Város
-					'f_1039' 	=> trim($szamlazasi_keys[city]),
+					'f_1039' 	=> trim($szamlazasi_keys['city']),
 					// Számlázási Irányítószám
-					'f_1040' 	=> trim($szamlazasi_keys[irsz]),
+					'f_1040' 	=> trim($szamlazasi_keys['irsz']),
 					// Számlázási Megye
-					'f_1041' 	=> trim($szamlazasi_keys[state]),
+					'f_1041' 	=> trim($szamlazasi_keys['state']),
 					// Szállítási név
-					'f_1042' 	=> trim($szallitasi_keys[nev]),
+					'f_1042' 	=> trim($szallitasi_keys['nev']),
 					// Szállítási utca, házszám
-					'f_1043' 	=> trim($szallitasi_keys[uhsz]),
+					'f_1043' 	=> trim($szallitasi_keys['uhsz']),
 					// Szállítási Város
-					'f_1044' 	=> trim($szallitasi_keys[city]),
+					'f_1044' 	=> trim($szallitasi_keys['city']),
 					// Szállítási Irányítószám
-					'f_1045' 	=> trim($szallitasi_keys[irsz]),
+					'f_1045' 	=> trim($szallitasi_keys['irsz']),
 					// Szállítási Megye
-					'f_1046' 	=> trim($szallitasi_keys[state]),
+					'f_1046' 	=> trim($szallitasi_keys['state']),
 					// (Szállítási) Telefonszám
-					'f_1047' 	=> trim($szallitasi_keys[phone]),
+					'f_1047' 	=> trim($szallitasi_keys['phone']),
 					'sub' 		=> 'Feliratkozás'
 				) )
 				->setDebug( false )
@@ -1397,9 +1397,9 @@ class Users
 	{
 		$referertimefilter = '';
 
-		if (isset($arg[referertime]))
+		if (isset($arg['referertime']))
 		{
-			$time = $arg[referertime];
+			$time = $arg['referertime'];
 
 			if(isset($time['from']) && !empty($time['from']))
 			{
@@ -1421,8 +1421,8 @@ class Users
 		// WHERE
 		$q .= " WHERE 1=1 ";
 
-		if(count($arg[filters]) > 0){
-			foreach($arg[filters] as $key => $v){
+		if(count($arg['filters']) > 0){
+			foreach($arg['filters'] as $key => $v){
 				switch($key)
 				{
 					case 'ID':
@@ -1463,18 +1463,18 @@ class Users
 
 		//echo $q;
 
-		$arg[multi] = "1";
+		$arg['multi'] = "1";
 		extract($this->db->q($q, $arg));
 
 		$B = array();
 		foreach($data as $d){
 			$d['user_group_name'] = $this->getUserGroupes( $d['user_group'] );
 			$d['price_group'] = $this->getPriceGroupes( $d['price_group'] );
-			$d[total_data] = $this->get(array( 'user' => $d['email'] ));
+			$d['total_data'] = $this->get(array( 'user' => $d['email'] ));
 			$B[] = $d;
 		}
 
-		$ret[data] = $B;
+		$ret['data'] = $B;
 
 		return $ret;
 	}

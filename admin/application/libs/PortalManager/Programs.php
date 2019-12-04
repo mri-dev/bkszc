@@ -26,7 +26,7 @@ class Programs
 
 	function __construct( $news_id = false, $arg = array() )
 	{
-		$this->db = $arg[db];
+		$this->db = $arg['db'];
 		if ( $news_id ) {
 			$this->selected_news_id = $news_id;
 		}

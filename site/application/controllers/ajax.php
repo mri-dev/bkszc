@@ -48,7 +48,7 @@ class ajax extends Controller{
 								$re = $this->User->add($_POST);
 							}catch(Exception $e){
 								$err = $this->escape($e->getMessage(),$ret);
-								$ret[errorCode] = $e->getCode();
+								$ret['errorCode'] = $e->getCode();
 							}
 
 							if(!$err)
@@ -60,11 +60,11 @@ class ajax extends Controller{
 						case 'login':
 							$err = false;
 							try{
-								$re = $this->User->login($_POST[data]);
+								$re = $this->User->login($_POST['data']);
 
-								if( $re && $re[remember]){
-									setcookie('ajx_login_usr', $re[email], time() + 60*60*24*3, '/' );
-									setcookie('ajx_login_pw', $re[pw], time() + 60*60*24*3, '/' );
+								if( $re && $re['remember']){
+									setcookie('ajx_login_usr', $re['email'], time() + 60*60*24*3, '/' );
+									setcookie('ajx_login_pw', $re['pw'], time() + 60*60*24*3, '/' );
 								}else{
 									setcookie('ajx_login_usr', null, time() - 3600, '/' );
 									setcookie('ajx_login_pw', null , time() -3600, '/' );
@@ -72,7 +72,7 @@ class ajax extends Controller{
 
 							}catch(Exception $e){
 								$err = $this->escape($e->getMessage(),$ret);
-								$ret[errorCode] = $e->getCode();
+								$ret['errorCode'] = $e->getCode();
 							}
 
 							if(!$err)
@@ -84,10 +84,10 @@ class ajax extends Controller{
 						case 'resetPassword':
 							$err = false;
 							try{
-								$re = $this->User->resetPassword($_POST[data]);
+								$re = $this->User->resetPassword($_POST['data']);
 							}catch(Exception $e){
 								$err = $this->escape($e->getMessage(),$ret);
-								$ret[errorCode] = $e->getCode();
+								$ret['errorCode'] = $e->getCode();
 							}
 
 							if(!$err)
@@ -103,13 +103,13 @@ class ajax extends Controller{
 		}
 
 		private function setSuccess($msg, &$ret){
-			$ret[msg] 		= $msg;
-			$ret[success] 	= 1;
+			$ret['msg'] 		= $msg;
+			$ret['success'] 	= 1;
 			return true;
 		}
 		private function escape($msg, &$ret){
-			$ret[msg] 		= $msg;
-			$ret[success] 	= 0;
+			$ret['msg'] 		= $msg;
+			$ret['success'] 	= 0;
 			return true;
 		}
 

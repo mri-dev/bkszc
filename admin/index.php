@@ -9,7 +9,7 @@
 
 	require "settings/config.php";
 
-	if( $_GET[dev] ){
+	if( $_GET['dev'] ){
 		require 'devautoload.php';
 	}else require 'autoload.php';
 

@@ -115,7 +115,7 @@ class Database
 		$debug_str = null;
 		$header	= null;
 		$value 	= null;
-		$debug 	= ( !$arg[debug] ) ? false : true;
+		$debug 	= ( !$arg['debug'] ) ? false : true;
 
 		// Kivételkezelés használata
 		$this->db->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_EXCEPTION);
@@ -240,11 +240,11 @@ class Database
 		$back 		= array();
 		$pages 		= array();
 		$total_num 	= 0;
-		$return_str = ($arg[ret_str]) ? $arg[ret_str] : 'ret';
+		$return_str = ($arg['ret_str']) ? $arg['ret_str'] : 'ret';
 		$current_page = ($arg['page']) ? $arg['page'] : \Helper::getLastParam();
 		$get 		= count(\Helper::GET());
 		if($get <= 2) $current_page = 1;
-			$pages[current] = (is_numeric($current_page) && $current_page > 0) ? $current_page : 1;
+			$pages['current'] = (is_numeric($current_page) && $current_page > 0) ? $current_page : 1;
 		$limit 		= 50;
 		$data 		= array();
 		//////////////////////
@@ -252,11 +252,11 @@ class Database
 
 
 		// LIMIT
-		if($arg[limit]){
+		if($arg['limit']){
 			$query = rtrim($query,";");
-			$limit = (is_numeric($arg[limit]) && $arg[limit] > 0 && $arg[limit] != '') ? $arg[limit] : $limit;
+			$limit = (is_numeric($arg['limit']) && $arg['limit'] > 0 && $arg['limit'] != '') ? $arg['limit'] : $limit;
 			$l_min = 0;
-			$l_min = $pages[current] * $limit - $limit;
+			$l_min = $pages['current'] * $limit - $limit;
 			$query .= " LIMIT $l_min, $limit";
 			$query .= ";";
 		}
@@ -266,12 +266,12 @@ class Database
 
 		if(!$q){
 			error_log($query);
-			//$back[$return_str][info][query][error] = $q->errorInfo();
+			//$back[$return_str]['info']['query'][error] = $q->errorInfo();
 		}
 
-		if($q->rowCount() == 1 && !$arg[multi]){
+		if($q->rowCount() == 1 && !$arg['multi']){
 			$data = $q->fetch(\PDO::FETCH_ASSOC);
-		}else if($q->rowCount() > 1 || $arg[multi]){
+		}else if($q->rowCount() > 1 || $arg['multi']){
 			$data = $q->fetchAll(\PDO::FETCH_ASSOC);
 		}
 
@@ -280,18 +280,18 @@ class Database
 		$return_num = $q->rowCount();
 
 		///
-			$pages[max] 	= ($total_num == 0) ? 0 : ceil($total_num / $limit);
-			$pages[limit] 	= ($arg[limit]) ? $limit : false;
+			$pages['max'] 	= ($total_num == 0) ? 0 : ceil($total_num / $limit);
+			$pages['limit'] 	= ($arg['limit']) ? $limit : false;
 
-		$back[$return_str][info][input][arg] 	= $arg;
-		$back[$return_str][info][query][str] 	= $query;
-		$back[$return_str][info][total_num] 	= (int)$total_num;
-		$back[$return_str][info][return_num] 	= (int)$return_num;
-		$back[$return_str][info][pages] 		= $pages;
+		$back[$return_str]['info']['input']['arg'] 	= $arg;
+		$back[$return_str]['info']['query']['str'] 	= $query;
+		$back[$return_str]['info']['total_num'] 	= (int)$total_num;
+		$back[$return_str]['info']['return_num'] 	= (int)$return_num;
+		$back[$return_str]['info']['pages'] 		= $pages;
 
 
-		$back[$return_str][data] 	= $data;
-		$back[data] 				= $data;
+		$back[$return_str]['data'] 	= $data;
+		$back['data'] 				= $data;
 		return $back;
 	}
 

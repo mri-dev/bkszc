@@ -137,7 +137,7 @@
 
         function getPreferences($prefs = array(), $arg = array()){
             $parent_path = VIEW.$this->gets[0].'/preferences/';
-            $css_file = ($arg[css] != '') ? $arg[css].'.' : 'main.';
+            $css_file = ($arg['css'] != '') ? $arg['css'].'.' : 'main.';
 
             if(!empty($prefs))
                 foreach($prefs as $pf){

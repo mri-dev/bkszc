@@ -36,7 +36,7 @@
             <div class="clr"></div>
             <div class="in-cats">
               <?php foreach ( (array)$categories['list'] as $cat ): ?>
-              <a class="cat" target="_blank" href="<?=($cat[is_tematic])?'/':'/cikkek/kategoriak/'?><?=$cat['slug']?>"><?=$cat['label']?></a>
+              <a class="cat" target="_blank" href="<?=($cat['is_tematic'])?'/':'/cikkek/kategoriak/'?><?=$cat['slug']?>"><?=$cat['label']?></a>
               <?php endforeach; ?>
               <div class="clr"></div>
             </div>

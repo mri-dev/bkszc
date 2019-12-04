@@ -26,8 +26,8 @@ class Admin
 
 	function __construct( $admin_id = false, $arg = array() )
 	{
-		$this->db = $arg[db];
-		$this->settings = $arg[view]->settings;
+		$this->db = $arg['db'];
+		$this->settings = $arg['view']->settings;
 
 		if ($admin_id) {
 			$this->admin_id = $admin_id;
@@ -436,9 +436,9 @@ class Admin
 			}
 		}
 
-		$arg[kedvezmeny] 	= $data[kedvezmeny_szazalek];
-		$data[items] 		= $this->getOrderListItems($data[ID], $arg);
-		$data[referer] 		= $referer;
+		$arg['kedvezmeny'] 	= $data['kedvezmeny_szazalek'];
+		$data['items'] 		= $this->getOrderListItems($data['ID'], $arg);
+		$data['referer'] 		= $referer;
 
 		return $data;
 	}
@@ -465,14 +465,14 @@ class Admin
 		LEFT OUTER JOIN order_termek_allapot as otp ON ok.allapotID = otp.ID
 		WHERE ok.orderKey = $orderID";
 
-		$arg[multi] = '1';
+		$arg['multi'] = '1';
 		extract($this->db->q($q,$arg));
 
 		$bdata = array();
-		$kedvezmenyes = ($arg[kedvezmeny] > 0) ? true : false;
+		$kedvezmenyes = ($arg['kedvezmeny'] > 0) ? true : false;
 		foreach ($data as $d) {
 			if( $kedvezmenyes ) {
-				\PortalManager\Formater::discountPrice( $d[ar], $arg[kedvezmeny] );
+				\PortalManager\Formater::discountPrice( $d[ar], $arg['kedvezmeny'] );
 			}
 			$bdata[] = $d;
 		}
@@ -488,7 +488,7 @@ class Admin
 
 		$back = array();
 		foreach($data as $d){
-			$back[$d[ID]] = $d;
+			$back[$d['ID']] = $d;
 		}
 
 		return $back;
@@ -501,7 +501,7 @@ class Admin
 
 		$back = array();
 		foreach($data as $d){
-			$back[$d[ID]] = $d;
+			$back[$d['ID']] = $d;
 		}
 
 		return $back;
@@ -511,7 +511,7 @@ class Admin
 	{
 		if($orderID == '') return false;
 
-		$accessKey 		= $post[accessKey][$orderID];
+		$accessKey 		= $post['accessKey'][$orderID];
 		$updateData		= array();
 		$changedData 	= array();
 		$strKey 		= array(
@@ -547,7 +547,7 @@ class Admin
 			$totalOrderPrice = (float) $this->db->query("
 				SELECT 				sum((o.me * o.egysegAr)) as ar
 				FROM 				`order_termekek` as o
-				WHERE 				o.userID = {$user[data][ID]} and
+				WHERE 				o.userID = {$user['data']['ID']} and
 									datediff(now(),o.hozzaadva) <= 365  and
 									(SELECT allapot FROM orders WHERE ID = o.orderKey) = {$this->settings['flagkey_orderstatus_done']}
 			")->fetch(\PDO::FETCH_COLUMN);
@@ -605,51 +605,51 @@ class Admin
 		}
 
 		if ( count($added_new_items) > 0 ) {
-			$changedData[uj_termek]	= count($added_new_items);
+			$changedData['uj_termek']	= count($added_new_items);
 		}
 
 		// Megrendelés állapot
-		$allapot 		= $post[allapotID][$orderID];
-		$allapot_pre 	= $post[prev_allapotID][$orderID];
+		$allapot 		= $post['allapotID'][$orderID];
+		$allapot_pre 	= $post['prev_allapotID'][$orderID];
 		if($allapot != $allapot_pre){
 			$updateData['allapot'] 	= $allapot;
-			$changedData[allapot]	= 1;
+			$changedData['allapot']	= 1;
 		}
 
 		// Szállítási költség
-		$szallitasi_koltseg 		= $post[szallitasi_koltseg][$orderID];
-		$szallitasi_koltseg_pre 	= $post[prev_szallitasi_koltseg][$orderID];
+		$szallitasi_koltseg 		= $post['szallitasi_koltseg'][$orderID];
+		$szallitasi_koltseg_pre 	= $post['prev_szallitasi_koltseg'][$orderID];
 		if($szallitasi_koltseg != $szallitasi_koltseg_pre){
 			$updateData['szallitasi_koltseg'] 	= $szallitasi_koltseg;
-			$changedData[szallitasi_koltseg]	= 1;
+			$changedData['szallitasi_koltseg']	= 1;
 		}
 		// Kedvezmény
-		$kedvezmeny 		= $post[kedvezmeny][$orderID];
-		$kedvezmeny_pre 	= $post[prev_kedvezmeny][$orderID];
+		$kedvezmeny 		= $post['kedvezmeny'][$orderID];
+		$kedvezmeny_pre 	= $post['prev_kedvezmeny'][$orderID];
 		if($kedvezmeny != $kedvezmeny_pre){
 			$updateData['kedvezmeny'] 	= $kedvezmeny;
-			$changedData[kedvezmeny]	= 1;
+			$changedData['kedvezmeny']	= 1;
 		}
 		// Átvétel
-		$szallitas 		= $post[szallitas][$orderID];
-		$szallitas_pre 	= $post[prev_szallitas][$orderID];
+		$szallitas 		= $post['szallitas'][$orderID];
+		$szallitas_pre 	= $post['prev_szallitas'][$orderID];
 		if($szallitas != $szallitas_pre){
 			$updateData['szallitasiModID'] 	= $szallitas;
-			$changedData[szallitas]			= 1;
+			$changedData['szallitas']			= 1;
 		}
 		// Pick Pack Pont üzletkód
-		$ppp_uzlet 		= $post[pickpackpont_uzlet_kod];
-		$ppp_uzlet_pre 	= $post[prev_pickpackpont_uzlet_kod];
+		$ppp_uzlet 		= $post['pickpackpont_uzlet_kod'];
+		$ppp_uzlet_pre 	= $post['prev_pickpackpont_uzlet_kod'];
 		if($ppp_uzlet != $ppp_uzlet_pre){
 			$updateData['pickpackpont_uzlet_kod'] 	= $ppp_uzlet;
 			$changedData['pickpackpont_uzlet_kod']	= 1;
 		}
 		// Fizetés
-		$fizetes 		= $post[fizetes][$orderID];
-		$fizetes_pre 	= $post[prev_fizetes][$orderID];
+		$fizetes 		= $post['fizetes'][$orderID];
+		$fizetes_pre 	= $post['prev_fizetes'][$orderID];
 		if($fizetes != $fizetes_pre){
 			$updateData['fizetesiModID'] 	= $fizetes;
-			$changedData[fizetes]			= 1;
+			$changedData['fizetes']			= 1;
 		}
 
 		// Megrendelés megváltoztatása
@@ -663,18 +663,18 @@ class Admin
 
 		// Termékek állapota
 
-		$termek_allapotok 		= $post[termekAllapot][$orderID];
-		$termek_allapotok_pre 	= $post[prev_termekAllapot][$orderID];
+		$termek_allapotok 		= $post['termekAllapot'][$orderID];
+		$termek_allapotok_pre 	= $post['prev_termekAllapot'][$orderID];
 		$termekAllapotChange 	= array();
 		$termek_will_delete 	= array();
 
 		foreach($termek_allapotok  as $tid => $tv){
 			$pre = $termek_allapotok_pre[$tid];
 			if($tv != $pre){
-				if(!$changedData[termekAllapot]){
-					$changedData[termekAllapot] = 1;
+				if(!$changedData['termekAllapot']){
+					$changedData['termekAllapot'] = 1;
 				}else{
-					$changedData[termekAllapot] += 1;
+					$changedData['termekAllapot'] += 1;
 				}
 
 				if( $tv == '7') {
@@ -695,9 +695,9 @@ class Admin
 			$this->db->update(
 				'order_termekek',
 				array(
-					'allapotID' => $tac[val]
+					'allapotID' => $tac['val']
 				),
-				"ID = ".$tac[id]
+				"ID = ".$tac['ID']
 			);
 		}
 
@@ -707,17 +707,17 @@ class Admin
 		}
 
 		// Termék mennyiségek
-		$termek_me 		= $post[termekMe][$orderID];
-		$termek_me_pre 	= $post[prev_termekMe][$orderID];
+		$termek_me 		= $post['termekMe'][$orderID];
+		$termek_me_pre 	= $post['prev_termekMe'][$orderID];
 		$termekMeChange	= array();
 
 		foreach($termek_me  as $tid => $tv){
 			$pre = $termek_me_pre[$tid];
 			if($tv != $pre){
-				if(!$changedData[termekMe]){
-					$changedData[termekMe] = 1;
+				if(!$changedData['termekMe']){
+					$changedData['termekMe'] = 1;
 				}else{
-					$changedData[termekMe] += 1;
+					$changedData['termekMe'] += 1;
 				}
 				$termekMeChange[] = array(
 					'id' => $tid,
@@ -727,28 +727,28 @@ class Admin
 		}
 
 		foreach($termekMeChange as $tac){
-			$changedData[termekMe]	= 1;
+			$changedData['termekMe']	= 1;
 			$this->db->update(
 				'order_termekek',
 				array(
-					'me' => $tac[val]
+					'me' => $tac['val']
 				),
-				"ID = ".$tac[id]
+				"ID = ".$tac['ID']
 			);
 		}
 
 		// Termék árak
-		$termek_ar 		= $post[termekAr][$orderID];
-		$termek_ar_pre 	= $post[prev_termekAr][$orderID];
+		$termek_ar 		= $post['termekAr'][$orderID];
+		$termek_ar_pre 	= $post['prev_termekAr'][$orderID];
 		$termekArChange	= array();
 
 		foreach($termek_ar  as $tid => $tv){
 			$pre = $termek_ar_pre[$tid];
 			if($tv != $pre){
-				if(!$changedData[termekAr]){
-					$changedData[termekAr] = 1;
+				if(!$changedData['termekAr']){
+					$changedData['termekAr'] = 1;
 				}else{
-					$changedData[termekAr] += 1;
+					$changedData['termekAr'] += 1;
 				}
 				$termekArChange[] = array(
 					'id' => $tid,
@@ -758,26 +758,26 @@ class Admin
 		}
 
 		foreach($termekArChange as $tac){
-			$changedData[termekAr]	= 1;
+			$changedData['termekAr']	= 1;
 			$this->db->update(
 				'order_termekek',
 				array(
-					'egysegAr' => $tac[val]
+					'egysegAr' => $tac['val']
 				),
-				"ID = ".$tac[id]
+				"ID = ".$tac['ID']
 			);
 		}
 
 		// Számlázási adatok
-		$szamlazasi_adat 		= $post[szamlazasi_adat][$orderID];
-		$szamlazasi_adat_pre 	= $post[prev_szamlazasi_adat][$orderID];
+		$szamlazasi_adat 		= $post['szamlazasi_adat'][$orderID];
+		$szamlazasi_adat_pre 	= $post['prev_szamlazasi_adat'][$orderID];
 		foreach($szamlazasi_adat  as $tid => $tv){
 			$pre = $szamlazasi_adat_pre[$tid];
 			if($tv != $pre){
-				if(!$changedData[szamlazasi_adat]){
-					$changedData[szamlazasi_adat] = 1;
+				if(!$changedData['szamlazasi_adat']){
+					$changedData['szamlazasi_adat'] = 1;
 				}else{
-					$changedData[szamlazasi_adat] += 1;
+					$changedData['szamlazasi_adat'] += 1;
 				}
 			}
 		}
@@ -791,15 +791,15 @@ class Admin
 		);
 
 		// Szállítási adatok
-		$szallitasi_adat 		= $post[szallitasi_adat][$orderID];
-		$szallitasi_adat_pre 	= $post[prev_szallitasi_adat][$orderID];
+		$szallitasi_adat 		= $post['szallitasi_adat'][$orderID];
+		$szallitasi_adat_pre 	= $post['prev_szallitasi_adat'][$orderID];
 		foreach($szallitasi_adat  as $tid => $tv){
 			$pre = $szallitasi_adat_pre[$tid];
 			if($tv != $pre){
-				if(!$changedData[szallitasi_adat]){
-					$changedData[szallitasi_adat] = 1;
+				if(!$changedData['szallitasi_adat']){
+					$changedData['szallitasi_adat'] = 1;
 				}else{
-					$changedData[szallitasi_adat] += 1;
+					$changedData['szallitasi_adat'] += 1;
 				}
 			}
 		}
@@ -860,7 +860,7 @@ class Admin
 				'ppp_uzlet_str' => $pickpackpont_uzlet_kod,
 			);
 
-			$mail->setSubject( 'Megrendelése megváltozott: '.$orderData[azonosito] );
+			$mail->setSubject( 'Megrendelése megváltozott: '.$orderData['azonosito'] );
 			$mail->setMsg( (new Template( VIEW . 'templates/mail/' ))->get( 'user_order_changes', $arg ) );
 			$re = $mail->sendMail();
 		}
@@ -997,15 +997,15 @@ class Admin
 			/* * /
 			if ( $orderData['referer_code'] )
 			{
-				if( $this->db->query("SELECT 1 FROM shop_partner_balance_log WHERE felh_id = ".$orderData['referer']->getPartnerID()." and order_id = ".$orderData[ID].";")->rowCount() == 0 )
+				if( $this->db->query("SELECT 1 FROM shop_partner_balance_log WHERE felh_id = ".$orderData['referer']->getPartnerID()." and order_id = ".$orderData['ID'].";")->rowCount() == 0 )
 				{
 					// Logoloás
 					$this->db->insert(
 						'shop_partner_balance_log',
 						array(
 							'felh_id'	=> $orderData['referer']->getPartnerID(),
-							'order_id' 	=> $orderData[ID],
-							'price' 	=> $orderData[kedvezmeny]
+							'order_id' 	=> $orderData['ID'],
+							'price' 	=> $orderData['kedvezmeny']
 						)
 					);
 
@@ -1018,8 +1018,8 @@ class Admin
 						array(
 							'felh_id' 		=> $orderData['referer']->getPartnerID(),
 							'referer' 		=> 'Ajánló partnerkód vásárlás',
-							'referer_id' 	=> $orderData[ID],
-							'cash' 			=> $orderData[kedvezmeny],
+							'referer_id' 	=> $orderData['ID'],
+							'cash' 			=> $orderData['kedvezmeny'],
 							'direction' 	=> 'in'
 						)
 					);
@@ -1037,10 +1037,10 @@ class Admin
 						'settings' 		=> $this->settings,
 						'infoMsg' 		=> 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
 						'name' 			=> $orderData['referer']->getPartnerName(false),
-						'cash' 			=> $orderData[kedvezmeny]
+						'cash' 			=> $orderData['kedvezmeny']
 					);
 
-					$mail->setSubject( 'Egyenleg jóváírás partnerkód vásárlás után: '.$orderData[kedvezmeny].' Ft' );
+					$mail->setSubject( 'Egyenleg jóváírás partnerkód vásárlás után: '.$orderData['kedvezmeny'].' Ft' );
 					$mail->setMsg( (new Template( VIEW . 'templates/mail/' ))->get( 'user_bill_refererbuyingorder', $arg ) );
 					$re = $mail->sendMail();
 				}
@@ -1387,17 +1387,17 @@ class Admin
 		$temp = array();
 		$log_img = array();
 		foreach ( $total_list as $img ) {
-			$log_img[] = array( $img[name], $img[src_path], $img[time] );
+			$log_img[] = array( $img['name'], $img['src_path'], $img['time'] );
 			$renew = false;
 
-			$renew_check = $this->db->query("SELECT 1 FROM shop_termek_kepek_valtozasok WHERE cim = '{$img[name]}' and {$img[time]} > utoljara_modositva;");
+			$renew_check = $this->db->query("SELECT 1 FROM shop_termek_kepek_valtozasok WHERE cim = '{$img['name']}' and {$img['time']} > utoljara_modositva;");
 
 			if( $renew_check->rowCount() != 0 ){
 				$renew = true;
 
 			}
 
-			$img[renewable] = $renew;
+			$img['renewable'] = $renew;
 			$temp[] = $img;
 		}
 
@@ -1435,7 +1435,7 @@ class Admin
 		// Használatlan képek törlése az adatbázisból
 		foreach ( $data as $d ) {
 			if( is_null($d['tid']) ) {
-				$this->db->query("DELETE FROM shop_termek_kepek WHERE ID = {$d[ID]};");
+				$this->db->query("DELETE FROM shop_termek_kepek WHERE ID = {$d['ID']};");
 			}
 		}
 
@@ -1469,17 +1469,17 @@ class Admin
 				/* */
 
 				/* */
-				$thb75_img = str_replace($img[name],'thb75_'.$img[name],$img[src_path]);
-				$thb150_img = str_replace($img[name],'thb150_'.$img[name],$img[src_path]);
+				$thb75_img = str_replace($img['name'],'thb75_'.$img['name'],$img['src_path']);
+				$thb150_img = str_replace($img['name'],'thb150_'.$img['name'],$img['src_path']);
 
 				if( file_exists( $thb150_img ) ) {
 					unlink($thb150_img);
-					Image::makeThumbnail( $img[src_path], $img[short_path], str_replace( '.'.$img[extension], '', $img[name] ), 'thb150_', 150, '.'.$img[extension]);
+					Image::makeThumbnail( $img['src_path'], $img['short_path'], str_replace( '.'.$img['extension'], '', $img['name'] ), 'thb150_', 150, '.'.$img['extension']);
 				}
 
 				if( file_exists( $thb75_img ) ) {
 					unlink($thb75_img);
-					Image::makeThumbnail( $img[src_path], $img[short_path], str_replace( '.'.$img[extension], '', $img[name] ), 'thb75_', 75, '.'.$img[extension]);
+					Image::makeThumbnail( $img['src_path'], $img['short_path'], str_replace( '.'.$img['extension'], '', $img['name'] ), 'thb75_', 75, '.'.$img['extension']);
 				}
 				/* */
 			}
@@ -1487,9 +1487,9 @@ class Admin
 			$this->db->update(
 				'shop_termek_kepek_valtozasok',
 				array(
-					'utoljara_modositva' => $img[time]
+					'utoljara_modositva' => $img['time']
 				),
-				"cim = '{$img[name]}'"
+				"cim = '{$img['name']}'"
 			);
 			/* */
 		}
@@ -1507,27 +1507,27 @@ class Admin
 		$unique_set = array();
 		foreach ( $must_import as $i ) {
 
-			foreach ( $i[ids] as $id ) {
+			foreach ( $i['ids'] as $id ) {
 				// MD5( $supplierid_$colorcode_$userid_$nev )
-				$hashkey = md5( $i[supplierid].'_'.$i[color_code].'_'.$id.'_'.$i[nev]);
+				$hashkey = md5( $i['supplierid'].'_'.$i['color_code'].'_'.$id.'_'.$i['nev']);
 				if( $this->db->query("SELECT 1 FROM shop_termek_kepek WHERE hashkey = '$hashkey';")->rowCount() !== 0 )  continue;
 
-				$db_body[] = array( $hashkey, $id, $i[index], str_replace( '../../admin/', '', $i[src]));
+				$db_body[] = array( $hashkey, $id, $i['index'], str_replace( '../../admin/', '', $i['src']));
 
-				/*$unique_set[ $i[supplierid].'_'.$i[color_code] ] = array(
-					'supplierid' => $i[supplierid],
-					'color_code' => $i[color_code],
+				/*$unique_set[ $i['supplierid'].'_'.$i['color_code'] ] = array(
+					'supplierid' => $i['supplierid'],
+					'color_code' => $i['color_code'],
 					'id' => $id
 				);*/
 
 				/**
 				* Profilkép beállítása
 				* */
-				if( $i[is_profil] == '1' && true ) {
+				if( $i['is_profil'] == '1' && true ) {
 					$this->db->update(
 						'shop_termekek',
 						array(
-							'profil_kep' => str_replace( '../../admin/', '', $i[src])
+							'profil_kep' => str_replace( '../../admin/', '', $i['src'])
 						),
 						"ID = $id"
 					);
@@ -1537,12 +1537,12 @@ class Admin
 				* Thumbnailok létrehozása
 				* */
 				// 150x150
-				if( !file_exists(  $i[path] . 'thb150_'.$i[nev] ) ) {
-					Image::makeThumbnail( $i[src], $i[path], str_replace( '.'.$i[extension], '', $i[nev] ), 'thb150_', 150, '.'.$i[extension]);
+				if( !file_exists(  $i['path'] . 'thb150_'.$i['nev'] ) ) {
+					Image::makeThumbnail( $i['src'], $i['path'], str_replace( '.'.$i['extension'], '', $i['nev'] ), 'thb150_', 150, '.'.$i['extension']);
 				}
 				// 75x75
-				if( !file_exists(  $i[path] . 'thb75_'.$i[nev] ) ) {
-					Image::makeThumbnail( $i[src], $i[path], str_replace( '.'.$i[extension], '', $i[nev] ), 'thb75_', 75, '.'.$i[extension]);
+				if( !file_exists(  $i['path'] . 'thb75_'.$i['nev'] ) ) {
+					Image::makeThumbnail( $i['src'], $i['path'], str_replace( '.'.$i['extension'], '', $i['nev'] ), 'thb75_', 75, '.'.$i['extension']);
 				}
 			}
 		}
@@ -1563,7 +1563,7 @@ class Admin
 					'lathato' => 1,
 					'fotermek' => 0
 				),
-				"raktar_supplierid = '{$set[supplierid]}' and szin_kod = '{$set[color_code]}'"
+				"raktar_supplierid = '{$set['supplierid']}' and szin_kod = '{$set['color_code']}'"
 			);
 
 			// Főtermék beállítása
@@ -1572,7 +1572,7 @@ class Admin
 				array(
 					'fotermek' => 1
 				),
-				"ID = '{$set[id]}'"
+				"ID = '{$set['ID']}'"
 			);
 		}
 		/* */
@@ -1603,8 +1603,8 @@ class Admin
 
 		foreach ( $images as $upimage ) {
 			$import_ids = null;
-			$x = explode( '_', str_replace( '.'.$upimage[extension], '', $upimage[name]));
-			$import_ids = $this->getProductsIdForImageImport( $x[0], $x[1], $upimage[name] );
+			$x = explode( '_', str_replace( '.'.$upimage['extension'], '', $upimage['name']));
+			$import_ids = $this->getProductsIdForImageImport( $x[0], $x[1], $upimage['name'] );
 
 			if( $import_ids ) {
 
@@ -1612,10 +1612,10 @@ class Admin
 				$is_profil = ( $x[2] == '') ? 1 : (( $x[2] == '1') ? 1 : 0);
 
 				$must_import[] = array(
-					'nev' => $upimage[name],
-					'src' => $upimage[src_path],
-					'path' => $upimage[short_path],
-					'extension' => $upimage[extension],
+					'nev' => $upimage['name'],
+					'src' => $upimage['src_path'],
+					'path' => $upimage['short_path'],
+					'extension' => $upimage['extension'],
 					'color_code' => $x[1],
 					'index' => $img_index,
 					'is_profil' => $is_profil,
@@ -1651,7 +1651,7 @@ class Admin
 
 		$ids = array();
 		foreach ( $data as $d ) {
-			$ids[] = $d[ID];
+			$ids[] = $d['ID'];
 		}
 
 		return $ids;
@@ -1665,13 +1665,13 @@ class Admin
 			throw new \Exception('Válaszüzenet megadása kötelező!');
 		}
 
-		if($msgData[felado_email] == ''){
+		if($msgData['felado_email'] == ''){
 			throw new \Exception('Nincs válaszcím, amire küldhetjük a válaszüzenetet!');
 		}
 
 		// Válasz a feladónak
 		$mail = new Mailer( $this->settings['page_title'], SMTP_USER, $this->settings['mail_sender_mode'] );
-		$mail->add( $msgData[felado_email] );
+		$mail->add( $msgData['felado_email'] );
 		$arg = array(
 			'settings'=> $this->settings,
 			'infoMsg' => 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
@@ -1689,7 +1689,7 @@ class Admin
 					"valaszolva" 	=> NOW,
 					"valasz_uzenet" => $replyMsg
 				),
-				"ID = ".$msgData[ID]
+				"ID = ".$msgData['ID']
 			);
 		}
 	}
