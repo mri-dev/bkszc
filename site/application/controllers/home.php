@@ -35,7 +35,7 @@ class home extends Controller{
 			if ( $news->has_news() ) {
 				while ( $news->walk() ) {
 					$hir = $news->the_news();
-					$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir[ID]);
+					$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir['ID']);
 				}
 			}
 			$this->out( 'aktual_news', $hirek );
@@ -60,7 +60,7 @@ class home extends Controller{
 			if ( $news->has_news() ) {
 				while ( $news->walk() ) {
 					$hir = $news->the_news();
-					$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir[ID]);
+					$hirek[] = (new News(false, array( 'db' => $this->db )))->get($hir['ID']);
 				}
 			}
 			$this->out( 'news', $hirek );
