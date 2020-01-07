@@ -6,7 +6,7 @@ if ( isset($this->settings['countdown_event']) && $this->settings['countdown_eve
   $interval = $today->diff($event);
   $dt = array();
 
-  $nap = $interval->d;
+  $nap = $interval->days;
   $ora = $interval->h;
   $perc = $interval->i;
   $masodperc = $interval->s;
@@ -26,6 +26,8 @@ if ( isset($this->settings['countdown_event']) && $this->settings['countdown_eve
   $dt['perc'][1] =  (strlen($perc) > 1) ? substr($perc,1) : substr($perc,0,1);
   $dt['masodperc'][0] =  (strlen($masodperc) > 1) ? substr($masodperc,0,1) : 0;
   $dt['masodperc'][1] =  (strlen($masodperc) > 1) ? substr($masodperc,1) : substr($masodperc,0,1);
+
+  //print_r($dt);
 ?>
 <div class="event-countdown" style="background-image: url('<?=ADMROOT.$this->settings['countdown_background']?>');">
   <div class="wrapper">
