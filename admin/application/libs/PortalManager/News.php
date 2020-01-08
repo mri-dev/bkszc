@@ -456,7 +456,7 @@ class News
     if( isset($arg['exc_cat_slug']) && !empty($arg['exc_cat_slug']) ) {
       $qry .= " and (";
         foreach ((array)$arg['exc_cat_slug'] as $exc_cat ) {
-          $qry .= "'".$exc_cat."' NOT IN (SELECT ck.slug  FROM `cikk_xref_cat` as c LEFT OUTER JOIN cikk_kategoriak as ck ON ck.ID = c.cat_id WHERE c.`cikk_id` = h.ID) and ";
+          $qry .= "'".$exc_cat."' NOT IN (SELECT ck.slug  FROM `cikk_xref_cat` as c LEFT OUTER JOIN cikk_kategoriak as ck ON ck.ID = c.cat_id WHERE c.`cikk_id` = h.ID and c.ctype = 'article') and ";
         }
         $qry = trim($qry," and ");
       $qry .= ")";
@@ -471,7 +471,7 @@ class News
       if (is_array($cats)) {
         $qry .= " and(";
         foreach ($cats as $cid) {
-          $qry .= $cid." IN (SELECT cat_id FROM cikk_xref_cat WHERE cikk_id = h.ID) or ";
+          $qry .= $cid." IN (SELECT cat_id FROM cikk_xref_cat WHERE ctype = 'article' and cikk_id = h.ID) or ";
         }
         $qry = rtrim($qry, " or ");
         $qry .= ")";
@@ -825,7 +825,7 @@ class News
 	}
 	public function getIdopont( $format = false )
 	{
-		return ( !$format ) ? $this->current_get_item['idopont'] : date($format, strtotime($this->current_get_item['idopont']));
+		return ( !$format ) ? $this->current_get_item['letrehozva'] : date($format, strtotime($this->current_get_item['letrehozva']));
 	}
 	public function getVisibility()
 	{
@@ -932,7 +932,7 @@ class News
 		FROM
 		cikk_xref_cat as c
 		LEFT OUTER JOIN cikk_kategoriak as ct ON ct.ID = c.cat_id
-		WHERE 1=1 and ";
+		WHERE 1=1 and c.ctype = 'article' and ct.ID IS NOT NULL and ";
 		if ($by_cikk) {
 				$q .= " c.cikk_id = :cikk";
 		}

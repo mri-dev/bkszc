@@ -45,7 +45,7 @@ class galeria extends Controller{
 			$news = new News( false, array( 'db' => $this->db ) );
 			$catarg = array();
 			$catarg['usetree'] = false;
-			$catarg['childof'] = 35;
+			$catarg['childof'] = 127;
 			if ($this->view->gallery && $this->view->gallery['default_cat']['ID']) {
 				$cat = $this->view->gallery['default_cat']['slug'];
 			}
