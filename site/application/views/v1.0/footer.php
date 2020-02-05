@@ -19,6 +19,9 @@
 					<div class="flex">
 						<div class="logo">
 							<a href="<?=$this->settings['page_url']?>"><img src="<?=IMG?>gk_logo.svg" style="height:80px;" alt="<?=$this->settings['page_title']?>"></a>
+							<div class="simple-pay-otp-badge">
+								<a href="http://simplepartner.hu/PaymentService/Fizetesi_tajekoztato.pdf" target="_blank" rel="noopener noreferrer"> <img title=" SimplePay - Online bankkártyás fizetés" src="<?=SOURCE?>simplesdk/logos/simplepay_200x50.png" alt="SimplePay vásárlói tájékoztató" height="30"></a>
+							</div>
 						</div>
 						<div class="links">
 							<ul>
@@ -48,9 +51,6 @@
 									</li>
 								<? endforeach; ?>
 							</ul>
-							<div class="felnottkepz-nytsz">
-								Felnőttképzési nyilvántartásba vételi szám: <strong>E-001415/2016</strong>
-							</div>
 						</div>
 					</div>
 				</div>

@@ -23,6 +23,9 @@
 			$arg['is_tematic'] = (in_array($arg['categories']['list'][0]['slug'], $this->news->tematic_cikk_slugs)) ? true : false;
 		?>
 		<? echo $this->template->get( 'hir-olvas',  $arg ); ?>
+		<?php if ( $_GET['cikk'] == 'alapitvany-tamogatas' ): ?>
+			<? $this->render('templates/tamogatas'); ?>
+		<?php endif; ?>
 		<? else: ?>
 		<div class="news-list">
 			<?php if (isset($_GET['src']) && !empty($_GET['src'])): ?>
@@ -64,4 +67,5 @@
 			</div>
 		</div>
 		<? endif; ?>
+
 </div>

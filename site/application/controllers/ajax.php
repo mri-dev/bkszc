@@ -1,5 +1,6 @@
 <?
 use PortalManager\Programs;
+use Applications\Simple;
 
 class ajax extends Controller{
 		function __construct()
@@ -7,6 +8,12 @@ class ajax extends Controller{
 			header("Access-Control-Allow-Origin: *");
 			parent::__construct();
 		}
+
+	  private function returnJSON($array)
+	  {
+	    echo json_encode($array);
+	    die();
+	  }
 
 		function post(){
 			extract($_POST);
@@ -16,6 +23,152 @@ class ajax extends Controller{
 			);
 			switch($type)
 			{
+				case 'tamogatas_form':
+			    parse_str($_POST['form'], $form);
+					$return = $ret;
+			    $return['passed_params'] = $form;
+			    $check_aszf = ($_POST['check_aszf'] == 'true') ? true : false;
+			    $check_hirlevel = ($_POST['check_hirlevel'] == 'true') ? true : false;
+			    $adomanyozo_forma = $form['adomanyozo_forma'];
+			    $adomany_tipus = $form['adomany_tipus'];
+			    $mode = $_POST['mode'];
+
+			    $return['passed_params']['mode'] = $mode;
+			    $return['passed_params']['check_aszf'] = $check_aszf;
+			    $return['passed_params']['check_hirlevel'] = $check_hirlevel;
+
+			    // ASZF vizsgálat
+			    if( !$check_aszf ) {
+			      $return['error']  = 1;
+			      $return['msg']    = '<div class="alert alert-danger">A felhasználási és adatvédelmi feltételeket el kell olvasni és el kell fogadni a támogatáshoz!</div>';
+			      $this->returnJSON($return);
+			    }
+
+			    // Támogatási összeg
+
+			    if( empty($form['cbpay']) ) {
+			      $return['error']  = 1;
+			      $return['msg']    = '<div class="alert alert-danger">Kérjük, hogy válassza ki a támogatás összegét!</div>';
+			      $this->returnJSON($return);
+			    }
+
+			    // Támogatási összeg vizsgálat
+
+			    if( $form['cbpay'] == -1 && ( empty($form['othercash']) || $form['othercash'] == '' || $form['othercash'] <= 500) ) {
+			      $return['error']  = 1;
+			      $return['msg']    = '<div class="alert alert-danger">Egyéb összegű támogatás esetén minimum 500 Ft a támogatási összeg!</div>';
+			      $this->returnJSON($return);
+			    }
+
+			    // Személyes adatok
+
+			    if( $form['name'] == '' || $form['email'] == '' || $form['telefon'] == '') {
+			      $return['error']  = 1;
+			      $return['msg']    = '<div class="alert alert-danger">Kérjük, hogy adja meg az adományozóra vonatkozó adatokat: név, email, telefonszám!</div>';
+			      $this->returnJSON($return);
+			    }
+
+			    // Email validate
+			    if ( !filter_var($form['email'], FILTER_VALIDATE_EMAIL) ) {
+			      $return['error']  = 1;
+			      $return['msg']    = '<div class="alert alert-danger">A megadott e-mail cím nem megfelelő formátumú! Példa: minta@email.hu.</div>';
+			      $this->returnJSON($return);
+			    }
+
+			    $tamogatas = 0;
+
+			    if ($form['cbpay'] == -1) {
+			      $tamogatas = $form['othercash'];
+			    } else {
+			      $tamogatas = $form['cbpay'];
+			    }
+
+			    $session = uniqid();
+			    $return['session'] = $session;
+
+			    // OTP simplepay
+			    if ( $mode == 'OTPSimple' )
+			    {
+			      $simple = new Simple();
+			      $simple->setOrderId( $session );
+
+			      $simple->setData(array(
+			        'nev' => trim($form['name']),
+			        'email' => trim($form['email']),
+			        'phone' => trim($form['telefon']),
+			        'price' => trim($tamogatas),
+			        'adomanyozo_forma' => $adomanyozo_forma,
+			        'adomany_tipus' => $adomany_tipus,
+			        'cim_megye' => trim($form['cim_megye']),
+			        'cim_irsz' => trim($form['cim_irsz']),
+			        'cim_varos' => trim($form['cim_varos']),
+			        'cim_uhsz' => trim($form['cim_uhsz']),
+			      ));
+
+			      $missing = $simple->prepare();
+			      $return['simplemissing'] = $missing;
+			      $btn = $simple->getPayButton();
+			    }
+
+
+			    //$wpdb->show_errors();
+
+			    $this->db->insert(
+			      'tamogatok',
+			      array(
+			        'hashkey' => $session,
+			        'paymode' => $mode,
+			        'adomany_tipus' => $adomany_tipus,
+			        'adomanyozo_forma' => $adomanyozo_forma,
+			        'name' => trim($form['name']),
+			        'email' => trim($form['email']),
+			        'phone' => trim($form['telefon']),
+			        'tamogatas' => $tamogatas,
+			        'pay_status' => 'START',
+			        'hirlevel' => (($check_hirlevel)?1:0),
+			        'cim_megye' => trim($form['cim_megye']),
+			        'cim_irsz' => trim($form['cim_irsz']),
+			        'cim_varos' => trim($form['cim_varos']),
+			        'cim_uhsz' => trim($form['cim_uhsz']),
+			      )
+			    );
+
+					// E-mail küldés az adminnak
+					/*
+			    $to  = get_option('admin_email');
+			    $subject  = 'Új támogatás igény érkezett: '.$form['name'].' ('.$session.')';
+
+			    ob_start();
+			      include(locate_template('moduls/tamogatas/templates/mails/tamogatas_admin_alert.php'));
+			      $message = ob_get_contents();
+			    ob_end_clean();
+
+			    add_filter( 'wp_mail_from', array($this, 'getMailSender') );
+			    add_filter( 'wp_mail_from_name', array($this, 'getMailSenderName') );
+			    add_filter( 'wp_mail_content_type', array($this, 'getMailFormat') );
+
+			    $headers    = array();
+			    if (!empty($form['email'])) {
+			      $headers[]  = 'Reply-To: '.$form['name'].' <'.$form['email'].'>';
+			    }
+			    $alert = wp_mail( $to, $subject, $message, $headers );
+
+			    if ( $mode == 'Atutalas' ) {
+			      $btn = 'Átutalandó összeg: <strong>'.$tamogatas.' HUF</strong>. Közlemény: <strong>ETTTAM'.date('Y').'-'.$wpdb->insert_id.'</strong>.';
+			    }
+					*/
+					// E: E-mail küldés az adminnak
+
+			    //$return['wpdb'] = $wpdb->print_error();
+
+			    $return['button'] = $btn;
+					$return['error'] = 0;
+
+					$this->setSuccess('Fizetés indítása elindulhat!', $return);
+
+					echo json_encode($return);
+					return;
+				break;
 				case 'Calendar':
 					$calendar = new Programs(false, array('db' => $this->db));
 					$ret['pass'] = $_POST;

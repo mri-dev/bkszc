@@ -2559,6 +2559,14 @@ footer{
 	.logo {
 		padding: 10px 0;
 		position: relative;
+
+		.simple-pay-otp-badge{
+			position: absolute;
+	    top: 50%;
+			-webkit-transform: translateY(-50%);
+	    transform: translateY(-50%);
+	    left: calc(100% + 40px);
+		}
 	}
 	.info{
 		background: #f5f5f5;
@@ -3233,4 +3241,172 @@ body.article-slug-tanarok-elerhetosegei{
 			}
 		}
 	}
+}
+
+.tamogatas-form-holder{
+	border: 20px solid #0072c5;
+	background: #fafafa;
+	padding: 0;
+}
+.tamogatas-form-holder a:link,
+.tamogatas-form-holder a:visited{
+	color: #e8b94c;
+}
+.tamogatas-form-holder .header{
+	margin: 0;
+  background: #0072c5;
+	text-align:center;
+  padding: 10px 0 20px 0;
+}
+.tamogatas-form-holder .header h2{
+	color: #ffffff;
+	font-weight: bold;
+	text-transform: uppercase;
+	font-size: 2rem;
+}
+.tamogatas-form-holder .cwrapper .group{
+	padding: 15px;
+}
+.tamogatas-form-holder .cwrapper .group h3{
+	color: #ffffff;
+	font-weight: bold;
+	font-size: 1.1rem;
+  background: #0072c5;
+  padding: 10px;
+	margin: -15px -15px 0 -15px;
+}
+.tamogatas-form-holder .cwrapper .group + .group{
+	margin: 15px 0 0 0;
+}
+.tamogatas-form-holder .cwrapper .group .paying{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	margin: 25px 0 15px 0;
+}
+.tamogatas-form-holder .cwrapper .group .paying .text .t{
+	padding: 0 15px 0 0;
+	line-height: 1.5;
+	font-size: 0.8rem;
+	color: black;
+}
+.tamogatas-form-holder .cwrapper .group .paying .buttons button{
+	padding: 10px 15px;
+	background: #63b32e;
+	border: 4px solid #57982d;
+	color: white;
+	text-transform: uppercase;
+	border-radius: 4px;
+	font-size: 0.8rem;
+	/* border: none; */
+	white-space: nowrap;
+	cursor: pointer;
+}
+.tamogatas-form-holder .paying-cashes{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 10px -5px 0 -5px;
+}
+.tamogatas-form-holder .paying-cashes > div{
+	padding: 5px;
+}
+.tamogatas-form-holder .paying-cashes > div input[type=radio]{
+	display: none;
+}
+.tamogatas-form-holder .paying-cashes > div label{
+	border: 0.5px solid #d2d2d2;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: block;
+  color: #454545;
+  background: #e4e4e4;
+}
+.tamogatas-form-holder .paying-cashes > div label input[type=number]{
+	border: none;
+	color: black;
+	line-height: 34px;
+	width: 110px;
+	text-align: center;
+	border-radius: 4px;
+	padding: 0 8px;
+	font-size: 1.2rem;
+}
+.tamogatas-form-holder .paying-cashes > div input[type=radio]:checked + label,
+.tamogatas-form-holder .paying-cashes > div label:hover{
+	background: #97ac23;
+  color: white;
+  border: 2px solid #c6dd43;
+}
+.tamogatas-form-holder .form-fields{
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 10px -10px 10px -10px;
+}
+.tamogatas-form-holder .form-fields.radio-set > div,
+.tamogatas-form-holder .form-fields.address-line > div{
+	flex-basis: initial;
+}
+
+.tamogatas-form-holder .form-fields.address-line > div.cim_varos{
+	flex-basis: 180px;
+}
+.tamogatas-form-holder .form-fields.address-line > div.cim_cim{
+	flex: 1;
+}
+.tamogatas-form-holder .form-fields > div{
+	flex-basis: calc(100% / 3);
+}
+.tamogatas-form-holder .form-fields > div > .fwrap{
+	padding: 10px;
+}
+.tamogatas-form-holder .checkboxes{
+	margin: 12px 0 -15px 0;
+}
+.tamogatas-form-holder .form-fields > div > .fwrap input[type=text],
+.tamogatas-form-holder .form-fields > div > .fwrap input[type=number],
+.tamogatas-form-holder .form-fields > div > .fwrap select{
+	padding: 10px 12px;
+	display: block;
+	width: 100%;
+	font-size: 1.1rem;
+	border: 0.5px solid #dbd8d8;
+	color: #0072c5;
+}
+.tamogatas-form-holder .form-fields > div > .fwrap label{
+	display: block;
+	font-weight: bold;
+	color: black;
+	font-size:0.85rem;
+	margin: 0 0 6px 0;
+	line-height: 1;
+}
+
+.tamogatas-form-holder .form-fields.radio-set > div .fwrap label{
+	display: initial;
+	text-transform: uppercase;
+	margin: 0 0 0 10px;
+	color: #0072c5;
+	cursor: pointer;
+}
+.tamogatas-form-holder .payingbackmsg .alert{
+	padding: 10px 15px;
+	margin: 10px 0;
+	border-radius: 4px;
+	border-style: solid;
+	border-width: 0.5px;
+	color: white;
+}
+.tamogatas-form-holder .payingbackmsg .alert.alert-danger{
+	border-color: #bf6969;
+	background: #ff8a8a;
+}
+.tamogatas-form-holder .payingbackmsg .alert.alert-success{
+	border-color: #3ea02c;
+	background: #5fc162;
 }
