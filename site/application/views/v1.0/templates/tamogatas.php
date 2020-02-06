@@ -119,7 +119,7 @@
       <h3>3. ÁSZF elfogadása és feliratkozás</h3>
       <div class="checkboxes">
         <div class="aszf">
-          <input type="checkbox" id="check_aszf" name="check_aszf" value="1"> <label for="check_aszf">* Elolvastam és elfogadom a <a target="_blank" href="/aszf">felhasználási és adatvédelmi feltételeket</a>!</label>
+          <input type="checkbox" id="check_aszf" name="check_aszf" value="1"> <label for="check_aszf">* Elolvastam és elfogadom a <a target="_blank" href="/aszf">Általános Szerződési Feltételeket</a>, különösen az <a target="_blank" href="/aszf">Adattovábbítási Nyilatkozatot</a>!</label>
         </div>
         <?php if (false): ?>
           <div class="aszf">

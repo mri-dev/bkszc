@@ -79,6 +79,12 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
+RewriteRule ^aszf(/)?$ index.php?tag=cikkek&reader=1&cikk=aszf [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
 RewriteRule ^galeria(/)?$ index.php?tag=galeria&root=1 [QSA,L]
 
 RewriteCond %{REQUEST_FILENAME} !-f
