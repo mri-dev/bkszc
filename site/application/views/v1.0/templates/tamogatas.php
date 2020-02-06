@@ -113,6 +113,18 @@
           </div>
         </div>
       </div>
+      <div class="form-fields">
+        <div class="igazolas">
+          <div class="fwrap">
+            <label for="fc_igazolas">Igazolás a támogatásról *</label>
+            <select id="fc_igazolas" class="" name="igazolas">
+              <option value="Nem kérek igazolást" selected="selected">Nem kérek igazolást</option>
+              <option value="E-mail címemre kérek elekronikus igazolást">E-mail címemre kérek elekronikus igazolást</option>
+              <option value="Postai úton kérek igazolást">Postai úton kérek igazolást</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </div>
     </form>
     <div class="group">

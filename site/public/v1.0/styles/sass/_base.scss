@@ -1165,6 +1165,7 @@ body.homepage .sidebar-holder:not(.nomargintop){
     & > div:not(.articles) {
       flex-basis: calc(100% / 2);
     }
+
 		& > div.articles {
 			flex-basis: 100%;
 			display: -webkit-box;
@@ -1195,6 +1196,19 @@ body.homepage .sidebar-holder:not(.nomargintop){
 				& > article:first-child{
 					flex-basis: 100% !important;
 				}
+			}
+		}
+
+		.no-news{
+			flex-basis: 100% !important;
+	    padding: 25px 10px;
+	    text-align: center;
+	    font-size: 1.0rem;
+	    color: #a2a2a2;
+	    line-height: 1.4;
+
+			h3 {
+				color: #444444;
 			}
 		}
   }
@@ -3352,9 +3366,17 @@ body.article-slug-tanarok-elerhetosegei{
 .tamogatas-form-holder .form-fields.address-line > div{
 	flex-basis: initial;
 }
-
+.tamogatas-form-holder .form-fields.address-line > div.cim_megye{
+	flex-basis:200px;
+}
+.tamogatas-form-holder .form-fields .igazolas{
+	flex-basis: 100%;
+}
+.tamogatas-form-holder .form-fields.address-line > div.cim_irsz{
+	flex-basis:95px;
+}
 .tamogatas-form-holder .form-fields.address-line > div.cim_varos{
-	flex-basis: 180px;
+	flex-basis: 165px;
 }
 .tamogatas-form-holder .form-fields.address-line > div.cim_cim{
 	flex: 1;

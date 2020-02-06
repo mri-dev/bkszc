@@ -18,7 +18,7 @@
 				<?php endif; ?>
 			</div>
 		</div>
-		<a href="/cikk/alapitvany-tamogatas"><< Vissza a támogatói oldalra</a>
+		<a href="/cikkek/kategoriak/nemzeti-gundel-alapitvany"><< Vissza a támogatói oldalra</a>
 	</div>
 	<div class="opt-simple-info">
 		<a href="http://simplepartner.hu/PaymentService/Fizetesi_tajekoztato.pdf" target="_blank">

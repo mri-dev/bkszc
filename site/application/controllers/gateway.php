@@ -304,6 +304,49 @@ class gateway extends Controller
 								$title_status = 'Sikeres tranzakció.';
 								$desc = 'Köszönjük támogatását, melyet az OTP Simple rendszerével fizetett ki!';
 								$simple_trans = 'SimplePay tranzakció azonosító: <strong>'.$trans['t'].'</strong>';
+
+								// email
+								$check_alert = $this->db->query("SELECT * FROM tamogatok WHERE hashkey = '{$trans['o']}'");
+
+								if ( $check_alert->rowCount() != 0 )
+								{
+									$form = $check_alert->fetch(\PDO::FETCH_ASSOC);
+
+									if ((int)$form['admin_alerted'] == 0) {
+										// E-mail küldés az adminnak
+										$mail = new Mailer( $this->view->settings['page_title'], SMTP_USER, $this->view->settings['mail_sender_mode'] );
+										$mail->add( $this->view->settings['alert_email'] );
+										$arg = array(
+											'settings' 		=>$this->view->settings,
+											'infoMsg' 		=> 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
+											'hashkey' => $form['hashkey'],
+											'paymode' => $form['paymode'],
+											'adomany_tipus' => $form['adomany_tipus'],
+											'adomanyozo_forma' => $form['adomanyozo_forma'],
+											'name' => trim($form['name']),
+											'email' => trim($form['email']),
+											'phone' => trim($form['phone']),
+											'tamogatas' => $form['tamogatas'],
+											'igazolas' => trim($form['igazolas']),
+											'cim_megye' => trim($form['cim_megye']),
+											'cim_irsz' => trim($form['cim_irsz']),
+											'cim_varos' => trim($form['cim_varos']),
+											'cim_uhsz' => trim($form['cim_uhsz']),
+										);
+										$mail->setSubject( 'Új alapítványi támogatás: '.trim($form['name']).' - '. \Helper::cashFormat($form['tamogatas']).' Ft');
+										$mail->setMsg( (new Template( VIEW . 'templates/mail/' ))->get( 'admin_tamogatas', $arg ) );
+										$re = $mail->sendMail();
+										$this->db->update(
+											'tamogatok',
+											array(
+												'admin_alerted' => 1,
+											 ),
+											 sprintf("hashkey = '%s'", $trans['o'])
+										);
+										// E: E-mail küldés az adminnak
+									}
+								}
+
 							break;
 
 							case 'CANCEL':

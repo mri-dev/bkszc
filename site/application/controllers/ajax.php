@@ -1,6 +1,8 @@
 <?
 use PortalManager\Programs;
 use Applications\Simple;
+use MailManager\Mailer;
+use PortalManager\Template;
 
 class ajax extends Controller{
 		function __construct()
@@ -126,6 +128,7 @@ class ajax extends Controller{
 			        'tamogatas' => $tamogatas,
 			        'pay_status' => 'START',
 			        'hirlevel' => (($check_hirlevel)?1:0),
+							'igazolas' => trim($form['igazolas']),
 			        'cim_megye' => trim($form['cim_megye']),
 			        'cim_irsz' => trim($form['cim_irsz']),
 			        'cim_varos' => trim($form['cim_varos']),
@@ -133,33 +136,6 @@ class ajax extends Controller{
 			      )
 			    );
 
-					// E-mail küldés az adminnak
-					/*
-			    $to  = get_option('admin_email');
-			    $subject  = 'Új támogatás igény érkezett: '.$form['name'].' ('.$session.')';
-
-			    ob_start();
-			      include(locate_template('moduls/tamogatas/templates/mails/tamogatas_admin_alert.php'));
-			      $message = ob_get_contents();
-			    ob_end_clean();
-
-			    add_filter( 'wp_mail_from', array($this, 'getMailSender') );
-			    add_filter( 'wp_mail_from_name', array($this, 'getMailSenderName') );
-			    add_filter( 'wp_mail_content_type', array($this, 'getMailFormat') );
-
-			    $headers    = array();
-			    if (!empty($form['email'])) {
-			      $headers[]  = 'Reply-To: '.$form['name'].' <'.$form['email'].'>';
-			    }
-			    $alert = wp_mail( $to, $subject, $message, $headers );
-
-			    if ( $mode == 'Atutalas' ) {
-			      $btn = 'Átutalandó összeg: <strong>'.$tamogatas.' HUF</strong>. Közlemény: <strong>ETTTAM'.date('Y').'-'.$wpdb->insert_id.'</strong>.';
-			    }
-					*/
-					// E: E-mail küldés az adminnak
-
-			    //$return['wpdb'] = $wpdb->print_error();
 
 			    $return['button'] = $btn;
 					$return['error'] = 0;
