@@ -15,7 +15,7 @@
     </div>
     <div class="block">
       <div class="in">
-        <a href="/cikkek/kategoriak/nemzeti-gundel-alapitvany">
+        <a href="/cikkek/kategoriak/nemzeti-gundel-alapitvany#tamogatas">
           <div class="ico"><img src="<?=IMG?>icons/ico-handskake.svg" alt="Támogatás"></div>
           <div class="text">Támogatás</div>
         </a>
