@@ -62,7 +62,7 @@
 				</div>
 				<?=($this->list->tree_items > 0)?$this->navigator:''?>
 
-				<?php if ( $_GET['cat'] == 'nemzeti-gundel-alapitvany' || true ): ?>
+				<?php if ( $_GET['cat'] == 'nemzeti-gundel-alapitvany' ): ?>
 					<a name="tamogatas"></a>
 					<? $this->render('templates/tamogatas'); ?>
 				<?php endif; ?>

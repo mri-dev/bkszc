@@ -124,7 +124,7 @@ class Simple
 		$this->live->addData('methods', array('CARD'));
 		$this->live->addData('url', $this->config['URL']);
 		$this->live->formDetails['element'] = 'button';
-		$this->live->formDetails['elementText'] = 'Fizetés OTP Simple-el >';
+		$this->live->formDetails['elementText'] = 'Fizetés OTP Simple-lel >';
 		$this->live->runStart();
 		$this->live->getHtmlForm('Fizetés');
 		$this->pay_form = $this->live->returnData['form'];
