@@ -315,7 +315,7 @@ class gateway extends Controller
 									if ((int)$form['admin_alerted'] == 0) {
 										// E-mail küldés az adminnak
 										$mail = new Mailer( $this->view->settings['page_title'], SMTP_USER, $this->view->settings['mail_sender_mode'] );
-										$mail->add( $this->view->settings['alert_email'] );
+										$mail->add( 'nga@gundeliskola.hu' );
 										$arg = array(
 											'settings' 		=>$this->view->settings,
 											'infoMsg' 		=> 'Ezt az üzenetet a rendszer küldte. Kérjük, hogy ne válaszoljon rá!',
