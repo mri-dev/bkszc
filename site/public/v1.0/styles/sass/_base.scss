@@ -1081,6 +1081,8 @@ body.homepage .sidebar-holder:not(.nomargintop){
 		.content{
 			img {
 				margin: 15px;
+				max-width: 100%;
+				height: auto;
 			}
 			.links{
 				li {
