@@ -267,7 +267,7 @@ class Gallery implements InstallModules
       $groupqry .= " and g.lathato = ".(int)$arg['lathato'];
     }
 
-    $groupqry .= " ORDER BY g.uploaded DESC";
+    $groupqry .= " ORDER BY g.idopont DESC";
     $groupqry .= " LIMIT 0, 10";
 
     $groupqry = $this->db->squery( $groupqry, array('slug' => $slug) );
@@ -306,6 +306,22 @@ class Gallery implements InstallModules
 			$eleres = $this->checkEleres( $cim );
 		}
 
+    // publikáció ideje
+    $datepub_year = ($data['datepub_year']) ?: false;
+    $datepub_month = ($data['datepub_month']) ?: false;
+    $datepub_day = ($data['datepub_day']) ?: false;
+    $datepub_time = ($data['datepub_time']) ?: false;
+
+    if ($datepub_year && $datepub_month && $datepub_day) {
+       $letrehozva = $datepub_year.'-'.$datepub_month.'-'.$datepub_day;
+       if ($datepub_time) {
+         $letrehozva .= ' '.$datepub_time;
+       }
+       $idopont = $letrehozva;
+    } else {
+      $idopont = NOW;
+    }
+
     $upd = array(
       'author' => $uid,
       'title' => $cim,
@@ -317,6 +333,7 @@ class Gallery implements InstallModules
       'lathato' => $lathato,
       'sorrend' => $sorrend,
       'filepath' => NULL,
+      'idopont' => $idopont
     );
 
 		$this->db->insert(
@@ -404,13 +421,27 @@ class Gallery implements InstallModules
 
   public function editSimpleGallery( $id, $data )
   {
-    $cim = ($data['cim']) ?: false;
-    $eleres = ($data['eleres']) ?: false;
-    $szoveg = ($data['description']) ?: NULL;
-    $default_cat = ($data['default_cat']) ?: NULL;
+    $cim = ($data['cim']) ? addslashes($data['cim']) : false;
+    $eleres = ($data['eleres']) ? $data['eleres'] : false;
+    $szoveg = ($data['description']) ? addslashes($data['description']) : NULL;
+    $default_cat = ($data['default_cat']) ? (int)$data['default_cat'] : NULL;
     $lathato= ($data['lathato'] == 'on') ? 1 : 0;
     $sorrend = ($data['sorrend']) ? (int)$data['sorrend'] : 100;
     $image_set = array();
+
+    // publikáció ideje
+    $datepub_year = ($data['datepub_year']) ?: false;
+    $datepub_month = ($data['datepub_month']) ?: false;
+    $datepub_day = ($data['datepub_day']) ?: false;
+    $datepub_time = ($data['datepub_time']) ?: false;
+
+    if ($datepub_year && $datepub_month && $datepub_day) {
+       $letrehozva = $datepub_year.'-'.$datepub_month.'-'.$datepub_day;
+       if ($datepub_time) {
+         $letrehozva .= ' '.$datepub_time;
+       }
+       $idopont = $letrehozva;
+    }
 
     if (!$cim) { throw new \Exception("Kérjük, hogy adja meg az <strong>Galéria címét</strong>!"); }
 
@@ -495,7 +526,8 @@ class Gallery implements InstallModules
       'updated_at' => NOW,
       'lathato' => $lathato,
       'sorrend' => $sorrend,
-      'default_cat' => $default_cat
+      'default_cat' => $default_cat,
+      'idopont' => $idopont
     );
 
     $this->db->update(
@@ -526,6 +558,18 @@ class Gallery implements InstallModules
     }
 
     return $id;
+  }
+
+  private function preparePublicDates( &$data )
+  {
+    $date = $data['idopont'];
+
+    $data['datepub_year'] = date('Y', strtotime($date));
+    $data['datepub_month'] = date('m', strtotime($date));
+    $data['datepub_day'] = date('d', strtotime($date));
+    $data['datepub_time'] = date('H:i', strtotime($date));
+
+    return $data;
   }
 
   public function deleteSimpleGallery( $id )
@@ -597,6 +641,8 @@ class Gallery implements InstallModules
     }
 
     $list = $groupqry->fetch(\PDO::FETCH_ASSOC);
+
+    $this->preparePublicDates( $list );
 
     $list['images'] = unserialize($list['filepath']);
     unset($list['filepath']);
@@ -715,6 +761,7 @@ class Gallery implements InstallModules
       $d['images'] = unserialize($d['filepath']);
       unset($d['filepath']);
       $d['in_cats'] = $this->simpleGalleryItemCats( $d['ID'], $d['default_cat'] );
+      $this->preparePublicDates( $d );
       $list[] = $d;
     }
 

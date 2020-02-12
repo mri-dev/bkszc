@@ -54,7 +54,7 @@ if (isset($_GET['folder'])) {
           <div class="list">
             <ul>
               <?php foreach ((array)$folder['items'] as $i): ?>
-              <li><a href="/galeria/folder/<?=$i['slug']?>"><?=$i['title']?></a> <span class="datetime">&mdash; <?php echo date('Y/m/d', strtotime($i['uploaded'])); ?></span></li>
+              <li><a href="/galeria/folder/<?=$i['slug']?>"><?=$i['title']?></a> <span class="datetime">&mdash; <?php echo date('Y/m/d', strtotime($i['idopont'])); ?></span></li>
               <?php endforeach; ?>
             </ul>
           </div>
@@ -99,7 +99,7 @@ if (isset($_GET['folder'])) {
   if (isset($_GET['folder']) && $this->gallery): ?>
   <div class="news-content">
     <div class="uploaddate">
-      Közzétéve: <strong><?=date('Y. m. d.', strtotime($this->gallery['uploaded']))?></strong>
+      Esemény ideje: <strong><?=date('Y. m. d.', strtotime($this->gallery['idopont']))?></strong>
     </div>
     <div class="content">
       <?=$this->gallery['description']?>

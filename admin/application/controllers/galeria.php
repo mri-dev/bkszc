@@ -71,7 +71,7 @@ class galeria extends Controller{
 				'item_limit'=> 12
 			)))->render() );
 
-      $cat_tree 	= $categories->getTree();
+      $cat_tree 	= $categories->getTree( GALLERY_CAT_ID );
       // Kategoriák
       $this->out( 'categories', $cat_tree );
 

@@ -1,4 +1,4 @@
-<?php foreach ((array)$this->newgalleries as $galslug => $gal ) { $date = strtotime($gal['uploaded']); ?>
+<?php foreach ((array)$this->newgalleries as $galslug => $gal ) { $date = strtotime($gal['idopont']); ?>
 <div class="gal">
   <div class="wrapper">
     <div class="text __autocorrett-height-by-width" data-image-ratio="1:1">

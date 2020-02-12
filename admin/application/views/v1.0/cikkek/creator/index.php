@@ -166,7 +166,7 @@
 															<input type="number" class="form-control" placeholder="Hó" min="1" max="12" name="datepub_month" value="<?=($this->news)?$this->news->getValue('datepub_month'):date('m')?>">
 														</div>
 														<div class="col-md-3">
-															<input type="number" class="form-control" placeholder="Nap" min="1" max="31" name="datepub_day" value="<?=($this->news)?$this->news->getValue('datepub_day'):date('m')?>">
+															<input type="number" class="form-control" placeholder="Nap" min="1" max="31" name="datepub_day" value="<?=($this->news)?$this->news->getValue('datepub_day'):date('d')?>">
 														</div>
 														<div class="col-md-3">
 															<input type="time" class="form-control" placeholder="Idő"  name="datepub_time" value="<?=($this->news)?$this->news->getValue('datepub_time'):'00:00'?>">

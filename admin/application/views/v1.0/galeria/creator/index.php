@@ -79,7 +79,7 @@ $scats['ids'] = $catids;
                       <input type="number" class="form-control" value="<?=($this->news)?$this->news['sorrend']:'100'?>" id="sorrend" name="sorrend" />
                   </div>
 									<?php if ($this->gets[2] == 'szerkeszt'): ?>
-									<div class="col-md-10">
+									<div class="col-md-4">
 										<label for="">Elsődleges kategória</label>
 										<select class="form-control" name="default_cat">
 											<option value="" selected="selected">- Nincs kiválasztva -</option>
@@ -92,6 +92,23 @@ $scats['ids'] = $catids;
 										</select>
 									</div>
 									<?php endif; ?>
+									<div class="col-md-6">
+										<label for="datepub">Esemény dátuma</label>
+										<div class="row" style="margin-left: -15px; margin-right: -15px;">
+											<div class="col-md-3">
+												<input type="number" class="form-control" placeholder="Év" name="datepub_year" value="<?=($this->news)?$this->news['datepub_year']:date('Y')?>">
+											</div>
+											<div class="col-md-3">
+												<input type="number" class="form-control" placeholder="Hó" min="1" max="12" name="datepub_month" value="<?=($this->news)?$this->news['datepub_month']:date('m')?>">
+											</div>
+											<div class="col-md-3">
+												<input type="number" class="form-control" placeholder="Nap" min="1" max="31" name="datepub_day" value="<?=($this->news)?$this->news['datepub_day']:date('d')?>">
+											</div>
+											<div class="col-md-3">
+												<input type="time" class="form-control" placeholder="Idő"  name="datepub_time" value="<?=($this->news)?$this->news['datepub_time']:'00:00'?>">
+											</div>
+										</div>
+									</div>
               </div>
               <br />
               <div class="row">
