@@ -36,6 +36,8 @@ $(function(){
 	    language: "hu_HU",
 	    content_css : "/public/v1.0/styles/DinFonts.css",
 	    allow_styles: 'family-font',
+			paste_data_images: true,
+			paste_enable_default_filters: false,
 	    font_formats :
 	   			"Din Composit=Din Comp, sans-serif;"+
 	   			"Din Condensed=Din Cond, sans-serif;"+

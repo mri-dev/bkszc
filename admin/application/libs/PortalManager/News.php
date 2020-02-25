@@ -95,7 +95,7 @@ class News
     if (isset($data['newdownloads']) && $data['newdownloads']['name'][0] != '')
     {
       $dli = -1;
-      foreach ( (array)$data['newdownloads'] as $dl )
+      foreach ( (array)$data['newdownloads']['name'] as $dl )
       {
         $dli++;
         $name = $data['newdownloads']['name'][$dli];
@@ -188,6 +188,7 @@ class News
 			$eleres = $this->checkEleres( $cim );
 		}
 
+
     // Optional
     if ($optional && !empty($optional)) {
       foreach ((array)$optional as $key => $value) {
@@ -223,7 +224,7 @@ class News
     if (isset($data['newdownloads']) && $data['newdownloads']['name'][0] != '')
     {
       $dli = -1;
-      foreach ( (array)$data['newdownloads'] as $dl )
+      foreach ( (array)$data['newdownloads']['name'] as $dl )
       {
         $dli++;
         $name = $data['newdownloads']['name'][$dli];

@@ -1107,6 +1107,7 @@ body.homepage .sidebar-holder:not(.nomargintop){
 
 		p{
 			margin: 4px 0 8px 0;
+			background: transparent !important;
 		}
 	}
 
@@ -1855,7 +1856,7 @@ article.newest{
 			}
 		}
 		.slick-next{
-			background: rgba(237, 237, 237, 0.81);
+			background: rgba(237, 237, 237, 0.8);
 			&:hover{
 				background: rgba(255, 255, 255, 0.5);
 			}

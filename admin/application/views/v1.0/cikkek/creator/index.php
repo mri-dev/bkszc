@@ -224,10 +224,10 @@
 													<div class="row">
 														<div class="col-md-5">
 															<i class="fa fa-arrows-v"></i>
-															<input type="text" placeholder="Letöltés elnevezése" name="newdownloads[name][]" value="" class="form-control">
+															<input type="text" placeholder="Letöltés elnevezése" id="newdltg0" name="newdownloads[name][]" value="" class="form-control">
 														</div>
 														<div class="col-md-7">
-															<input type="file" name="downloads[file][]" value="" class="form-control">
+															<input type="file" name="downloads[file][]" data-targetindex="0" value="" class="form-control">
 														</div>
 													</div>
 												</div>
@@ -267,6 +267,13 @@
     $(function(){
 			bindContentHandler();
 
+			$('input[type=file]').change(function(ev){
+				var tgi = $(this).data('targetindex');
+				var file = ev.target.files[0].name;
+				file = file.replace(/\.[^/.]+$/, "");
+				$('#newdltg'+tgi).val(file);
+			});
+
       $('#menu_type').change(function(){
           var stype = $(this).val();
           $('.type-row').hide();
@@ -305,16 +312,23 @@
 				'<div class="row-neg">'+
 					'<div class="row">'+
 						'<div class="col-md-5"><i class="fa fa-arrows-v"></i>'+
-							'<input type="text" placeholder="Letöltés elnevezése" name="downloads[name][]" value="" class="form-control">'+
+							'<input type="text" id="newdltg'+ix+'" placeholder="Letöltés elnevezése" name="newdownloads[name][]" value="" class="form-control">'+
 						'</div>'+
 						'<div class="col-md-7">'+
-							'<input type="file" name="downloads[file][]" value="" class="form-control">'+
+							'<input type="file" name="downloads[file][]" data-targetindex="'+ix+'" value="" class="form-control">'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
 			'</div>';
 
 			$('.link-set').append( e );
+
+			$('input[type=file]').change(function(ev){
+				var tgi = $(this).data('targetindex');
+				var file = ev.target.files[0].name;
+				file = file.replace(/\.[^/.]+$/, "");
+				$('#newdltg'+tgi).val(file);
+			});
 		}
 
 		function bindContentHandler() {
