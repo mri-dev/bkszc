@@ -54,6 +54,46 @@
 /* 0 - 1023 px - SMARTPHONE */
 @media all and (max-width: 1023px)
 {
+	footer .logo .simple-pay-otp-badge{
+		left: 300px;
+	}
+	header .top>.pw>.flex .contact,
+	header .top>.pw>.flex .ugyintezes{
+		flex-basis: 100%;
+	}
+	header .top {
+    padding: 10px 0 15px 0;
+	}
+	header .top>.pw>.flex .contact{
+		padding: 15px 0 0 0;
+	}
+	header .top .block-holder{
+		text-align: center;
+	}
+	header .top .block-holder i{
+		position: relative;
+		left: initial;
+		top: initial;
+	}
+	header .top .block-holder .data{
+		padding: 0;
+		font-size: 1rem;
+	}
+	header .top>.pw>.flex .ugyintezes .block-holder{
+		font-size: 1.2rem;
+		line-height: 1.2;
+		margin: 15px 0 0 0;
+		text-align: center;
+
+		.data .h {
+			font-size: 1.4rem;
+			margin: 0 0 4px 0;
+		}
+
+		i{
+			display: none !important;
+		}
+	}
 	body.singlepage .website .page.page-width{
 		width: 100%;
 	}
@@ -89,7 +129,7 @@
 	}
 	header .logo,
 	header .main .actions{
-		flex-basis: 100%;
+		flex: 1;
 	}
 	header .bottom{
 		display: none;
@@ -123,8 +163,24 @@
 	}
 	header .logo img {
 		max-height: initial;
-    width: 90%;
-    max-width: 90% !important;
+    width: 70%;
+    max-width: 70% !important;
+	}
+	.sidebar-block.partner-list > h3 {
+		text-align: center;
+	}
+	header .main .logo .bkszc {
+	  position: absolute;
+	  top: initial;
+		right: 5px;
+    bottom: 2px;
+
+		img {
+			height: 25px;
+			max-height: 25px;
+			width: auto !important;
+			max-width: initial !important;
+		}
 	}
 	header .main .actions{
 		justify-content: center;
@@ -161,6 +217,9 @@
 		font-size: 2.2vh;
 		margin: 0 0 25px 0;
 	}
+	.countdown{
+		flex-wrap: wrap-reverse;
+	}
 	.banners .groups{
 		margin: 0 5px;
 	}
@@ -169,6 +228,13 @@
 	}
 	.content-wrapper{
 		padding: 15px;
+	}
+	.countdown .bloc-time{
+		flex-basis: calc(100%/4);
+		margin: 14px 0 0 0 !important;
+	}
+	.event-countdown .in-content .text{
+		font-size: 4.5vw;
 	}
 	.home-etlap-miserend > .pw > .holder > .flex > div > div.wrapper{
 		padding: 15px;
@@ -614,6 +680,53 @@
 	}
 }
 
+@media all and (max-width: 770px) {
+	.sidebar-holder{
+		flex-basis: 100%;
+		padding: 15px !important;
+	}
+	.content-holder > .content-wrapper{
+		padding: 15px;
+	}
+	body.homepage .sidebar-holder:not(.nomargintop){
+		margin: 0 !important;
+	}
+	.programnaptar-holder,
+	.naptar-slide-block{
+		width: 340px;
+		max-width: 340px;
+		margin: 0 auto;
+	}
+	.news-block > .holder{
+		margin: 0;
+	}
+	.news-block.slide-view .slick-prev, .news-block.slide-view .slick-next{
+		top: -28px;
+	}
+	.news-block.slide-view .slick-prev{
+		right: 22px;
+	}
+	.news-block.slide-view .slick-next{
+		right: 0;
+	}
+	body.article .articles-header{
+		padding: 25px 15px 0 15px;
+	}
+	.news-block > .holder > div.articles > article{
+		flex-basis: calc(100%/2);
+	}
+	.nav-container{
+		text-align: center;
+	}
+	body.article .sidebar-block h3{
+		font-size: 6vw;
+	}
+	.event-countdown .in-content .timeback{
+		width: 100%;
+		max-width: 100%;
+	}
+}
+
 /* 0 - 640 px - SMARTPHONE */
 @media all and (max-width: 640px)
 {
@@ -822,8 +935,88 @@
 }
 
 /* 0 - 375 px - SMARTPHONE */
-@media all and (max-width: 375px)
+@media all and (max-width: 480px)
 {
+	.sidebar-block.alapitvany-list{
+		img {
+			width: 100%;
+			max-width: 100%;
+		}
+	}
+	footer .logo .simple-pay-otp-badge{
+		position: relative;
+		text-align: center;
+		left:initial;
+		top: initial;
+		margin: 40px 0 0 0;
+	}
+	footer .info .bottom {
+    font-size: 1rem;
+    line-height: 1.4;
+	}
+	.watch-this .wrapper > .block{
+		flex-basis: calc(100% / 2);
+	}
+	footer .info .flex > div{
+		text-align: center;
+	}
+	.countdown .bloc-time{
+		flex-basis: 50%;
+	}
+	.event-countdown .in-content .text{
+		font-size: 5vw;
+	}
+	.event-countdown .in-content .timeback{
+		padding: 0px 10px 23px 10px;
+	}
+	.galery-block .slick-prev, .galery-block .slick-next{
+    bottom: -68px;
+    width: 45px;
+    height: 45px;
+	}
+	.galery-block .slick-prev {
+    right: 46px;
+	}
+	header .main .logo{
+		padding: 15px 0 35px 15px;
+	}
+	header .main .actions{
+		border-top: 2px solid #e4e4e4;
+	}
+	.article-block .head h3{
+		font-size: 1.3rem;
+	}
+	.galery-block > .holder .image > .wrapper img{
+		height: 125%;
+		max-height: 125%;
+	}
+	header .header-img{
+		height: 250px;
+		max-height: 250px;
+	}
+	header .main .logo .bkszc {
+    position: absolute;
+    top: initial;
+    right: initial;
+    left: 158px;
+    bottom: 14px;
+	}
+	header .logo, header .main .actions{
+		flex-basis: 100% !important;
+		flex:initial !important;
+		width: 100%;
+	}
+	header .main .actions > div > a{
+		width: auto !important;
+		padding: 0 !important;
+	}
+	header .main .actions > div {
+		flex-basis: calc(100% / 5);
+	}
+	.event-countdown{
+		height: 480px;
+		min-height: 480px;
+	}
 	body {
 		font-size: 0.9em;
 	}

@@ -255,6 +255,13 @@
                         <input type="text" id="basics_page_author_phone" name="page_author_phone" class="form-control" value="<?=$this->settings['page_author_phone']?>">
                     </div>
                 </div>
+								<br>
+                <div class="row np">
+                    <div class="col-md-12">
+                        <label for="basics_mobile_number_elerhetoseg">Ügyintézés szövege a fejlécben</label>
+                        <input type="text" id="basics_mobile_number_elerhetoseg" name="mobile_number_elerhetoseg" class="form-control" value="<?=$this->settings['mobile_number_elerhetoseg']?>">
+                    </div>
+                </div>
                 <br>
                 <div class="row np">
                     <div class="col-md-12">

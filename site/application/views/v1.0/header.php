@@ -32,7 +32,7 @@
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
 <header>
-  <div class="top">
+  <div class="top hide-on-mobile">
     <div class="pw">
       <div class="flex">
         <div class="contact">
@@ -93,35 +93,35 @@
         </div>
         <div class="actions">
           <div class="kreta">
-            <a href="https://bkszc-gundel.e-kreta.hu" target="_blank" title="Kréta E-napló">
+            <a href="https://bkszc-gundel.e-kreta.hu" target="_blank" title="Kréta E-napló" class="autocorrett-height-by-width" data-image-ratio="1:1" data-image-under="480">
               <div class="ico">
                 <img src="<?=IMG?>icons/ico-kreta.svg" alt="Kréta E-napló">
               </div>
             </a>
           </div>
           <div class="office">
-            <a href="http://outlook.com/gundeliskola.hu" target="_blank" title="Belépés az Office levelezőrendszerbe">
+            <a href="http://outlook.com/gundeliskola.hu" target="_blank" title="Belépés az Office levelezőrendszerbe" class="autocorrett-height-by-width" data-image-ratio="1:1" data-image-under="480">
               <div class="ico">
                 <img src="<?=IMG?>icons/ico-office.svg" alt="Office">
               </div>
             </a>
           </div>
           <div class="facebook">
-            <a href="<?=$this->settings['social_facebook_link']?>" target="_blank" title="Facebook oldalunk">
+            <a href="<?=$this->settings['social_facebook_link']?>" target="_blank" title="Facebook oldalunk" class="autocorrett-height-by-width" data-image-ratio="1:1" data-image-under="480">
               <div class="ico">
                 <i class="fa fa-facebook"></i>
               </div>
             </a>
           </div>
           <div class="instagram">
-            <a href="<?=$this->settings['social_instagram_link']?>" target="_blank" title="Instagram oldalunk">
+            <a href="<?=$this->settings['social_instagram_link']?>" target="_blank" title="Instagram oldalunk" class="autocorrett-height-by-width" data-image-ratio="1:1" data-image-under="480">
               <div class="ico">
                 <i class="fa fa-instagram"></i>
               </div>
             </a>
           </div>
           <div class="position">
-            <a href="/kapcsolat" title="Kapcsolat">
+            <a href="/kapcsolat" title="Kapcsolat" class="autocorrett-height-by-width" data-image-ratio="1:1" data-image-under="480">
               <div class="ico">
                 <i class="fa fa-map-marker"></i>
               </div>
