@@ -309,6 +309,7 @@ $(function(){
 						var opened = t.hasClass('opened');
 						if ( opened ) {
 							t.removeClass('opened');
+							$('body').removeClass('mobiltoggled');
 						} else {
 							if (_.menu) {
 								$('.mobile-menu .nav').css({

@@ -31,6 +31,47 @@
     js.src = "https://connect.facebook.net/hu_HU/sdk.js#xfbml=1&version=v3.0";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
+<div class="mobile-menu show-on-mobile">
+  <div class="header">
+    <div class="title">
+      <img src="<?=IMG?>GK_logo_pikto.svg" alt="Gundel Iskola">
+      <?=__('Gundel Károly<br>Szakképző Iskola')?>
+      <div class="sub"><a href="tel:<?=$this->settings['page_author_phone']?>"><?=$this->settings['page_author_phone']?></a> &bull; <a href="mailto:<?=$this->settings['primary_email']?>"><?=$this->settings['primary_email']?></a></div>
+      <div class="clr"></div>
+    </div>
+    <div class="close" mb-event="true" data-mb='{ "event": "toggleOnClick", "target" : ".mobile-menu", "menu": true }'><img src="<?=IMG?>close-x.svg" alt="Menü bezárása"></div>
+  </div>
+  <div class="menu-wrapper">
+    <ul>
+      <? foreach ( $this->menu_header->tree as $menu ): ?>
+      <li class="<?=$menu['css_class']?><?=($menu['child'])?' has-child':''?>">
+        <a href="<?=($menu['link']?:'')?>">
+          <? if($menu['kep']): ?><img src="<?=\PortalManager\Formater::sourceImg($child['kep'])?>"><? endif; ?>
+          <?=$menu['nev']?><? if($menu['child']&& false): ?><i class="fa fa-angle-down"></i><? endif; ?></a>
+          <? if($menu['child']): ?>
+          <div class="sub nav-sub-view">
+              <div class="inside">
+                <ul>
+                <? foreach($menu['child'] as $child):  ?>
+                <?php if($child['tipus'] == 'kategoria_alkategoria_lista'): ?>
+                  <?php echo $child['kategoria_alkategoria_lista_li']; ?>
+                <?php else: ?>
+                <li class="<?=$child['css_class']?>">
+                  <? if($child['link']): ?><a href="<?=$child['link']?>"><? endif; ?>
+                  <span style="<?=$child['css_styles']?>"><?=$child['nev']?></span>
+                  <? if($child['link']): ?></a><? endif; ?>
+                </li>
+                <?php endif; ?>
+                <? endforeach; ?>
+                </ul>
+              </div>
+          </div>
+          <? endif; ?>
+      </li>
+      <? endforeach; ?>
+    </ul>
+  </div>
+</div>
 <header>
   <div class="top hide-on-mobile">
     <div class="pw">

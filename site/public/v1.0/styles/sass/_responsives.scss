@@ -54,6 +54,13 @@
 /* 0 - 1023 px - SMARTPHONE */
 @media all and (max-width: 1023px)
 {
+	.news-page{
+		padding: 15px;
+	}
+	header{
+		border-top: 10px solid #01a3de;
+		border-bottom: 5px solid #bfdfe8;
+	}
 	footer .logo .simple-pay-otp-badge{
 		left: 300px;
 	}
@@ -98,7 +105,7 @@
 		width: 100%;
 	}
 	.news-page .news-content{
-		padding: 15px;
+		padding: 0;
 	}
 	header .header-img.noimage:not(.has-text){
 		height: 10px;
@@ -937,6 +944,38 @@
 /* 0 - 375 px - SMARTPHONE */
 @media all and (max-width: 480px)
 {
+	.tamogatas-form-holder .paying-cashes > div{
+		flex-basis: calc(100% / 2);
+		text-align: center;
+	}
+	.tamogatas-form-holder .paying-cashes > div:last-child{
+		flex-basis: calc(100% / 1);
+	}
+	.tamogatas-form-holder .form-fields > div{
+		flex-basis: 100% !important;
+	}
+	.actual-news-block > .holder article.actual > .wrapper .content{
+		width: 100%;
+		background: rgba(250, 250, 250, 0.65);
+		top: 30%;
+	}
+	.actual-news-block > .holder article.actual > .wrapper .content .morebtn a{
+		font-size: 0.7rem;
+		text-align: right;
+	}
+	.actual-news-block > .holder article.actual > .wrapper .content .text .title{
+		font-size: 0.84rem;
+		margin: 0 !important;
+	}
+	.actual-news-block > .holder article.actual > .wrapper .content .text .subtitle{
+		font-size: 0.56rem;
+		margin: 0 !important;
+	}
+	.actual-news-block > .holder article.actual > .wrapper .content .text .desc{
+		font-size: 0.56rem;
+		line-height: 1;
+		margin: 5px 0 0 0;
+	}
 	.sidebar-block.alapitvany-list{
 		img {
 			width: 100%;
