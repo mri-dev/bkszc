@@ -3589,3 +3589,12 @@ body.article-slug-tanarok-elerhetosegei{
 	border-color: #3ea02c;
 	background: #5fc162;
 }
+
+@media all and (max-width: 480px)
+{
+	.actual-news-block > .holder article.actual > .wrapper .content{
+		width: 100%;
+		background: rgba(250, 250, 250, 0.65);
+		top: 30%;
+	}
+}
