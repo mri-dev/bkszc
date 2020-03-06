@@ -35,6 +35,8 @@ class Controller {
         setlocale(LC_TIME, 'hu_HU');
         //$this->memory_usage();
 
+        //var_dump($_GET);
+
         // CORE
         // $this->model 		= new Model();
         $this->view = new View();
