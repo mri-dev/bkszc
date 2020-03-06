@@ -267,12 +267,14 @@
     $(function(){
 			bindContentHandler();
 
+			/*
 			$('input[type=file]').change(function(ev){
 				var tgi = $(this).data('targetindex');
 				var file = ev.target.files[0].name;
 				file = file.replace(/\.[^/.]+$/, "");
 				$('#newdltg'+tgi).val(file);
 			});
+			*/
 
       $('#menu_type').change(function(){
           var stype = $(this).val();
@@ -323,12 +325,14 @@
 
 			$('.link-set').append( e );
 
+			/*
 			$('input[type=file]').change(function(ev){
 				var tgi = $(this).data('targetindex');
 				var file = ev.target.files[0].name;
 				file = file.replace(/\.[^/.]+$/, "");
 				$('#newdltg'+tgi).val(file);
 			});
+			*/
 		}
 
 		function bindContentHandler() {
