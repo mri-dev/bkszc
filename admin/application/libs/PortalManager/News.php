@@ -55,7 +55,7 @@ class News
 
 		$this->current_get_item = $qry->fetch(\PDO::FETCH_ASSOC);
 
-    $this->preparePublicDates($this->current_get_item);
+		$this->preparePublicDates($this->current_get_item);
 
 		return $this;
 	}
