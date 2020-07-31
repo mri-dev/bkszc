@@ -56,7 +56,7 @@
 
 		define('UPLOADS', 'src/uploads/');
 		define('FILEMANAGER', 'src/filemanager/');
-		define('RPDOCUMENTROOT', '/home/ideasandbox/bkszc/cp/src/uploaded_files');
+		define('RPDOCUMENTROOT', '/home/users/ideasandbox/www/gundeliskola/admin/src/uploaded_files');
 
 	// Adminisztráció
 		define('ADMROOT','https://www.cp.'.DM.'/');

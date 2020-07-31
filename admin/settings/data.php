@@ -1,13 +1,13 @@
 <?
 	define("DB_HOST",'localhost');
-	define("DB_NAME",'ideasand_bkszc');
-	define("DB_USER",'ideasand_bkszc');
-	define("DB_PW",'1~0pnp,c_KSz');
+	define("DB_NAME",'gundeliskola');
+	define("DB_USER",'gundeliskola');
+	define("DB_PW",'_Sq4NHC%Bam@');
 
 		// SMTP Settings
-	define("SMTP_HOST",	"mail.web-pro.hu");
-	define("SMTP_USER",	"office@web-pro.hu");
-	define("SMTP_PW",	"E[.c4C.)0]uP3w5D");
-	define("SMTP_MODE",	"ssl");
-	define("SMTP_PORT",	465);
+	define("SMTP_HOST",	"server.web-pro.hu");
+	define("SMTP_USER",	"smtp@web-pro.hu");
+	define("SMTP_PW",	"*23#23x!iGjy");
+	define("SMTP_MODE",	"tls");
+	define("SMTP_PORT",	576);
 ?>
