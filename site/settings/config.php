@@ -3,7 +3,7 @@
 	// Protocol
 	$protocol = 'http://';
 	if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') {
-		$protocol = 'http://';
+		$protocol = 'https://';
 	}
 	// Domain név
 	define('DOMAIN',$protocol.$_SERVER['HTTP_HOST'].'/');

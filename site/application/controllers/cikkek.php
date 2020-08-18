@@ -51,6 +51,13 @@ class cikkek extends Controller{
 		$archive_dates = $news->getArchiveDates( $adlimit );
 		$this->out('archive_dates', $archive_dates);
 
+		
+		// archív tanévek
+		$adlimit = (isset($_GET['archive'])) ? false : false;
+		$archive_sy = $news->getArchiveSCYears( $adlimit );
+		$this->out('archive_years', $archive_sy);
+	
+
 		if ( isset($_GET['cikk']) ) {
 			$this->out( 'bodyclass', 'article singlearticle article-slug-'.$_GET['cikk'] );
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );

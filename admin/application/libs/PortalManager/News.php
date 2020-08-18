@@ -55,7 +55,7 @@ class News
 
 		$this->current_get_item = $qry->fetch(\PDO::FETCH_ASSOC);
 
-		$this->preparePublicDates($this->current_get_item);
+    $this->preparePublicDates($this->current_get_item);
 
 		return $this;
 	}
@@ -644,6 +644,55 @@ class News
         'datef' => utf8_encode(strftime ('%Y. %B', strtotime($d['dateg']))),
         'posts' => (int)$d['counts'],
       );
+    }
+
+    return $list;
+  }
+
+  public function getArchiveSCYears( $limit = false )
+  {
+    $list = array();
+
+    $qry = "SELECT
+      substr(letrehozva, 1, 4) as years, 
+      substr(letrehozva, 6, 5) as ondays,
+      letrehozva
+    FROM `hirek`
+    WHERE lathato = 1
+    ORDER BY letrehozva DESC";
+
+    if ($limit) {
+      $qry .= " LIMIT 0,".$limit;
+    }
+
+    $qry = $this->db->query($qry);
+
+    if ($qry->rowCount() == 0 ) {
+      return $list;
+    }
+
+    foreach ((array)$qry->fetchAll(\PDO::FETCH_ASSOC) as $d) {
+      $xd = explode("-", $d['ondays']);
+      $yc = $d['years'];
+
+      if( (int)$xd[0] > 0 && (int)$xd[0] <= 7 ) {
+        // --
+        $yca =  date("Y", strtotime(date("Y-m-d", strtotime($d['letrehozva'])) . " - 365 day"));
+        $yc = $yca."/".$d['years'];
+      } else {
+        $yca =  date("Y", strtotime(date("Y-m-d", strtotime($d['letrehozva'])) . " + 365 day"));
+        $yc = $d['years'].'/'.$yca;
+      }
+      if( !isset($list[$yc]) ){
+        $list[$yc] = array(
+          'date' => $yc,
+          'datef' => $yc,
+          'posts' => 1,
+        );
+      } else {
+        $list[$yc]['posts'] += 1;
+      }
+      
     }
 
     return $list;

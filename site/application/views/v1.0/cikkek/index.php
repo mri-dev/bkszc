@@ -38,7 +38,7 @@
 						$step = 0;
 						while ( $this->list->walk() ) {
 							$step++;
-							$arg = $this->list->the_news();
+							$arg = $this->list->the_news(); 
 							$arg['categories'] = $this->list->getCategories();
 							$arg['date_format'] = $this->settings['date_format'];
 							$arg['newscats'] = $this->newscats;
