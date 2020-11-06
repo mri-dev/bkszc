@@ -57,8 +57,8 @@ class cikkek extends Controller{
 		$archive_sy = $news->getArchiveSCYears( $adlimit );
 		$this->out('archive_years', $archive_sy);
 	
-
-		if ( isset($_GET['cikk']) ) {
+		if ( isset($_GET['cikk']) ) 
+		{
 			$this->out( 'bodyclass', 'article singlearticle article-slug-'.$_GET['cikk'] );
 			$this->out( 'news', $news->get( trim($_GET['cikk']) ) );
 			$this->out( 'is_tematic_cat', 1);
@@ -122,6 +122,12 @@ class cikkek extends Controller{
 					$title = $headimgtitle . ' | Bejegyzéseink';
 				}
 
+				// Tanév
+				if (isset($_GET['datea']) && isset($_GET['dateb'])) {
+					$headimgtitle .= ' - '.$_GET['datea'].'/'.$_GET['dateb'].' tanév cikkei';
+					$title = $headimgtitle . ' | Bejegyzéseink';
+				}
+
 				$this->out( 'head_img_title', $headimgtitle);
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			} else {
@@ -131,11 +137,19 @@ class cikkek extends Controller{
 				$this->out( 'head_img_title', (!$is_archiv) ? $cat_name : 'Archívum:'.$this->view->newscatslist[$cat_slug]['neve']  );
 				$this->out( 'head_img', IMGDOMAIN.'/src/uploads/covers/cover-archive.jpg' );
 			}
+
+			$limit = 13;
+			$page = (isset($_GET['page'])) ? (int)str_replace('P','', $_GET['page']) : 1;
+
+			if( $page > 1 ){
+				$limit = 12;
+			}
+
 			$arg = array(
-				'limit' => 12,
+				'limit' => $limit,
 				'hide_offline' => true,
 				'in_cat' => $cat_id,
-				'page' => (isset($_GET['page'])) ? (int)str_replace('P','', $_GET['page']) : 1,
+				'page' => $page,
 			);
 			$this->out('current_page', $arg['page']);
 
@@ -146,12 +160,19 @@ class cikkek extends Controller{
 				$arg['search'] = trim($_GET['src']);
 			}
 
+			// tanév
+			if ( isset($_GET['datea']) && isset($_GET['dateb']) ) {
+				$arg['tanev'] = [$_GET['datea'], $_GET['dateb']];
+			}
+
+			//print_r($arg);
+
 			$this->out( 'list', $news->getTree( $arg ) );
 
-			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.'/kategoriak'.( (isset($_GET['cat'])) ? '/'.$_GET['cat'] : '' );
+			$navroot = (in_array($_GET['cat'], $news->tematic_cikk_slugs)) ? $_GET['cat'] : '/'.__CLASS__.( (isset($_GET['cat'])) ? '/kategoriak/'.$_GET['cat'] : '' );
 
 			if ($is_archiv) {
-				$navroot = '/'.__CLASS__.'/date/'.$_GET['date'];
+				$navroot = '/'.__CLASS__.'/date/'.$_GET['datea'].'/'.$_GET['dateb'];
 			}
 
 			$this->out( 'navigator', (new Pagination(array(

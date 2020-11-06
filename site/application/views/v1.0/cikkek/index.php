@@ -1,5 +1,5 @@
 <div class="articles-header">
-	<h1><?=$this->head_img_title?></h1>
+	<h1><?=$this->head_img_title?></h1> 
 	<?php if ($this->cat_parent_row): ?>
 	<div class="navi">
 		<ul class="cat-nav">

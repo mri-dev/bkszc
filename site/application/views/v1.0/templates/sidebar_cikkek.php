@@ -60,27 +60,29 @@
   </div>
   <div class="divider"></div>
   <div class="sidebar-block">
-    <h3>Tanév</h3>
+    <h3>Archívum - Tanév szerint</h3>
     <?php if (true): ?>
     <div class="list">
       <?php foreach ((array)$this->archive_years as $nc): ?>
       <div class="cat <?=($_GET['date'] == ($nc['date']))?'active':''?>">
-        <a href="<?=$this->cikkroot.'date/'.$nc['date'].'/1'?>">> <?=$nc['datef']?> (<?=$nc['posts']?>)</a>
+        <a href="<?=$this->cikkroot.'date/'.$nc['date'].'/P1'?>">> <?=$nc['datef']?> (<?=$nc['posts']?>)</a>
       </div>
       <?php endforeach; ?>
     </div>
     <?php endif; ?>
   </div>
+  <?php if( false ): ?>
   <div class="sidebar-block">
     <h3>Archívum</h3>
     <?php if (true): ?>
     <div class="list">
       <?php foreach ((array)$this->archive_dates as $nc): ?>
       <div class="cat <?=($_GET['date'] == ($nc['date']))?'active':''?>">
-        <a href="<?=$this->cikkroot.'date/'.$nc['date'].'/1'?>">> <?=$nc['datef']?> (<?=$nc['posts']?>)</a>
+        <a href="<?=$this->cikkroot.'date/'.$nc['date'].'/P1'?>">> <?=$nc['datef']?> (<?=$nc['posts']?>)</a>
       </div>
       <?php endforeach; ?>
     </div>
     <?php endif; ?>
   </div>
+  <?php endif; ?>
 </div>

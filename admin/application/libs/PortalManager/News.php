@@ -453,6 +453,14 @@ class News
       $qry .= " and h.letrehozva LIKE '".addslashes($arg['on_date'])."%'";
     }
 
+    // tanév
+    if( isset($arg['tanev']) && !empty($arg['tanev']) ) {
+      $ta = $arg['tanev'][0].'-08-01';
+      $tb = $arg['tanev'][1].'-07-31';
+
+      $qry .= " and (h.letrehozva >= '".$ta."' and h.letrehozva <= '".$tb."') ";
+    }
+
     // Kategória slug exlude
     if( isset($arg['exc_cat_slug']) && !empty($arg['exc_cat_slug']) ) {
       $qry .= " and (";
@@ -651,7 +659,7 @@ class News
 
   public function getArchiveSCYears( $limit = false )
   {
-    $list = array();
+    $list = array(); 
 
     $qry = "SELECT
       substr(letrehozva, 1, 4) as years, 
@@ -675,7 +683,7 @@ class News
       $xd = explode("-", $d['ondays']);
       $yc = $d['years'];
 
-      if( (int)$xd[0] > 0 && (int)$xd[0] <= 7 ) {
+      if( (int)$xd[0] > 0 && (int)$xd[0] < 8 ) {
         // --
         $yca =  date("Y", strtotime(date("Y-m-d", strtotime($d['letrehozva'])) . " - 365 day"));
         $yc = $yca."/".$d['years'];
@@ -691,8 +699,7 @@ class News
         );
       } else {
         $list[$yc]['posts'] += 1;
-      }
-      
+      }      
     }
 
     return $list;
