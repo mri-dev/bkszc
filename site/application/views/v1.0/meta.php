@@ -25,18 +25,18 @@
 
 <!-- JS's -->
 <!-- Angular Material requires Angular.js Libraries -->
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/hu.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/locale/hu.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-sanitize.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
 <?=$this->addJS('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js',true)?>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
 <script src='//www.google.com/recaptcha/api.js?hl=hu'></script>
-<script defer src='//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
+<script defer src='//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>'></script>
 
 <!-- Angular Material Library -->
 <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
@@ -54,10 +54,10 @@
 <?=$this->addJS('counter',false,false)?>
 <?php $this->switchJSAsync(false); ?>
 
-<script type="text/javascript" src="/src/vendors/autocomplete/scripts/jquery.mockjax.js"></script>
-<script type="text/javascript" src="/src/vendors/autocomplete/dist/jquery.autocomplete.min.js"></script>
-<script type="text/javascript" src="/src/vendors/md-date-range-picker/md-date-range-picker.js"></script>
-<script type="text/javascript" src="/src/vendors/angular-timer/dist/assets/js/angular-timer-all.min.js"></script>
-<script type="text/javascript" src="<?=JS?>slick/slick.min.js"></script>
-<script type="text/javascript" src="<?=JS?>fancybox/jquery.fancybox.js?v=2.1.4"></script>
-<script type="text/javascript" src="<?=JS?>fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="/src/vendors/autocomplete/scripts/jquery.mockjax.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script type="text/javascript" src="/src/vendors/autocomplete/dist/jquery.autocomplete.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script type="text/javascript" src="/src/vendors/md-date-range-picker/md-date-range-picker.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script type="text/javascript" src="/src/vendors/angular-timer/dist/assets/js/angular-timer-all.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script type="text/javascript" src="<?=JS?>slick/slick.min.js<?=(defined('TS') && DEVMODE === false)?'?ts='.TS:''?>"></script>
+<script type="text/javascript" src="<?=JS?>fancybox/jquery.fancybox.js?v=2.1.4<?=(defined('TS') && DEVMODE === false)?'&ts='.TS:''?>"></script>
+<script type="text/javascript" src="<?=JS?>fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5<?=(defined('TS') && DEVMODE === false)?'&ts='.TS:''?>"></script>

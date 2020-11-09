@@ -113,7 +113,7 @@
                 };
                 element.on('click', function (e) {
                     var eventKey = e.target.getAttribute('event-key'),
-                        eventParam = e.target.getAttribute('event-param');
+                        eventParam = e.target.getAttribute('event-param'); 
                         scope.actionByKey(eventKey, eventParam, e);
                 });
 
@@ -418,6 +418,10 @@
         function handleClickDate($event, date) {
             var changed = false;
             var shouldConfirm = false;
+            /** WEBPRO: hozzáadtam, hogy ne legyen daterange csak 1 napos kiválasztás */
+            $scope.dateEnd = date;
+            $scope.dateStart = date;
+            /** WEBPRO: END */
             if (getDateDiff($scope.dateStart, $scope.dateEnd) === 0) {
                 if (getDateDiff($scope.dateStart, date) === 0) {
                     shouldConfirm = true;

@@ -19,7 +19,7 @@ class esemenyek extends Controller
 		$news = new Programs( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
-
+ 
 		// Közelgő események
 		$arg = array(
 			'limit' => 12,
@@ -64,11 +64,19 @@ class esemenyek extends Controller
 			} else {
 				$this->out( 'head_img_title', 'Események' );
 			}
+
+			$navroot = '/'.__CLASS__. (isset($_GET['cat']) ? '/'.$_GET['cat']: '');
+
+			if( isset($_GET['datelist']) )
+			{
+				$navroot = '/'.__CLASS__. '/'.$_GET['year'].'/'.$_GET['month'];
+			}
+
 			$this->out( 'navigator', (new Pagination(array(
 				'class' 	=> 'pagination pagination-sm center',
 				'current' 	=> $news->getCurrentPage(),
 				'max' 		=> $news->getMaxPage(),
-				'root' 		=> '/'.__CLASS__. (isset($_GET['cat']) ? '/'.$_GET['cat']: ''),
+				'root' 		=> $navroot,
 				'item_limit'=> 12
 			)))->render() );
 

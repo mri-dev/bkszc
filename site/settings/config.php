@@ -10,7 +10,8 @@
 	define('CURRENT_URI',$protocol.$_SERVER['HTTP_HOST'].$_SERVER["REQUEST_URI"] );
 	define('MDOMAIN',$_SERVER['HTTP_HOST']);
 	define('CLR_DOMAIN',str_replace(array($protocol,"www."),"",substr('www.'.DOMAIN,0,-1)));
-	define('DEVMODE', false);
+	define('DEVMODE', true);
+	define('TS', '202011091400');
 	define('PARTNER_CAT_ID', 6);
 
 	// Üdvözlő üzenet

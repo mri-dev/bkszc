@@ -161,7 +161,6 @@ app.controller('Programs', ['$scope', '$http', '$mdToast', '$mdDialog', '$httpPa
         dateend: dendformat
       })
     }).success(function(r){
-      console.log(r);
       if (r.dates && r.dates.length != 0) {
         $scope.calendarModel.highlightedDates = r.dates;
       }
