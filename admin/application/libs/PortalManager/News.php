@@ -167,7 +167,12 @@ class News
 	}
 
 	public function save( $data )
-	{
+	{ 
+    $ret = array(
+      'success' => 0,
+      'messages' => []
+    );
+
 		$cim 	= ($data['cim']) ?: false;
 		$eleres = ($data['eleres']) ?: false;
 		$szoveg = ($data['szoveg']) ?: NULL;
@@ -220,25 +225,52 @@ class News
       unset($tempdownloads);
     }
 
-    // new downloads
-    if (isset($data['newdownloads']) && $data['newdownloads']['name'][0] != '')
+    if( isset($_FILES['uploads']) ) 
     {
       $dli = -1;
-      foreach ( (array)$data['newdownloads']['name'] as $dl )
+
+      foreach ( (array)$_FILES['uploads']['name'] as $dl )
       {
         $dli++;
-        $name = $data['newdownloads']['name'][$dli];
-        $file_tmp = $_FILES['downloads']['tmp_name']['file'][$dli];
-        $file_err = $_FILES['downloads']['error']['file'][$dli];
-        $file_name = uniqid().'_'.basename($_FILES['downloads']['name']['file'][$dli]);
+        $finded_prev_file = false;
+        $name = pathinfo($_FILES['uploads']['name'][$dli], \PATHINFO_FILENAME);
+        $file_tmp = $_FILES['uploads']['tmp_name'][$dli];
+        $file_err = $_FILES['uploads']['error'][$dli];
+        $file_name = uniqid().'_'.basename($_FILES['uploads']['name'][$dli]);
 
+        // Find prev 
+        if( $data['downloads'] && is_array($data['downloads']) && !empty($data['downloads']['name']) )
+        {
+          if( in_array($name, $data['downloads']['name']) )
+          {
+            $six = array_search($name, $data['downloads']['name']);
+
+            if ( $six !== FALSE ) 
+            {
+              $finded_prev_file = true;
+            }
+          }
+        } 
+
+        if( $finded_prev_file )
+        {
+          $xfn = explode("/", $data['downloads']['file'][$six]);
+          $xfn = end($xfn);
+          $file_name = $xfn;
+        }
+
+        /* */
         if ( !empty($name) && !empty($file_tmp) && $file_err == \UPLOAD_ERR_OK ) {
           if(move_uploaded_file( $file_tmp, 'src/uploaded_files/'.$file_name )){
             usleep(500);
-            $data['downloads']['name'][] = $name;
-            $data['downloads']['file'][] = 'src/uploaded_files/'.$file_name;
+            if( !$finded_prev_file )
+            {
+              $data['downloads']['name'][] = $name;
+              $data['downloads']['file'][] = 'src/uploaded_files/'.$file_name;
+            }            
           }
         }
+        /* */
       }
     }
 
@@ -286,7 +318,12 @@ class News
 			sprintf("ID = %d", $this->selected_news_id)
 		);
 
-		$this->resaveCategories( $this->selected_news_id, $data['cats'] );
+    $this->resaveCategories( $this->selected_news_id, $data['cats'] );
+
+    $ret['success'] = 1;
+    $ret['messages'][] = '<strong>Sikeresen mentésre kerültek a bejegyzés adatai.</strong>';
+    
+    return $ret;
 	}
 
   private function preparePublicDates( &$data )

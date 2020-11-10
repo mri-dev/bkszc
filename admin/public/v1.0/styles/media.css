@@ -4239,6 +4239,23 @@ input[type=file].lab-selector + label img {
 .filter-inputs .orders{
   flex-basis: 20%;
 }
+.upload-files{
+	background-color: #f1f1f1;
+	padding: 25px;
+	margin: 20px 0;
+	border-radius: 10px;
+}
+.upload-files .title {
+	font-size: 1.8rem;
+	font-weight: bold;
+	color: black;
+	margin: 0 0 10px 0;
+}
+.upload-files input[type=file] + em {
+	font-size: 1.1rem;	
+	color: #736969;
+	letter-spacing: .4px;
+}
 @media all and (max-width: 1400px){
   .filter-inputs .orders{
     flex-basis: 300px;

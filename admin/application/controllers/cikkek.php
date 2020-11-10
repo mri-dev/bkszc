@@ -157,6 +157,24 @@ class cikkek extends Controller{
 				$xrmsg = explode('::', $_GET['rmsg']);
 				$this->out('msg', \Helper::makeAlertMsg('p'.ucfirst($xrmsg[0]), $xrmsg[1]));
 			}
+			
+			if( isset($_GET['saved']) ) 
+			{
+				$saved_msg = json_decode(base64_decode($_GET['saved']), true);
+				if( !empty($saved_msg['messages']) )
+				{
+					$rmsg = '';
+					foreach( (array)$saved_msg['messages'] as $m )
+					{
+						$rmsg .= "<div>".$m."</div>";
+					}
+					if( $saved_msg['success'] == 0){
+						$this->out('msg', \Helper::makeAlertMsg('pError', $rmsg));
+					} else {
+						$this->out('msg', \Helper::makeAlertMsg('pSuccess', $rmsg));
+					}
+				}				
+			}
 
 			if(Post::on('add')){
 				try{
@@ -166,7 +184,7 @@ class cikkek extends Controller{
 					$this->view->err 	= true;
 					$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());
 				}
-			}
+			} 
 
 			$refurl = $_SERVER['HTTP_REFERER'];
 
@@ -185,8 +203,10 @@ class cikkek extends Controller{
 						exit;
 						/* */
 						try{
-							$news->save($_POST);
-							Helper::reload('/cikkek/creator/szerkeszt/'.$this->gets[3]);
+							$ret = $news->save($_POST);
+							$svd = json_encode($ret, \JSON_UNESCAPED_UNICODE );
+							$svd = base64_encode( $svd );
+							Helper::reload('/cikkek/creator/szerkeszt/'.$this->gets[3].'?saved='.$svd);
 						}catch(Exception $e){
 							$this->view->err 	= true;
 							$this->view->msg 	= Helper::makeAlertMsg('pError', $e->getMessage());

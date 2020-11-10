@@ -218,23 +218,17 @@
 													</div>
 												</div>
 											</div>
-										<?php endforeach; endif; ?>
-											<div class="link">
-												<div class="row-neg">
-													<div class="row">
-														<div class="col-md-5">
-															<i class="fa fa-arrows-v"></i>
-															<input type="text" placeholder="Letöltés elnevezése" id="newdltg0" name="newdownloads[name][]" value="" class="form-control">
-														</div>
-														<div class="col-md-7">
-															<input type="file" name="downloads[file][]" data-targetindex="0" value="" class="form-control">
-														</div>
-													</div>
-												</div>
-											</div>
+										<?php endforeach; else:?> 
+										<div class="alert alert-info">Nincsenek feltöltve fájlok!</div>
+										
+										<?php endif; ?>
 										</div>
-										<br>
-										<a onclick="addmoredownload()" href="javascript:void(0);">+ új letöltés</a>
+										<div class="upload-files">
+											<div class="title">Új fájlok feltöltése</div>
+											<p>Ha a fájl elnevezése megegyezik egy már feltöltött fájl nevével, a fájl forrása frissítésre kerül!</p>
+											<input type="file" name="uploads[]" multiple class="form-control">
+											<em>Válassza ki a feltöltendő fájlokat. Egyszerre több fájlt is kiválaszthat!</em>
+										</div>
                   </div>
               </div>
               <br />
@@ -307,33 +301,6 @@
 
 				$('.link-set').sortable();
     })
-
-		function addmoredownload() {
-			var ix = $('.link-set .link').length;
-			var e = '<div class="link">'+
-				'<div class="row-neg">'+
-					'<div class="row">'+
-						'<div class="col-md-5"><i class="fa fa-arrows-v"></i>'+
-							'<input type="text" id="newdltg'+ix+'" placeholder="Letöltés elnevezése" name="newdownloads[name][]" value="" class="form-control">'+
-						'</div>'+
-						'<div class="col-md-7">'+
-							'<input type="file" name="downloads[file][]" data-targetindex="'+ix+'" value="" class="form-control">'+
-						'</div>'+
-					'</div>'+
-				'</div>'+
-			'</div>';
-
-			$('.link-set').append( e );
-
-			/*
-			$('input[type=file]').change(function(ev){
-				var tgi = $(this).data('targetindex');
-				var file = ev.target.files[0].name;
-				file = file.replace(/\.[^/.]+$/, "");
-				$('#newdltg'+tgi).val(file);
-			});
-			*/
-		}
 
 		function bindContentHandler() {
 			var selected = [];
