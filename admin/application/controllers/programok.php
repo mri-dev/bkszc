@@ -32,7 +32,8 @@ class programok extends Controller{
 				'current' 	=> $news->getCurrentPage(),
 				'max' 		=> $news->getMaxPage(),
 				'root' 		=> '/'.__CLASS__,
-				'item_limit'=> 28
+				'item_limit'=> 28,
+				'page_prefix' => ''
 			)))->render() );
 
 			// LOAD
