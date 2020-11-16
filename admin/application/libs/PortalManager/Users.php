@@ -40,12 +40,13 @@ class Users
 		'cikkek' => 'Cikkek',
 		'redirects' => 'Átirányítások',
 		'programok' => 'Programok, események',
+		'dolgozok' => 'Dolgozók listája',
 	);
 
 	public $user_group_permissions = array(
 		'user' => array(),
-		'admin' => array('adminsettings', 'users', 'menu', 'oldalak', 'emails', 'galeria', 'cikkek', 'redirects', 'programok'),
-		'adminuser' => array('cikkek','programok','galeria')
+		'admin' => array('adminsettings', 'users', 'menu', 'oldalak', 'emails', 'galeria', 'cikkek', 'redirects', 'programok', 'dolgozok'),
+		'adminuser' => array('cikkek','programok','galeria', 'dolgozok')
 	);
 
 	public 	$user 		= false;
