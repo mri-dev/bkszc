@@ -3589,6 +3589,101 @@ body.article-slug-tanarok-elerhetosegei{
 	border-color: #3ea02c;
 	background: #5fc162;
 }
+.fb_iframe_widget iframe,
+.news-page .news-content > .head .subline > div.share{
+	width:  170px !important;
+}
+.dolgozo-lista{
+	& > .wrapper{
+		background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+		& > .ember,
+		& > .ember-header{
+			padding: 10px;
+			& > .wrapper{
+				display: flex;
+				align-items: center;
+				& > div {
+					padding: 15px;
+				}
+				.image{
+					flex-basis: 100px;
+					position: relative;
+					padding: 0;
+					a{
+						display: block;
+						height: 100%;
+						width: 100%;
+						overflow: hidden;
+						border-radius: 100px;
+						position: absolute;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -50%);
+						box-shadow: 0 10px 50px -20px #5d5959;
+					}
+					img{
+						margin: 0;
+						padding: 0;
+						max-width: 110%;
+						width: 110%;
+					}
+
+					&.landscape{
+						img{
+							max-width: initial;
+							width: auto;
+							height: 110%;
+							max-height: 110%;
+						}
+					}
+				}
+				.profil{
+					flex: 1;
+					.name{
+						font-size: 1.8rem;
+						font-weight: bold;
+						color: $color-blue;
+					}
+				}
+				.osztaly{
+					font-weight: bold;
+					color: black;
+					flex-basis: 150px;
+				}
+				.contacts{
+					flex-basis: 20%;
+					label {
+						display: block;
+						font-size: 0.8rem;
+						font-weight: normal;
+						color: #afafaf;
+						margin: 20px 0 5px 0;
+					}
+
+					& > div:first-child label{
+						margin-top: 0;
+					}
+				}
+			}
+			&:nth-child(even){
+				background-color: #f5f5f5;
+			}
+		}
+
+		& > .ember-header{
+			background-color: $color-blue-light;
+			color: white !important;
+			.wrapper .osztaly{
+				color: white;
+			}
+			& > div {
+				color: white !important;
+			}
+		}
+	}
+}
 
 @media all and (max-width: 480px)
 {
