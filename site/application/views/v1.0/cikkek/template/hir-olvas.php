@@ -45,10 +45,10 @@
 				<?php if (!empty($bevezeto)): ?>
 				<div class="abstext"><?php echo $bevezeto; ?></div>
 				<?php endif; ?>
-			</div>
+			</div> 
 		</div>
 		<?php endif; ?>
-		<?=\PortalManager\News::textRewrites($szoveg)?>
+		<?=$newsobj->textRewrites($szoveg)?>
 		<?php $linkek_list = unserialize($linkek); ?>
 		<?php if ($linkek && count($linkek_list) > 0): ?>
 			<div class="links">

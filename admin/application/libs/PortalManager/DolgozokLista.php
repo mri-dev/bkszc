@@ -55,6 +55,9 @@ class DolgozokLista
 		$nev 	= ($data['nev']) ?: false;
     $kep 	= ($data['profilkep']) ?: NULL;
 		$tantargyak = ($data['tantargyak']) ?: NULL;
+		$osztaly = ($data['osztaly']) ?: NULL;
+		$email = ($data['email']) ?: NULL;
+		$telefon = ($data['telefon']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
 
 		if (!$nev) { throw new \Exception("Kérjük, hogy adja meg az <strong>Dolgozó nevét</strong>!"); }
@@ -62,7 +65,10 @@ class DolgozokLista
     $upd = array(
       'nev' => addslashes($nev),
       'profilkep' => $kep,
-      'tantargyak' => addslashes($tantargyak),
+			'tantargyak' => addslashes($tantargyak),
+			'osztaly' => addslashes($osztaly),
+			'email' => addslashes($email),
+			'telefon' => addslashes($telefon),
       'lathato' => $lathato
     );
 
@@ -86,6 +92,9 @@ class DolgozokLista
     $nev 	= ($data['nev']) ?: false;
     $kep 	= ($data['profilkep']) ?: NULL;
 		$tantargyak = ($data['tantargyak']) ?: NULL;
+		$osztaly = ($data['osztaly']) ?: NULL;
+		$email = ($data['email']) ?: NULL;
+		$telefon = ($data['telefon']) ?: NULL;
 		$lathato= ($data['lathato'] == 'on') ? 1 : 0;
 
 		if (!$nev) { throw new \Exception("Kérjük, hogy adja meg az <strong>Dolgozó nevét</strong>!"); }
@@ -94,6 +103,9 @@ class DolgozokLista
       'nev' => addslashes($nev),
       'profilkep' => $kep,
       'tantargyak' => addslashes($tantargyak),
+			'osztaly' => addslashes($osztaly),
+			'email' => addslashes($email),
+			'telefon' => addslashes($telefon),
       'lathato' => $lathato
     );
 

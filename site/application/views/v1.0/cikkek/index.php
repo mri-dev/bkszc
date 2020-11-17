@@ -21,6 +21,7 @@
 			$arg['categories'] = $this->news->getCategories();
 			$arg['newscats'] = $this->newscats;
 			$arg['is_tematic'] = (in_array($arg['categories']['list'][0]['slug'], $this->news->tematic_cikk_slugs)) ? true : false;
+			$arg['newsobj'] = $this->newsobj;
 		?>
 		<? echo $this->template->get( 'hir-olvas',  $arg ); ?>
 		<? else: ?>
