@@ -34,14 +34,13 @@
               slidesToScroll: 1,
               dots: true,
               arrow: true,
-              autoplay: false,
+              autoplay: true,
               delay: 5000,
               speed: 1000
             });
 
             var apw = $('.actual-news-block').height() / 3 * 4;
-            console.log(apw);
-
+            
             $('.actual-news-block > .holder article.actual > .wrapper .image').css({
               flexBasis: apw+'px'
             })
