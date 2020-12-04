@@ -380,19 +380,21 @@ class Pages
 		// Kép
 		$text = str_replace( '../../src/uploads/', UPLOADS, $text );
 
-		// Includes
+    // Includes
 		$text = preg_replace_callback( "/==(.*)==/i", function ( $m ) use ( $template ) {
+      var_dump($m);
 			return $template->get( $m[1]);
 		} , $text );
 
-		// Méret táblázat
+    // Méret táblázat
+    /*
 		$text = preg_replace_callback("/##table-data:(.*)##/i", function( $m ) use ( $template, $Tabledata ) {
 			$sizedata = array();
 			$sizedata['key'] = $m[1];
 			$sizedata['data'] = $Tabledata->getTable( $m[1] );
 
 			return $template->get('size_data', $sizedata);
-		}, $text);
+		}, $text);*/
 
 		// Aloldal beszúrása
 		if ( isset($_GET['page']) ) {

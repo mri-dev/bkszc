@@ -1,5 +1,5 @@
 <?
-namespace PortalManager;
+namespace PortalManager; 
 
 /**
 * class Pagination
@@ -14,6 +14,7 @@ class Pagination
 	private $root = '';
 	private $after = '';
 	private $page_limit = 10;
+	private $page_prefix = 'P';
 
 	function __construct( $arg = array() )
 	{
@@ -40,7 +41,17 @@ class Pagination
 			$this->page_limit = $arg['item_limit'];
 		}
 
+		if( isset($arg['page_prefix']) )
+		{
+			$this->page_prefix = $arg['page_prefix'];
+		}
+
 		return $this;
+	}
+
+	private function formatPage( $page )
+	{
+		return $this->page_prefix.$page;
 	}
 
 	public function render()
@@ -49,9 +60,9 @@ class Pagination
 		$do_end_much = false;
 		$r = '<div class="nav-container">';
 		$r .= '<ul class="'.$this->class.'">';
-		  $r .= '<li><a href="'.$this->root.'/P1'.$this->after.'"><i class="fa fa-angle-left"></i></a></li>';
+		  $r .= '<li><a href="'.$this->root.'/'.$this->formatPage(1).$this->after.'"><i class="fa fa-angle-left"></i></a></li>';
 		  if( $this->current_item-1 > ($this->page_limit/2) &&  $this->max_item > $this->page_limit )  {
-		  	$r .= '<li ><a href="'.$this->root.'/P1'.$this->after.'">1</a></li>';
+		  	$r .= '<li ><a href="'.$this->root.'/'.$this->formatPage(1).$this->after.'">1</a></li>';
 		  }
 		  for($p = 1; $p <= $this->max_item; $p++):
 		  	if( $p < ($this->current_item - ($this->page_limit/2))) {
@@ -67,12 +78,12 @@ class Pagination
 		  		}
 		  		continue;
 	  		}
-		  	$r .= '<li class="'.( $this->current_item == $p  ? 'active' : '' ).'"><a href="'.$this->root.'/P'.$p.$this->after.'">'.$p.'</a></li>';
+		  	$r .= '<li class="'.( $this->current_item == $p  ? 'active' : '' ).'"><a href="'.$this->root.'/'.$this->formatPage($p).$this->after.'">'.$p.'</a></li>';
 		  endfor;
 		  if( ($this->current_item < $this->max_item - ($this->page_limit/2) ) &&  $this->max_item > $this->page_limit )  {
-		  	$r .= '<li ><a href="'.$this->root.'/P'.$this->max_item.$this->after.'">'.$this->max_item.'</a></li>';
+		  	$r .= '<li ><a href="'.$this->root.'/'.$this->formatPage($this->max_item).$this->after.'">'.$this->max_item.'</a></li>';
 		  }
-		  $r .= '<li><a href="'.$this->root.'/P'.$this->max_item.$this->after.'"><i class="fa fa-angle-right"></i></a></li>';
+		  $r .= '<li><a href="'.$this->root.'/'.$this->formatPage($this->max_item).$this->after.'"><i class="fa fa-angle-right"></i></a></li>';
 		$r .= '</ul>';
 		$r .= '</div>';
 

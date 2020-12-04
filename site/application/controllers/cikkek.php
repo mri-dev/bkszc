@@ -45,6 +45,7 @@ class cikkek extends Controller{
 		$news = new News( false, array( 'db' => $this->db ) );
 		$temp = new Template( VIEW . __CLASS__.'/template/' );
 		$this->out( 'template', $temp );
+		$this->out( 'newsobj', $news );
 
 		// archív dátumok
 		$adlimit = (isset($_GET['archive'])) ? false : 25;

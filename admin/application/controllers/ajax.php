@@ -3,6 +3,7 @@ use PortalManager\Template;
 use PortalManager\Traffic;
 use PortalManager\EtlapAPI;
 use PortalManager\News;
+use PortalManager\DolgozokLista;
 use ProductManager\Products;
 use PortalManager\Gallery;
 use PortalManager\Banners;
@@ -181,6 +182,38 @@ class ajax extends Controller{
 						$news->delete((int)$id);
 						$ret['error'] = false;
 						$ret['msg'] = 'Bejegyzés sikeresen törölve!';
+					}catch(Exception $e){
+						$ret['error'] = true;
+						$ret['msg'] = $e->getMessage();
+					}
+					/**/
+					echo json_encode( $ret );
+				break;
+				case 'deleteDolgozo':
+					$ret = array(
+						'error' => false,
+						'msg' 	=> false,
+					);
+
+					$this->view->adm = $this->AdminUser;
+					$this->view->adm->logged = $this->AdminUser->isLogged();
+
+					if ( !$this->view->adm->logged ) {
+						$ret['error'] = true;
+						$ret['msg'] = 'Adminisztráctrátor jogkör szükséges a feladat elvégzéséhez!';
+						echo json_encode( $ret );
+						exit;
+					}
+
+					$dolgozo = new DolgozokLista( $id ,  array( 'db' => $this->db ) );
+					$ret['pass'] = $_POST;
+					$ret['error'] = true;
+
+					/**/
+					try{
+						$dolgozo->delete((int)$id);
+						$ret['error'] = false;
+						$ret['msg'] = 'Dolgozó sikeresen törölve!';
 					}catch(Exception $e){
 						$ret['error'] = true;
 						$ret['msg'] = $e->getMessage();

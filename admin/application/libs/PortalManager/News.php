@@ -2,6 +2,7 @@
 namespace PortalManager;
 
 use PortalManager\Formater;
+use PortalManager\Template;
 use ShopManager\Categories;
 
 /**
@@ -653,11 +654,20 @@ class News
 		return $this->current_item;
 	}
 
-	public static function textRewrites( $text )
+	public function textRewrites( $text )
 	{
+    $template 	= new Template ( VIEW . 'templates/' );
 		// Kép
 		$text = str_replace( '../../../src/uploads/', UPLOADS, $text );
-		$text = str_replace( '/system/imagemanager/files/', UPLOADS, $text );
+    $text = str_replace( '/system/imagemanager/files/', UPLOADS, $text );    
+    // Includes
+		$text = preg_replace_callback( "/==(.*)==/i", function ( $m ) use ( $template) {
+      if( $m[1] == 'dolgozok' )
+      {
+        $data = new DolgozokLista(false, ['db' => $this->db]);
+      }
+			return $template->get( $m[1], ['data' => $data]);
+		} , $text );
 
 		return $text;
 	}
@@ -691,7 +701,7 @@ class News
       );
     }
 
-    return $list;
+    return $list; 
   }
 
   public function getArchiveSCYears( $limit = false )
