@@ -67,6 +67,7 @@ class Categories
 		$hashkey = ($new_data['hashkey']) ?: NULL;
 		$oldal_hashkeys = (count($new_data['oldal_hashkeys']) > 0) ? implode(",",$new_data['oldal_hashkeys']) : NULL;
 		$eleres = ($data['slug']) ?: NULL;
+		$leiras = ($new_data['leiras']) ?: NULL;
 
 		if (!$eleres) {
 			$eleres = $this->checkEleres( $name );
@@ -90,6 +91,7 @@ class Categories
 			$this->table,
 			array(
 				'neve' 		=> $name,
+				'leiras' => addslashes($leiras),
 				'slug' => $eleres,
 				'szulo_id' 	=> $parent,
 				'sorrend' 	=> $sort,
@@ -117,6 +119,7 @@ class Categories
 		$oldal_hashkeys = (count($new_data['oldal_hashkeys']) > 0) ? implode(",",$new_data['oldal_hashkeys']) : NULL;
 		$image = ( isset($new_data['image']) ) ? $new_data['image'] : NULL;
 		$eleres = ($new_data['slug']) ?: NULL;
+		$leiras = ($new_data['leiras']) ?: NULL;
 
 		if (!$eleres) {
 			$eleres = $this->checkEleres( $name );
@@ -136,6 +139,7 @@ class Categories
 
 		$row = array(
 			'neve' => $name,
+			'leiras' => addslashes($leiras),
 			'slug' => $eleres,
 			'szulo_id' => $parent,
 			'sorrend' => $sort,

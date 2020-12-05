@@ -92,7 +92,7 @@ class cikkek extends Controller{
 			$cat_slug =  trim($_GET['cat']);
 
 			// Kategória adatok
-			$catdata = $this->db->squery("SELECT ID, neve, szulo_id FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
+			$catdata = $this->db->squery("SELECT ID, neve, szulo_id, leiras FROM cikk_kategoriak WHERE slug = :slug", array('slug' => trim($_GET['cat'])))->fetch(\PDO::FETCH_ASSOC);
 			$cat_id = (int)$catdata['ID'];
 			$cat_parent_row = $news->parentCategoryData($cat_id);
 			$cat_parent_row = array_reverse($cat_parent_row);
@@ -104,6 +104,7 @@ class cikkek extends Controller{
 				'id' => $catdata['ID'],
 				'slug' =>$catdata['slug']
 			));
+			$this->out( 'catdata', $catdata );
 
 			if ($cat_id != 0) {
 				$parentcatdata = $this->db->squery("SELECT ID, neve, slug FROM cikk_kategoriak WHERE ID = :id", array('id' => trim($catdata['szulo_id'])))->fetch(\PDO::FETCH_ASSOC);

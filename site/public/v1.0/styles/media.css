@@ -1,6 +1,6 @@
 @charset "UTF-8";
 /* VÁLTOZÓK */
-/*$imgroot: "//www.cp.gundeliskola.hu/src/images/";*/
+/*$imgroot: "//www.cp.bkszc.ideasandbox.eu/src/images/";*/
 /* COLORS */
 /* FONTS */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700&subset=latin-ext");
@@ -1659,8 +1659,8 @@ body.mobiltoggled {
 }
 
 .news-block > .holder > div.articles > article {
-  -ms-flex-preferred-size: calc(100% / 3);
-      flex-basis: calc(100% / 3);
+  -ms-flex-preferred-size: calc(100% / 1);
+      flex-basis: calc(100% / 1);
 }
 
 .news-block > .holder > div.articles .in-cats {
@@ -1706,37 +1706,78 @@ body.mobiltoggled {
 
 .news-block .news-group article.news > .wrapper {
   border-radius: 3px;
-  border: 0.5px solid #d9dada;
+  border: 0.5px solid #eaeaea;
+  background-color: white;
   padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-left: 15px;
 }
 
-.news-block .news-group article.news > .wrapper .title {
+.news-block .news-group article.news > .wrapper .img {
+  -ms-flex-preferred-size: 100px;
+      flex-basis: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-block .news-group article.news > .wrapper .img img {
+  max-width: 100%;
+  width: 100%;
+}
+
+.news-block .news-group article.news > .wrapper .datas {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.news-block .news-group article.news > .wrapper .datas .title {
   margin: 0 0 8px 0;
 }
 
-.news-block .news-group article.news > .wrapper .title a {
+.news-block .news-group article.news > .wrapper .datas .title a {
   color: #0072c5;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.35rem;
 }
 
-.news-block .news-group article.news > .wrapper .desc {
+.news-block .news-group article.news > .wrapper .datas .desc {
   line-height: 1.3;
   color: #5b5b5b;
 }
 
-.news-block .news-group article.news > .wrapper .navlinks {
+.news-block .news-group article.news > .wrapper .datas .navlinks {
   margin: 10px 0 0 0;
 }
 
-.news-block .news-group article.news > .wrapper .navlinks a {
+.news-block .news-group article.news > .wrapper .datas .navlinks a {
   text-decoration: none;
   font-weight: bold;
+}
+
+.news-block .news-group article.news > .wrapper .img + .datas {
+  padding: 0 0 0 15px;
 }
 
 .news-block .news-group article.news > .wrapper:hover {
   -webkit-box-shadow: 4px 4px 8px -6px #acacac;
           box-shadow: 4px 4px 8px -6px #acacac;
+}
+
+.news-block .news-group article.news.newest > .wrapper {
+  border-radius: 3px;
+  border: 0.5px solid #d9dada;
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.news-block .news-group article.news.newest > .wrapper .img {
+  -ms-flex-preferred-size: 250px;
+      flex-basis: 250px;
 }
 
 .news-block .news-group article.news:not(.newest) > .wrapper {
@@ -1774,6 +1815,30 @@ body.mobiltoggled {
 .news-block.slide-view .slick-prev:before, .news-block.slide-view .slick-next:before {
   color: black;
   font-family: 'FontAwesome';
+}
+
+.news-block.slide-view .news > .wrapper {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.news-block.slide-view .news > .wrapper .title,
+.news-block.slide-view .news > .wrapper .desc,
+.news-block.slide-view .news > .wrapper .navlinks {
+  -ms-flex-preferred-size: 100% !important;
+      flex-basis: 100% !important;
+}
+
+.news-block.slide-view .news > .wrapper .title {
+  margin: 0 0 5px 0;
+}
+
+.news-block.slide-view .news > .wrapper .title a {
+  font-size: 1.2rem;
+}
+
+.news-block.slide-view .news > .wrapper .navlinks {
+  margin: 5px 0 0 0;
 }
 
 .new-gallery-list .link .cat {
@@ -3181,7 +3246,7 @@ header .nav:not(.nav-fix) > ul {
           align-items: center;
   padding: 40px 5px 5px 5px;
   background-color: #33c7eb;
-  background-image: url("//www.cp.bkszc.ideasandbox.eu/src/images/calendar-top-design.svg");
+  background-image: url("//www.cp.gundeliskola.hu/src/images/calendar-top-design.svg");
   background-repeat: repeat-x;
   background-position: top center;
   background-size: 45.6px;
@@ -3515,6 +3580,19 @@ body.article .articles-header {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
   padding: 20px 0 0 0;
+  line-height: 1.4;
+}
+
+body.article .articles-header .cat-desc {
+  margin: 0 0 25px 0;
+}
+
+body.article .articles-header .cat-desc h1, body.article .articles-header .cat-desc h2, body.article .articles-header .cat-desc h3, body.article .articles-header .cat-desc h4, body.article .articles-header .cat-desc h5, body.article .articles-header .cat-desc h6 {
+  margin: 10px 0 15px;
+}
+
+body.article .articles-header .cat-desc p + p {
+  margin: 8px 0 0 0;
 }
 
 body.article .articles-header h1 {

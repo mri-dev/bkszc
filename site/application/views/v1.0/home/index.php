@@ -36,7 +36,8 @@
               arrow: true,
               autoplay: true,
               delay: 5000,
-              speed: 1000
+              speed: 1000,
+              lazyLoad: "ondemand"
             });
 
             var apw = $('.actual-news-block').height() / 3 * 4;

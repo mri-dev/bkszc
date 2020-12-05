@@ -75,6 +75,10 @@ class Category
 	{
 		return $this->cat_data['neve'];
 	}
+	public function getDescription()
+	{
+		return $this->cat_data['leiras'];
+	}
 	public function getPageHashkeys()
 	{
 		$hashkeys = array();

@@ -20,7 +20,7 @@
         }
       ?>
       <div class="wrapper">
-        <a href="<?=$gal['url']?>"><img src="<?=$image?>" alt="<?=$gal['title']?>"></a>
+        <a href="<?=$gal['url']?>"><img src="<?=$image?>" alt="<?=$gal['title']?>" loading="lazy"></a>
       </div>
     </div>
   </div>

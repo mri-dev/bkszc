@@ -1,4 +1,11 @@
 <div class="articles-header">
+	<?php if( !$this->news ): ?>
+		<?php if( !empty($this->catdata['leiras'])): ?>
+		<div class="cat-desc">
+			<?php echo $this->catdata['leiras']; ?>
+		</div>
+		<?php endif; ?>
+	<?php endif; ?>
 	<h1><?=$this->head_img_title?></h1> 
 	<?php if ($this->cat_parent_row): ?>
 	<div class="navi">
