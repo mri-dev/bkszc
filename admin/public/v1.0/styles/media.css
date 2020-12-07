@@ -4256,6 +4256,55 @@ input[type=file].lab-selector + label img {
 	color: #736969;
 	letter-spacing: .4px;
 }
+.helpdesk-videos .video-holder{
+	overflow: hidden;
+	border-radius: 5px;
+	box-shadow: 0 5px 48px -20px black;
+}
+.helpdesk-videos .video-nav h3{
+	color: #0395bd;
+	text-transform: uppercase;
+	font-size: 2.4rem;
+	font-weight: bold;
+	margin: 10px 0 15px 0;
+}
+.helpdesk-videos .video-nav ul li a{
+	color: #828282;
+	font-size: 1.45rem;
+	font-weight: bold;
+	cursor: pointer;
+}
+.helpdesk-videos .video-nav ul li a.active{
+	color: #89ae34;
+}
+.helpdesk-videos .video-nav ul li a:hover{
+	color: #0395bd;
+}
+.helpdesk-videos video {
+	display: block;
+}
+.helpdesk-videos #progress_bar{
+	background-color: #dfdfdf;
+  border: 1px solid #b7b5b5;
+	border-radius: 3px;
+	margin: 5px 0;
+	height: 10px;
+	overflow: hidden;
+}
+.helpdesk-videos #progress_bar .progressbar {
+	background-color: #0f7aba;
+	display: block;
+	height: 10px;
+	width: 0px;
+}
+.helpdesk-videos #video_title {
+	color: #89ae34;
+	font-weight: bold;
+	font-size: 3rem;
+	line-height: 34px;
+	height: 34px;
+	margin: 0 0 15px 0px;
+}
 @media all and (max-width: 1400px){
   .filter-inputs .orders{
     flex-basis: 300px;
