@@ -7,7 +7,7 @@
         <h3><?=$group?></h3>
         <ul>
         <?php foreach( (array)$items as $id => $item ): ?>
-        <li><a href="#<?=$id?>" data-item="<?=$id?>" data-title="<?=$item['title']?>" data-video="<?=$item['video']?>" onclick="playVideo('<?=$item['title']?>', '<?=$item['video']?>', $(this))"><?=$item['title']?></a></li>
+        <li><? if($item['video'] !== false): ?><a href="#<?=$id?>" data-item="<?=$id?>" data-title="<?=$item['title']?>" data-video="<?=$item['video']?>" onclick="playVideo('<?=$item['title']?>', '<?=$item['video']?>', $(this))"><? endif; ?><?=$item['title']?><? if($item['video'] !== false): ?></a><? endif; ?></li>
         <?php endforeach; ?>
         </ul>
         <?php endforeach; ?>

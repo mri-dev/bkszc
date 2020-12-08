@@ -15,24 +15,72 @@ class helpdesk extends Controller{
       $video_root = '/src/helpdesk/videos/';
 
       /** Cikkek videók */
-      $videos['I. Cikkek']['I.1.'] = [
-        'title' => 'I.1. Cikkek feltöltése',
-        'video' => $video_root.'articles_create.mp4'
+      $videos['I. Cikkek, bejegyzések']['I.1.'] = [
+        'title' => 'I.1. Új cikk létrehozása',
+        'video' => $video_root.'I_1_cikk_letrahozas.mp4'
       ];
-      $videos['I. Cikkek']['I.2.'] = [
-        'title' => 'I.2. Minta',
-        'video' => $video_root.'1.mp4'
+      $videos['I. Cikkek, bejegyzések']['I.2.'] = [
+        'title' => 'I.2. Cikk kategóriáinak kezelése',
+        'video' => $video_root.'I_2_cikk_kategoria_szerkesztes.mp4'
       ];
-      $videos['I. Cikkek']['I.3.'] = [
-        'title' => 'I.3. Minta 2',
-        'video' => $video_root.'2.mp4'
+      $videos['I. Cikkek, bejegyzések']['I.3.'] = [
+        'title' => 'I.3. Cikk listázás használata és lehetősgei',
+        'video' => $video_root.'I_3_cikk_listazas_hasznalata_es_lehetosegei.mp4'
+      ];
+      
+      $videos['I. Cikkek, bejegyzések']['I.4.'] = [
+        'title' => 'I.4. Cikk publikációs dátum módosítása, cikkek sorrendje',
+        'video' => $video_root.'I_4_cikk_publikacio_es_sorrend.mp4'
+      ];
+      $videos['I. Cikkek, bejegyzések']['I.5.'] = [
+        'title' => 'I.5. Cikk áthelyezése másik tanévre',
+        'video' => $video_root.'I_5_cikk_athelyezes_masik_tanev.mp4'
+      ];
+      $videos['I. Cikkek, bejegyzések']['I.5.'] = [
+        'title' => 'I.6. Cikk kategóriák kezelése',
+        'video' => $video_root.'I_6_cikk_kategoriak_kezelese.mp4'
+      ];
+
+      
+      /** Menü videók */
+      $videos['II. Menü'][] = [
+        'title' => 'Hamarosan...',
+        'video' => false
+      ];
+      /** Oldalak videók */
+      $videos['III. Oldalak'][] = [
+        'title' => 'Hamarosan...',
+        'video' => false
+      ];
+      
+      /** Programok videók */
+      $videos['IV. Programok / Események'][] = [
+        'title' => 'Hamarosan...',
+        'video' => false
       ];
 
       /** Galéria videók */
-      $videos['II. Galéria'][] = [
-        'title' => 'II.1. Új galéria létrehozása',
-        'video' => $video_root.'gallery_var.mp4'
+      $videos['V. Galéria'][] = [
+        'title' => 'Hamarosan...',
+        'video' => false
       ];
+
+       /** Dolgozók videók */
+       $videos['VI. Dolgozók'][] = [
+        'title' => 'Hamarosan...',
+        'video' => false
+      ];
+
+      /** Egyéb videók */
+      $videos['X. Egyéb'][] = [
+        'title' => 'Fájlkezelő (hamarosan)',
+        'video' => false
+      ];
+      $videos['X. Egyéb'][] = [
+        'title' => 'Szövegszerkesztés (hamarosan)',
+        'video' => false
+      ];
+      /**/
       $this->out( 'videos', $videos );		
     }
     
