@@ -40,12 +40,11 @@ class helpdesk extends Controller{
         'title' => 'I.6. Cikk kategóriák kezelése',
         'video' => $video_root.'I_6_cikk_kategoriak_kezelese.mp4'
       ];
-
       
       /** Menü videók */
-      $videos['II. Menü'][] = [
-        'title' => 'Hamarosan...',
-        'video' => false
+      $videos['II. Menü']['II.1.'] = [
+        'title' => 'II.1. Menü áttekintése és használata',
+        'video' => $video_root.'II_1_menu_attekintese_es_szerkesztese.mp4'
       ];
       /** Oldalak videók */
       $videos['III. Oldalak'][] = [

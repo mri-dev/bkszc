@@ -15,8 +15,8 @@
               </div>
               <? if( count($this->page->getImageSet()) > 0 ): ?>
               <div class="image-set">
-                  <? $s = 0; foreach( $this->page->getImageSet() as $img ): $s++; $ws = 250; ?>
-                  <div class="img"><span class="helper"></span><a href="<?=\PortalManager\Formater::productImage($img)?>" rel="page-images" class="zoom"><img src="/render/thumbnail/?i=admin<?=$img?>&w=<?=$ws?>" alt=""></a></div>
+                  <? $s = 0; foreach( $this->page->getImageSet() as $img ): $s++; ?>
+                  <div class="img autocorrett-height-by-width" data-image-ratio="4:3"><span class="helper"></span><a data-caption="" href="<?=\PortalManager\Formater::productImage($img)?>" rel="page-images" class="zoom"><img loading="lazy" src="<?=\PortalManager\Formater::productImage($img)?>" alt=""></a></div>
                   <? endforeach;?>
               </div>
               <? endif; ?>

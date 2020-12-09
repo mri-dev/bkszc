@@ -3663,6 +3663,29 @@ body.article-slug-tanarok-elerhetosegei{
 .news-page .news-content > .head .subline > div.share{
 	width:  170px !important;
 }
+.image-set{
+	display: flex;
+	flex-wrap: wrap;
+	& > .img{
+		flex-basis: calc(100% / 4);
+		padding: 10px;
+		a{
+			display: block;
+			overflow: hidden;
+			position: relative;
+			height: 100%;
+			width: 100%;
+		}
+		img {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			max-width: 100%;
+			width: 100%;
+		}
+	}
+}
 .dolgozo-lista{
 	& > .wrapper{
 		background: white;

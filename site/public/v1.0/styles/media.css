@@ -4607,6 +4607,38 @@ body.article-slug-tanarok-elerhetosegei .news-content .content table td:nth-chil
   width: 170px !important;
 }
 
+.image-set {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.image-set > .img {
+  -ms-flex-preferred-size: calc(100% / 4);
+      flex-basis: calc(100% / 4);
+  padding: 10px;
+}
+
+.image-set > .img a {
+  display: block;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.image-set > .img img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  max-width: 100%;
+  width: 100%;
+}
+
 .dolgozo-lista > .wrapper {
   background: white;
   border: 1px solid #e5e5e5;
