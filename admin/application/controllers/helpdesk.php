@@ -46,16 +46,17 @@ class helpdesk extends Controller{
         'title' => 'II.1. Menü áttekintése és használata',
         'video' => $video_root.'II_1_menu_attekintese_es_szerkesztese.mp4'
       ];
+
       /** Oldalak videók */
-      $videos['III. Oldalak'][] = [
-        'title' => 'Hamarosan...',
-        'video' => false
+      $videos['III. Oldalak']['III.1.'] = [
+        'title' => 'III.1. Oldalak kezelése',
+        'video' => $video_root.'III_1_oldalak_kezelese.mp4'
       ];
       
       /** Programok videók */
       $videos['IV. Programok / Események'][] = [
-        'title' => 'Hamarosan...',
-        'video' => false
+        'title' => 'IV.1. Események kezelése és ismertetése',
+        'video' =>  $video_root.'IV_1_programok_esemenyek.mp4'
       ];
 
       /** Galéria videók */
