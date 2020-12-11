@@ -10,7 +10,7 @@
 	define('AJAX_GET','/ajax/get/');
 	define('AJAX_POST','/ajax/post/');
 	define('AJAX_BOX','/ajax/box/');
-	define('GALLERY_CAT_ID', 4);
+	define('GALLERY_CAT_ID', 110);
 
 	////////////////////////////////////////
 	// Ne módosítsa innen a beállításokat //

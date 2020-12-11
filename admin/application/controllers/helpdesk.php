@@ -60,9 +60,13 @@ class helpdesk extends Controller{
       ];
 
       /** Galéria videók */
-      $videos['V. Galéria'][] = [
-        'title' => 'Hamarosan...',
-        'video' => false
+      $videos['V. Galéria']['V.1.'] = [
+        'title' => 'V.1. Galéria kategóriák működése',
+        'video' =>  $video_root.'V_1_galeria_kategoriak.mp4'
+      ];
+      $videos['V. Galéria']['V.2.'] = [
+        'title' => 'V.2. Új galéria létrehozása, képek feltöltése, rendezése és törlése',
+        'video' =>  $video_root.'V_2_galeria_letrahozas_kepek_feltoltese.mp4'
       ];
 
        /** Dolgozók videók */

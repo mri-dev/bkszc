@@ -13,6 +13,7 @@
 	define('DEVMODE', true);
 	define('TS', '202011091400');
 	define('PARTNER_CAT_ID', 6);
+	define('GALLERY_CAT_ID', 110);
 
 	// Üdvözlő üzenet
 	define('WELCOME','Üdvözlünk az oldalunkon!');

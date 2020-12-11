@@ -14,7 +14,7 @@ class galeria extends Controller{
 
       // Szűrő mentése
       if(Post::on('filterList')){
-        $filtered = false;
+        $filtered = false; 
 
         if($_POST['nev'] != ''){
           setcookie('filter_nev',$_POST['nev'],time()+60*24,'/'.$this->view->gets[0]);
